@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💅 Nail Salon - Type & Talk</title>
+    <title>💅 Nail Salon - Where Are You From?</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -98,45 +98,64 @@
         .c-vi { font-size: 10px; color: #b2bec3; font-style: italic; margin-top: 2px; padding: 0 4px; }
         .c-tech .c-vi { text-align: right; }
 
-        /* INPUT PANEL */
-        .input-panel { background: white; border-radius: 18px; padding: 18px; box-shadow: 0 6px 25px rgba(0,0,0,0.08); }
-        .input-instruction { font-size: 11px; font-weight: 800; color: #e8594f; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .input-prompt { font-size: 15px; font-weight: 800; color: #2d3436; margin-bottom: 2px; line-height: 1.4; }
-        .input-prompt-vi { font-size: 12px; color: #b2bec3; font-style: italic; margin-bottom: 10px; }
-        .input-row { display: flex; gap: 8px; align-items: stretch; }
-        .text-input { flex: 1; padding: 12px 16px; border: 3px solid #eee; border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 700; color: #2d3436; outline: none; transition: border-color 0.2s; }
-        .text-input:focus { border-color: #667eea; }
-        .text-input::placeholder { color: #ccc; font-weight: 600; }
-        .text-input.input-correct { border-color: #00b894; background: #f0fff4; }
-        .text-input.input-wrong { border-color: #ff6b6b; background: #fff5f5; }
-        .send-btn { padding: 12px 20px; border: none; border-radius: 14px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 900; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; box-shadow: 0 3px 10px rgba(102,126,234,0.3); }
-        .send-btn:hover { transform: translateY(-1px); }
-        .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-        .key-hint { text-align: center; font-size: 10px; color: #b2bec3; margin-top: 4px; font-weight: 600; }
+        /* QUESTION PANEL */
+        .q-panel { background: white; border-radius: 18px; padding: 20px; box-shadow: 0 6px 25px rgba(0,0,0,0.08); }
 
-        .hint-area { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-        .hint-btn { padding: 7px 16px; border: 2px solid #ddd; border-radius: 20px; background: white; font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; color: #636e72; transition: all 0.2s; }
-        .hint-btn:hover { border-color: #a29bfe; color: #6c5ce7; background: #f8f7ff; }
-        .hint-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-        .hint-btn.show-answer-btn { border-color: #fdcb6e; color: #d35400; }
-        .hint-btn.show-answer-btn:hover { background: #fef9e7; }
+        .q-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .q-badge.ask { background: #e8f4fd; color: #0984e3; }
+        .q-badge.respond { background: #fef9e7; color: #d35400; }
+        .q-badge.understand { background: #eafaf1; color: #1e8449; }
+        .q-badge.grammar { background: #f4ecf7; color: #7d3c98; }
 
-        .hint-display { width: 100%; margin-top: 6px; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; display: none; animation: msgSlide 0.3s ease; }
-        .hint-display.hint-keyword { display: block; background: #f8f7ff; color: #6c5ce7; border-left: 3px solid #a29bfe; }
-        .hint-display.hint-answer { display: block; background: #fef9e7; color: #d35400; border-left: 3px solid #fdcb6e; }
-        .hint-display .hint-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.6; margin-bottom: 2px; }
+        .q-instruction { font-size: 11px; font-weight: 800; color: #e8594f; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .q-prompt { font-size: 15px; font-weight: 800; color: #2d3436; margin-bottom: 2px; line-height: 1.4; }
+        .q-prompt-vi { font-size: 12px; color: #b2bec3; font-style: italic; margin-bottom: 12px; }
 
+        /* OPTIONS */
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+
+        .opt-btn {
+            width: 100%; padding: 12px 16px; border: 3px solid #eee; border-radius: 14px;
+            background: white; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
+            color: #2d3436; cursor: pointer; transition: all 0.2s ease; text-align: left;
+            display: flex; align-items: flex-start; gap: 10px;
+        }
+        .opt-btn:hover:not(.locked) { border-color: #667eea; background: #f8f9ff; transform: translateY(-1px); }
+
+        .opt-letter {
+            width: 28px; height: 28px; border-radius: 50%; background: #f0f0f0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 900; color: #999; flex-shrink: 0; margin-top: 1px;
+        }
+
+        .opt-text { flex: 1; }
+        .opt-en { display: block; }
+        .opt-vi { display: block; font-size: 11px; color: #b2bec3; font-style: italic; margin-top: 2px; }
+
+        .opt-btn.correct-opt { border-color: #00b894; background: #f0fff4; animation: popCorrect 0.5s ease; }
+        .opt-btn.correct-opt .opt-letter { background: #00b894; color: white; }
+        @keyframes popCorrect { 0%{transform:scale(1)} 50%{transform:scale(1.02)} 100%{transform:scale(1)} }
+
+        .opt-btn.wrong-opt { border-color: #ff6b6b; background: #fff5f5; animation: shake 0.5s ease; }
+        .opt-btn.wrong-opt .opt-letter { background: #ff6b6b; color: white; }
+        @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+
+        .opt-btn.locked { cursor: not-allowed; opacity: 0.5; }
+
+        /* FEEDBACK */
         .fb-box { margin-top: 12px; padding: 12px 16px; border-radius: 12px; font-weight: 700; font-size: 13px; line-height: 1.5; display: none; animation: msgSlide 0.3s ease; }
         .fb-box.fb-ok { display: block; background: linear-gradient(135deg, #d5f5e3, #a9dfbf); color: #1e8449; }
-        .fb-box.fb-close { display: block; background: linear-gradient(135deg, #fef9e7, #fdebd0); color: #d68910; }
         .fb-box.fb-wrong { display: block; background: linear-gradient(135deg, #fadbd8, #f5b7b1); color: #c0392b; }
-        .fb-correct-answer { font-size: 12px; margin-top: 4px; opacity: 0.8; }
+        .fb-extra { font-size: 12px; margin-top: 4px; opacity: 0.8; }
 
         .cont-btn { display: none; width: 100%; margin-top: 10px; padding: 13px; border: none; border-radius: 14px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 900; cursor: pointer; box-shadow: 0 4px 14px rgba(102,126,234,0.3); transition: all 0.2s; }
         .cont-btn.show { display: block; }
         .cont-btn:hover { transform: translateY(-1px); }
 
-        .attempt-info { font-size: 11px; color: #b2bec3; font-weight: 700; margin-top: 6px; text-align: center; }
+        /* GRAMMAR TIP */
+        .grammar-tip { background: #f4ecf7; border-left: 4px solid #a29bfe; border-radius: 10px; padding: 10px 14px; margin-top: 10px; font-size: 12px; color: #6c3483; line-height: 1.5; display: none; animation: msgSlide 0.3s ease; }
+        .grammar-tip.show { display: block; }
+        .grammar-tip strong { color: #5b2c6f; }
 
         /* RESULTS */
         .result-card { background: white; border-radius: 24px; padding: 32px 22px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
@@ -159,7 +178,7 @@
 
         .review-sec { text-align: left; margin-top: 20px; border-top: 2px solid #f0f0f0; padding-top: 18px; }
         .review-h { font-size: 15px; font-weight: 900; color: #2d3436; text-align: center; margin-bottom: 12px; }
-        .review-wrap { background: #f8f9ff; border-radius: 14px; padding: 14px; }
+        .review-wrap { background: #f8f9ff; border-radius: 14px; padding: 14px; max-height: 400px; overflow-y: auto; }
         .rev-line { margin-bottom: 8px; padding: 7px 10px; border-radius: 8px; font-size: 12px; line-height: 1.6; }
         .rev-speaker { font-weight: 900; margin-right: 4px; }
         .rev-speaker.rev-c { color: #0984e3; }
@@ -170,14 +189,14 @@
         .restart-btn:hover { transform: translateY(-2px); }
 
         .confetti-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; overflow: hidden; }
-        .conf-piece { position: absolute; top: -20px; width: 10px; height: 10px; border-radius: 2px; animation: confDrop 3s ease-in forwards; }
+        .conf-piece { position: absolute; top: -20px; animation: confDrop 3s ease-in forwards; }
         @keyframes confDrop { 0%{transform:translateY(0) rotate(0deg);opacity:1} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
-        @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
 
         @media (max-width: 480px) {
             .profiles { grid-template-columns: 1fr; }
             .header h1 { font-size: 17px; }
-            .input-prompt { font-size: 14px; }
+            .q-prompt { font-size: 14px; }
+            .opt-btn { font-size: 13px; padding: 10px 14px; }
             .r-stats { flex-direction: column; align-items: center; }
         }
     </style>
@@ -185,25 +204,23 @@
 <body>
 
 <div class="header">
-    <h1>💅 Nail Salon — Type & Talk</h1>
-    <p>Practice Conversations by Typing Your Responses!</p>
+    <h1>💅 Nail Salon — Choose & Chat</h1>
+    <p>Practice Nail Salon Conversations!</p>
 </div>
 
 <div class="main">
 
-    <!-- START SCREEN -->
+    <!-- ===== START SCREEN ===== -->
     <div class="screen active" id="startScreen">
         <div class="start-card">
-            <div class="start-icon">⌨️💬</div>
+            <div class="start-icon">💬💅</div>
             <div class="start-title">Where Are You From?</div>
             <div class="start-title-vi">Bạn đến từ đâu?</div>
 
             <div class="start-desc">
-                🎯 <strong>Your Mission:</strong> You are <strong>Minh</strong>, a Nail Technician from Vietnam 🇻🇳 who lives in <strong>Pennsauken, NJ</strong>. A new client just sat down!
+                🎯 <strong>Your Mission:</strong> You are <strong>Minh</strong>, a Nail Technician from Vietnam 🇻🇳 living in <strong>Pennsauken, NJ</strong>. A new client just sat down!
                 <br><br>
-                👨‍🏫 Your <strong>Teacher</strong> will tell you what to say or ask. <strong>Type your response</strong> in the input box. Discover information about your client through conversation!
-                <br><br>
-                💡 <strong>Don't worry</strong> — you'll get hints and multiple tries if needed!
+                👨‍🏫 Your <strong>Teacher</strong> will guide you. <strong>Choose the best response</strong> to keep the conversation going and discover information about your client!
             </div>
 
             <div class="profiles">
@@ -233,11 +250,11 @@
 
             <div class="rules-box">
                 <h3>📝 How to Play</h3>
-                <div class="rule-item"><span>👨‍🏫</span> Teacher tells you what to say</div>
-                <div class="rule-item"><span>⌨️</span> Type your response in English</div>
-                <div class="rule-item"><span>✅</span> Get feedback on your answer</div>
-                <div class="rule-item"><span>💡</span> Use hints if you're stuck (costs points!)</div>
+                <div class="rule-item"><span>👨‍🏫</span> Teacher tells you what to say or ask</div>
+                <div class="rule-item"><span>🔘</span> Pick the best answer from the choices</div>
+                <div class="rule-item"><span>💬</span> Watch the conversation build in real-time</div>
                 <div class="rule-item"><span>🔍</span> Discover client info through conversation</div>
+                <div class="rule-item"><span>📚</span> Learn grammar tips along the way</div>
                 <div class="rule-item"><span>🏆</span> Try to get 3 stars!</div>
             </div>
 
@@ -245,7 +262,7 @@
         </div>
     </div>
 
-    <!-- GAME SCREEN -->
+    <!-- ===== GAME SCREEN ===== -->
     <div class="screen" id="gameScreen">
         <div class="top-bar">
             <span class="top-step" id="topStep">1/10</span>
@@ -255,17 +272,11 @@
         </div>
 
         <div class="mini-profiles">
-            <div class="mini-p">
-                <span class="mini-p-emoji">💅</span>
-                <div><div class="mini-p-name">Minh (You)</div><div class="mini-p-sub">Nail Tech</div></div>
-            </div>
-            <div class="mini-p">
-                <span class="mini-p-emoji">👩</span>
-                <div><div class="mini-p-name" id="miniClientName">Client</div><div class="mini-p-sub" id="miniClientSub">New customer</div></div>
-            </div>
+            <div class="mini-p"><span class="mini-p-emoji">💅</span><div><div class="mini-p-name">Minh (You)</div><div class="mini-p-sub">Nail Tech</div></div></div>
+            <div class="mini-p"><span class="mini-p-emoji">👩</span><div><div class="mini-p-name" id="miniClientName">Client</div><div class="mini-p-sub" id="miniClientSub">New customer</div></div></div>
         </div>
 
-        <div class="discovery-bar" id="discBar">
+        <div class="discovery-bar">
             <span class="disc-label">🔍 DISCOVERED:</span>
             <span class="disc-tag" id="dName">📛 Name</span>
             <span class="disc-tag" id="dFrom">🌍 From</span>
@@ -277,41 +288,20 @@
             <div class="teacher-ava">👨‍🏫</div>
             <div class="teacher-body">
                 <div class="teacher-tag">Teacher says</div>
-                <div class="teacher-txt" id="teacherTxt">Let's begin!</div>
+                <div class="teacher-txt" id="teacherTxt"></div>
                 <div class="teacher-vi" id="teacherVi"></div>
             </div>
         </div>
 
         <div class="chat-win">
-            <div class="chat-top">
-                <span class="chat-top-icon">💬</span>
-                <span class="chat-top-title">Nail Salon Conversation</span>
-            </div>
+            <div class="chat-top"><span class="chat-top-icon">💬</span><span class="chat-top-title">Nail Salon Conversation</span></div>
             <div class="chat-body" id="chatBody"></div>
         </div>
 
-        <div class="input-panel" id="inputPanel">
-            <div class="input-instruction" id="inputInstruction">TYPE YOUR RESPONSE</div>
-            <div class="input-prompt" id="inputPrompt"></div>
-            <div class="input-prompt-vi" id="inputPromptVi"></div>
-            <div class="input-row">
-                <input type="text" class="text-input" id="textInput" placeholder="Type your response here..." autocomplete="off">
-                <button class="send-btn" id="sendBtn" onclick="submitAnswer()">Send ✈️</button>
-            </div>
-            <div class="key-hint">Press <strong>Enter</strong> to send</div>
-            <div class="hint-area" id="hintArea">
-                <button class="hint-btn" id="hintBtn1" onclick="showHint(1)">💡 Keyword Hint (-2pts)</button>
-                <button class="hint-btn" id="hintBtn2" onclick="showHint(2)">📝 Sentence Hint (-3pts)</button>
-                <button class="hint-btn show-answer-btn" id="hintBtn3" onclick="showHint(3)">🔑 Show Answer (-5pts)</button>
-                <div class="hint-display" id="hintDisplay"></div>
-            </div>
-            <div class="attempt-info" id="attemptInfo"></div>
-            <div class="fb-box" id="fbBox"></div>
-            <button class="cont-btn" id="contBtn" onclick="goNext()">Continue ➜</button>
-        </div>
+        <div class="q-panel" id="qPanel"></div>
     </div>
 
-    <!-- RESULTS SCREEN -->
+    <!-- ===== RESULTS SCREEN ===== -->
     <div class="screen" id="resultsScreen">
         <div class="result-card">
             <div class="r-icon" id="rIcon">🎉</div>
@@ -320,7 +310,7 @@
             <div class="r-stars" id="rStars">⭐⭐⭐</div>
             <div class="r-stats">
                 <div class="r-stat"><div class="r-stat-v" id="rScore">0</div><div class="r-stat-l">Score</div></div>
-                <div class="r-stat"><div class="r-stat-v" id="rCorrect">0/0</div><div class="r-stat-l">1st Try</div></div>
+                <div class="r-stat"><div class="r-stat-v" id="rCorrect">0/0</div><div class="r-stat-l">Correct</div></div>
                 <div class="r-stat"><div class="r-stat-v" id="rStreak">0</div><div class="r-stat-l">Best Streak</div></div>
             </div>
             <div class="disc-card">
@@ -334,413 +324,252 @@
             <button class="restart-btn" onclick="restart()">🔄 Play Again</button>
         </div>
     </div>
-
 </div>
 
 <div class="confetti-layer" id="confettiLayer"></div>
 
 <script>
-// CLIENT INFO
-const CLIENT = { name: "Sarah", from: "Philadelphia", livesIn: "Cherry Hill, NJ", yearsHere: "her whole life" };
+var CLIENT = { name: "Sarah", from: "Philadelphia", livesIn: "Cherry Hill, NJ", yearsHere: "her whole life" };
 
-// STEPS
-const STEPS = [
+var STEPS = [
     {
         teacher: "A new client just sat down! Greet her warmly and ask her name.",
-        teacherVi: "Khách hàng mới vừa ngồi xuống! Chào cô ấy và hỏi tên.",
-        instruction: "TYPE YOUR GREETING",
-        prompt: "Say hi, tell your name (Minh), and ask for her name.",
-        promptVi: "Nói xin chào, giới thiệu tên (Minh), và hỏi tên cô ấy.",
-        placeholder: "Hi! My name is...",
-        acceptedAnswers: [
-            "hi my name is minh what is your name",
-            "hi my name is minh whats your name",
-            "hello my name is minh what is your name",
-            "hello my name is minh whats your name",
-            "hi i am minh what is your name",
-            "hi im minh whats your name",
-            "hello im minh whats your name",
-            "hi welcome my name is minh what is your name",
-            "hi welcome in my name is minh whats your name"
+        teacherVi: "Khách hàng mới ngồi xuống! Chào cô ấy và hỏi tên.",
+        badge: "ask",
+        instruction: "CHOOSE YOUR GREETING",
+        prompt: "How should you greet the client?",
+        promptVi: "Bạn nên chào khách hàng như thế nào?",
+        options: [
+            { en: "Hi! Welcome in. My name is Minh. What's your name?", vi: "Xin chào! Mời vào. Tên tôi là Minh. Tên bạn là gì?", correct: true },
+            { en: "What do you want today?", vi: "Hôm nay bạn muốn gì?", correct: false },
+            { en: "Where are you from?", vi: "Bạn đến từ đâu?", correct: false },
+            { en: "Sit down please.", vi: "Mời ngồi.", correct: false }
         ],
-        keywords: ["name", "minh"],
-        keywordHint: "Include: 'name' + 'Minh' + ask their name",
-        sentenceHint: "Hi! My name is Minh. What's your name?",
-        fullAnswer: "Hi! Welcome in. My name is Minh. What's your name?",
         correctMsg: "✅ Great greeting! Friendly and professional!",
-        closeMsg: "👍 Good try! A more complete greeting would be better.",
-        wrongMsg: "❌ Remember to say hi, tell your name, and ask theirs.",
-        onComplete: function() {
-            addChat("tech", "Hi! Welcome in. My name is Minh. What's your name?", "Xin chào! Mời vào. Tên tôi là Minh. Tên bạn là gì?");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "Hi Minh! I'm " + CLIENT.name + ". Nice to meet you!", "Chào Minh! Tôi là " + CLIENT.name + ". Rất vui được gặp bạn!");
-                    discover("name", CLIENT.name);
-                    resolve();
-                }, 1000);
-            });
-        }
+        wrongMsg: "❌ Start with a warm greeting and introduce your name first!",
+        grammarTip: "💡 <strong>Greeting pattern:</strong> Hi/Hello + Welcome + My name is [name] + What's your name?",
+        techChat: { text: "Hi! Welcome in. My name is Minh. What's your name?", vi: "Xin chào! Mời vào. Tên tôi là Minh. Tên bạn là gì?" },
+        clientReply: { text: "Hi Minh! I'm Sarah. Nice to meet you!", vi: "Chào Minh! Tôi là Sarah. Rất vui được gặp bạn!" },
+        discovers: [{ key: "name", val: "Sarah" }]
     },
     {
-        teacher: "Great! Her name is " + CLIENT.name + ". Now ask her where she is from.",
-        teacherVi: "Tốt! Tên cô ấy là " + CLIENT.name + ". Hãy hỏi cô ấy đến từ đâu.",
-        instruction: "ASK A QUESTION",
-        prompt: "Ask " + CLIENT.name + " where she is from.",
-        promptVi: "Hỏi " + CLIENT.name + " đến từ đâu.",
-        placeholder: "Where are you...",
-        acceptedAnswers: [
-            "where are you from",
-            "where are you from sarah",
-            "so where are you from",
-            "so where are you from sarah",
-            "where do you come from"
+        teacher: "Great! Her name is Sarah. Now ask her where she is from.",
+        teacherVi: "Tốt! Tên cô ấy là Sarah. Hãy hỏi cô ấy đến từ đâu.",
+        badge: "ask",
+        instruction: "ASK THE RIGHT QUESTION",
+        prompt: "You want to know where Sarah is from. What do you ask?",
+        promptVi: "Bạn muốn biết Sarah đến từ đâu. Bạn hỏi gì?",
+        options: [
+            { en: "Where are you from?", vi: "Bạn đến từ đâu?", correct: true },
+            { en: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?", correct: false },
+            { en: "Do you live near here?", vi: "Bạn có sống gần đây không?", correct: false },
+            { en: "What do you do for work?", vi: "Bạn làm nghề gì?", correct: false }
         ],
-        keywords: ["where", "from"],
-        keywordHint: "Use: 'Where' + 'are you' + 'from'",
-        sentenceHint: "Where are you from?",
-        fullAnswer: "Where are you from?",
-        correctMsg: "✅ Perfect question! Let's hear her answer.",
-        closeMsg: "👍 Almost! Make sure to use 'Where are you from?'",
-        wrongMsg: "❌ To ask about origin, say: 'Where are you from?'",
-        onComplete: function() {
-            addChat("tech", "So where are you from, Sarah?", "Vậy bạn đến từ đâu, Sarah?");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "I'm from " + CLIENT.from + "! Born and raised there.", "Tôi đến từ " + CLIENT.from + "! Sinh ra và lớn lên ở đó.");
-                    discover("from", CLIENT.from);
-                    resolve();
-                }, 1000);
-            });
-        }
+        correctMsg: "✅ Perfect question! Let's hear where Sarah is from!",
+        wrongMsg: "❌ To find out someone's origin, ask: 'Where are you from?'",
+        grammarTip: "💡 <strong>'Where are you from?'</strong> asks about someone's hometown or country of origin.",
+        techChat: { text: "So where are you from, Sarah?", vi: "Vậy bạn đến từ đâu, Sarah?" },
+        clientReply: { text: "I'm from Philadelphia! Born and raised there.", vi: "Tôi đến từ Philadelphia! Sinh ra và lớn lên ở đó." },
+        discovers: [{ key: "from", val: "Philadelphia" }]
     },
     {
-        teacher: CLIENT.name + " is from " + CLIENT.from + "! She asks you back. Tell her where you're from.",
-        teacherVi: CLIENT.name + " đến từ " + CLIENT.from + "! Cô ấy hỏi lại. Hãy nói bạn đến từ đâu.",
-        instruction: "RESPOND TO THE CLIENT",
-        prompt: CLIENT.name + " asks: 'How about you, Minh? Where are you from?' Tell her you're from Vietnam / Ho Chi Minh City.",
-        promptVi: "Nói rằng bạn đến từ Việt Nam / Thành phố Hồ Chí Minh.",
-        placeholder: "I am from...",
+        teacher: "Sarah is from Philadelphia! Now she asks YOU the same question. Tell her where you're from.",
+        teacherVi: "Sarah đến từ Philadelphia! Cô ấy hỏi lại BẠN. Hãy trả lời!",
+        badge: "respond",
+        instruction: "RESPOND TO SARAH",
+        prompt: "Sarah asks: 'How about you, Minh? Where are you from?'",
+        promptVi: "Sarah hỏi: 'Còn bạn thì sao, Minh? Bạn đến từ đâu?'",
         preChat: { speaker: "client", text: "How about you, Minh? Where are you from?", vi: "Còn bạn thì sao, Minh? Bạn đến từ đâu?" },
-        acceptedAnswers: [
-            "i am from vietnam",
-            "im from vietnam",
-            "i am from vietnam im originally from ho chi minh city",
-            "i am from vietnam im originally from ho chi minh",
-            "im from vietnam originally from ho chi minh city",
-            "i come from vietnam",
-            "im from ho chi minh city vietnam",
-            "i am from ho chi minh city vietnam"
+        options: [
+            { en: "I am from Vietnam. I'm originally from Ho Chi Minh City.", vi: "Tôi đến từ Việt Nam. Tôi quê ở TP Hồ Chí Minh.", correct: true },
+            { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false },
+            { en: "I have been here for 5 years.", vi: "Tôi ở đây được 5 năm.", correct: false },
+            { en: "I like it here very much.", vi: "Tôi rất thích ở đây.", correct: false }
         ],
-        keywords: ["from", "vietnam"],
-        keywordHint: "Include: 'I am from' + 'Vietnam'",
-        sentenceHint: "I am from Vietnam. I'm originally from Ho Chi Minh City.",
-        fullAnswer: "I am from Vietnam. I'm originally from Ho Chi Minh City.",
-        correctMsg: "✅ Excellent! You shared about Vietnam and Ho Chi Minh City!",
-        closeMsg: "👍 Good! Mentioning both Vietnam and Ho Chi Minh City is ideal.",
-        wrongMsg: "❌ Tell her: 'I am from Vietnam. I'm originally from Ho Chi Minh City.'",
-        onComplete: function() {
-            addChat("tech", "I am from Vietnam. I'm originally from Ho Chi Minh City.", "Tôi đến từ Việt Nam. Tôi quê ở Thành phố Hồ Chí Minh.");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "Oh, that's so cool! I've always wanted to visit Vietnam!", "Ồ, thật tuyệt! Tôi luôn muốn đến Việt Nam!");
-                    resolve();
-                }, 1000);
-            });
-        }
+        correctMsg: "✅ Excellent! You told her about Vietnam and Ho Chi Minh City!",
+        wrongMsg: "❌ She asked where you're FROM — tell her your country and city.",
+        grammarTip: "💡 <strong>'I am from [country]'</strong> — Use <strong>'from'</strong> to tell your origin. Add <strong>'originally from [city]'</strong> for more detail.",
+        techChat: { text: "I am from Vietnam. I'm originally from Ho Chi Minh City.", vi: "Tôi đến từ Việt Nam. Tôi quê ở TP Hồ Chí Minh." },
+        clientReply: { text: "Oh, that's so cool! I've always wanted to visit Vietnam!", vi: "Ồ, tuyệt thật! Tôi luôn muốn đến Việt Nam!" }
     },
     {
-        teacher: "Now ask " + CLIENT.name + " how long she has lived in this area.",
-        teacherVi: "Bây giờ hãy hỏi " + CLIENT.name + " đã sống ở đây bao lâu.",
-        instruction: "ASK A QUESTION",
-        prompt: "Ask " + CLIENT.name + " how long she has lived here.",
-        promptVi: "Hỏi " + CLIENT.name + " đã sống ở đây bao lâu.",
-        placeholder: "How long have you...",
-        acceptedAnswers: [
-            "how long have you lived here",
-            "how long have you lived here sarah",
-            "how long have you been living here",
-            "how long have you been here"
+        teacher: "Great job! Now let's check — which word do we use to talk about origin?",
+        teacherVi: "Giỏi lắm! Kiểm tra ngữ pháp — từ nào dùng để nói về quê quán?",
+        badge: "grammar",
+        instruction: "GRAMMAR CHECK",
+        prompt: "Complete: 'I am _____ Vietnam.'",
+        promptVi: "Hoàn thành: 'Tôi _____ Việt Nam.'",
+        options: [
+            { en: "from", vi: "từ (quê quán)", correct: true },
+            { en: "in", vi: "ở trong", correct: false },
+            { en: "at", vi: "ở tại", correct: false },
+            { en: "to", vi: "đến", correct: false }
         ],
-        keywords: ["how long", "lived"],
-        keywordHint: "Use: 'How long' + 'have you' + 'lived here'",
-        sentenceHint: "How long have you lived here?",
-        fullAnswer: "How long have you lived here?",
-        correctMsg: "✅ Great question! Let's see her answer.",
-        closeMsg: "👍 Almost! Use 'How long have you lived here?'",
-        wrongMsg: "❌ Ask: 'How long have you lived here?'",
-        onComplete: function() {
-            addChat("tech", "How long have you lived here?", "Bạn đã sống ở đây bao lâu?");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "I've lived here " + CLIENT.yearsHere + "! Born and raised in the area.", "Tôi đã sống ở đây " + CLIENT.yearsHere + "! Sinh ra và lớn lên ở vùng này.");
-                    discover("years", CLIENT.yearsHere);
-                    resolve();
-                }, 1000);
-            });
-        }
+        correctMsg: "✅ 'I am FROM Vietnam' — 'from' tells your origin!",
+        wrongMsg: "❌ We say 'I am FROM Vietnam.' 'From' is used for where you come from.",
+        grammarTip: "💡 <strong>'from'</strong> = origin (Where are you FROM?) | <strong>'in'</strong> = current location (I live IN Pennsauken)"
     },
     {
-        teacher: CLIENT.name + " has lived here " + CLIENT.yearsHere + ". She asks you the same thing. Tell her you've been here for 5 years.",
-        teacherVi: CLIENT.name + " sống ở đây " + CLIENT.yearsHere + ". Cô ấy hỏi lại bạn. Nói rằng bạn ở đây 5 năm.",
-        instruction: "RESPOND TO THE CLIENT",
-        prompt: CLIENT.name + " asks: 'How about you? How long have you been in the US?' Tell her 5 years.",
-        promptVi: "Nói rằng bạn đã sống ở đây 5 năm.",
-        placeholder: "I have lived here...",
+        teacher: "Now ask Sarah how long she has lived in this area.",
+        teacherVi: "Hãy hỏi Sarah đã sống ở đây bao lâu.",
+        badge: "ask",
+        instruction: "ASK THE RIGHT QUESTION",
+        prompt: "You want to know how long Sarah has lived here. What do you ask?",
+        promptVi: "Bạn muốn biết Sarah sống ở đây bao lâu. Hỏi gì?",
+        options: [
+            { en: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?", correct: true },
+            { en: "Where do you live?", vi: "Bạn sống ở đâu?", correct: false },
+            { en: "Do you like it here?", vi: "Bạn có thích ở đây không?", correct: false },
+            { en: "When did you move here?", vi: "Bạn chuyển đến đây khi nào?", correct: false }
+        ],
+        correctMsg: "✅ Great question! Let's hear Sarah's answer.",
+        wrongMsg: "❌ 'How long have you lived here?' asks about duration of time.",
+        grammarTip: "💡 <strong>'How long have you...?'</strong> asks about a <strong>duration</strong> of time (bao lâu).",
+        techChat: { text: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?" },
+        clientReply: { text: "I've lived here my whole life! Born and raised in the area.", vi: "Tôi sống ở đây cả đời! Sinh ra và lớn lên ở vùng này." },
+        discovers: [{ key: "years", val: "her whole life" }]
+    },
+    {
+        teacher: "Sarah has lived here her whole life! She asks you the same. Tell her you've been here 5 years.",
+        teacherVi: "Sarah sống ở đây cả đời! Cô ấy hỏi lại bạn. Nói 5 năm.",
+        badge: "respond",
+        instruction: "RESPOND TO SARAH",
+        prompt: "Sarah asks: 'How about you? How long have you been in the US?'",
+        promptVi: "Sarah hỏi: 'Còn bạn? Bạn ở Mỹ bao lâu rồi?'",
         preChat: { speaker: "client", text: "How about you, Minh? How long have you been in the US?", vi: "Còn bạn, Minh? Bạn ở Mỹ bao lâu rồi?" },
-        acceptedAnswers: [
-            "i have lived here for 5 years",
-            "i have lived here for five years",
-            "ive lived here for 5 years",
-            "ive lived here for five years",
-            "ive been here for 5 years",
-            "i have been here for 5 years",
-            "i have been here for five years",
-            "5 years",
-            "five years"
+        options: [
+            { en: "I have lived here for 5 years. I'm getting my citizenship soon!", vi: "Tôi đã sống ở đây 5 năm. Tôi sắp nhập quốc tịch!", correct: true },
+            { en: "I am from Vietnam.", vi: "Tôi đến từ Việt Nam.", correct: false },
+            { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false },
+            { en: "Yes, I like it here.", vi: "Vâng, tôi thích ở đây.", correct: false }
         ],
-        keywords: ["5", "years"],
-        keywordHint: "Include: 'I have lived here' + 'for' + '5 years'",
-        sentenceHint: "I have lived here for 5 years.",
-        fullAnswer: "I have lived here for 5 years.",
-        correctMsg: "✅ Perfect! 'For + period of time' is correct!",
-        closeMsg: "👍 Good! The full sentence is: 'I have lived here for 5 years.'",
-        wrongMsg: "❌ Say: 'I have lived here for 5 years.' Use 'for' + time period.",
-        onComplete: function() {
-            addChat("tech", "I have lived here for 5 years. I'm actually getting my citizenship soon!", "Tôi đã sống ở đây 5 năm. Thực ra tôi sắp được nhập quốc tịch!");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "Oh, congratulations! That's wonderful news!", "Ồ, chúc mừng bạn! Tin tuyệt vời!");
-                    resolve();
-                }, 1000);
-            });
-        }
+        correctMsg: "✅ Perfect! 'For 5 years' — and great news about citizenship!",
+        wrongMsg: "❌ She asked HOW LONG — tell her: 'I have lived here for 5 years.'",
+        grammarTip: "💡 <strong>'for' + time period</strong>: for 5 years, for 3 months. <strong>'since' + specific time</strong>: since 2019, since January.",
+        techChat: { text: "I have lived here for 5 years. I'm actually getting my citizenship soon!", vi: "Tôi đã sống ở đây 5 năm. Thực ra tôi sắp nhập quốc tịch!" },
+        clientReply: { text: "Oh, congratulations! That's wonderful news!", vi: "Ồ, chúc mừng bạn! Tin tuyệt vời!" }
     },
     {
-        teacher: "Ask " + CLIENT.name + " if she likes living in this area.",
-        teacherVi: "Hỏi " + CLIENT.name + " có thích sống ở khu vực này không.",
-        instruction: "ASK A QUESTION",
-        prompt: "Ask " + CLIENT.name + " if she likes it here.",
-        promptVi: "Hỏi " + CLIENT.name + " có thích ở đây không.",
-        placeholder: "Do you like...",
-        acceptedAnswers: [
-            "do you like it here",
-            "do you like living here",
-            "do you like it here sarah",
-            "do you like this area",
-            "do you enjoy living here"
+        teacher: "Grammar check! Which word fills the blank correctly?",
+        teacherVi: "Kiểm tra ngữ pháp! Từ nào điền vào chỗ trống?",
+        badge: "grammar",
+        instruction: "GRAMMAR CHECK",
+        prompt: "Complete: 'I have lived here _____ 5 years.'",
+        promptVi: "Hoàn thành: 'Tôi đã sống ở đây _____ 5 năm.'",
+        options: [
+            { en: "for", vi: "trong (khoảng thời gian)", correct: true },
+            { en: "since", vi: "kể từ (mốc thời gian)", correct: false },
+            { en: "in", vi: "trong", correct: false },
+            { en: "during", vi: "trong suốt", correct: false }
         ],
-        keywords: ["like", "here"],
-        keywordHint: "Use: 'Do you like' + 'it here' or 'living here'",
-        sentenceHint: "Do you like it here?",
-        fullAnswer: "Do you like it here?",
-        correctMsg: "✅ Nice question! Great small talk!",
-        closeMsg: "👍 Close! Try: 'Do you like it here?'",
-        wrongMsg: "❌ Ask: 'Do you like it here?'",
-        onComplete: function() {
-            addChat("tech", "Do you like it here?", "Bạn có thích ở đây không?");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "Yes, I love it! It's a great area. Very friendly people.", "Có, tôi rất thích! Khu vực tuyệt vời. Mọi người rất thân thiện.");
-                    resolve();
-                }, 1000);
-            });
-        }
+        correctMsg: "✅ 'For 5 years' — use 'for' with a period of time!",
+        wrongMsg: "❌ Use 'FOR' with a number/period: for 5 years, for 3 months.",
+        grammarTip: "💡 <strong>'for'</strong> + period (5 years, 2 months) | <strong>'since'</strong> + point in time (2019, last March)"
     },
     {
-        teacher: "She loves it here! Now ask what specific area or neighborhood she lives in.",
-        teacherVi: "Cô ấy rất thích ở đây! Hãy hỏi cô ấy sống ở khu vực nào.",
-        instruction: "ASK A QUESTION",
-        prompt: "Ask " + CLIENT.name + " what area she lives in.",
-        promptVi: "Hỏi " + CLIENT.name + " sống ở khu vực nào.",
-        placeholder: "What area do you...",
-        acceptedAnswers: [
-            "what area do you live in",
-            "what area do you live in sarah",
-            "where do you live",
-            "what neighborhood do you live in",
-            "what part do you live in",
-            "do you live near here"
+        teacher: "Now ask Sarah what specific area she lives in.",
+        teacherVi: "Hãy hỏi Sarah sống ở khu vực nào.",
+        badge: "ask",
+        instruction: "ASK THE RIGHT QUESTION",
+        prompt: "You want to know Sarah's neighborhood. What do you ask?",
+        promptVi: "Bạn muốn biết khu vực Sarah sống. Hỏi gì?",
+        options: [
+            { en: "What area do you live in?", vi: "Bạn sống ở khu vực nào?", correct: true },
+            { en: "Where are you from?", vi: "Bạn đến từ đâu?", correct: false },
+            { en: "Do you like your house?", vi: "Bạn có thích nhà mình không?", correct: false },
+            { en: "How far is your home?", vi: "Nhà bạn cách đây bao xa?", correct: false }
         ],
-        keywords: ["area", "live"],
-        keywordHint: "Use: 'What area' + 'do you live in'",
-        sentenceHint: "What area do you live in?",
-        fullAnswer: "What area do you live in?",
-        correctMsg: "✅ Perfect! Let's find out her neighborhood.",
-        closeMsg: "👍 Close! Try: 'What area do you live in?'",
-        wrongMsg: "❌ Ask: 'What area do you live in?'",
-        onComplete: function() {
-            addChat("tech", "What area do you live in?", "Bạn sống ở khu vực nào?");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "I live in " + CLIENT.livesIn + ". Do you know it?", "Tôi sống ở " + CLIENT.livesIn + ". Bạn biết chỗ đó không?");
-                    discover("livesIn", CLIENT.livesIn);
-                    resolve();
-                }, 1000);
-            });
-        }
+        correctMsg: "✅ Perfect! Let's find out where she lives.",
+        wrongMsg: "❌ 'What area do you live in?' asks about the neighborhood.",
+        grammarTip: "💡 <strong>'What area do you live in?'</strong> = Khu vực nào? Asks about neighborhood/town.",
+        techChat: { text: "What area do you live in?", vi: "Bạn sống ở khu vực nào?" },
+        clientReply: { text: "I live in Cherry Hill, NJ. Do you know it?", vi: "Tôi sống ở Cherry Hill, NJ. Bạn biết chỗ đó không?" },
+        discovers: [{ key: "livesIn", val: "Cherry Hill, NJ" }]
     },
     {
-        teacher: CLIENT.name + " lives in " + CLIENT.livesIn + " — that's near Pennsauken! Tell her where you live.",
-        teacherVi: CLIENT.name + " sống ở " + CLIENT.livesIn + " — gần Pennsauken! Nói cho cô ấy biết bạn sống ở đâu.",
-        instruction: "RESPOND TO THE CLIENT",
-        prompt: "Tell " + CLIENT.name + " you live in Pennsauken. It's close to her!",
-        promptVi: "Nói rằng bạn sống ở Pennsauken. Gần cô ấy lắm!",
-        placeholder: "I live in...",
-        acceptedAnswers: [
-            "i live in pennsauken",
-            "i live in pennsauken nj",
-            "i live in pennsauken new jersey",
-            "oh i live in pennsauken",
-            "oh i live in pennsauken thats close",
-            "i live in pennsauken thats really close",
-            "yes i live in pennsauken"
+        teacher: "Sarah lives in Cherry Hill — that's near you! Tell her where you live.",
+        teacherVi: "Sarah sống ở Cherry Hill — gần bạn! Nói cho cô ấy biết bạn sống ở đâu.",
+        badge: "respond",
+        instruction: "RESPOND TO SARAH",
+        prompt: "Tell Sarah where you live. It's close to Cherry Hill!",
+        promptVi: "Nói cho Sarah biết bạn sống ở đâu. Gần Cherry Hill lắm!",
+        options: [
+            { en: "Oh, I live in Pennsauken! That's really close to you!", vi: "Ồ, tôi sống ở Pennsauken! Gần bạn lắm!", correct: true },
+            { en: "I am from Vietnam.", vi: "Tôi đến từ Việt Nam.", correct: false },
+            { en: "I don't know Cherry Hill.", vi: "Tôi không biết Cherry Hill.", correct: false },
+            { en: "That's nice.", vi: "Hay đấy.", correct: false }
         ],
-        keywords: ["live", "pennsauken"],
-        keywordHint: "Include: 'I live in' + 'Pennsauken'",
-        sentenceHint: "I live in Pennsauken! That's really close to you!",
-        fullAnswer: "Oh, I live in Pennsauken! That's really close to you!",
-        correctMsg: "✅ 'I live IN Pennsauken' — Use 'in' for cities & areas!",
-        closeMsg: "👍 Good! Make sure to say 'I live IN Pennsauken.'",
-        wrongMsg: "❌ Say: 'I live in Pennsauken!' Use 'in' for places.",
-        onComplete: function() {
-            addChat("tech", "Oh, I live in Pennsauken! That's really close to you!", "Ồ, tôi sống ở Pennsauken! Gần bạn lắm đó!");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "Oh wow, we're practically neighbors! That's so cool!", "Ồ, chúng ta gần như là hàng xóm! Tuyệt quá!");
-                    resolve();
-                }, 1000);
-            });
-        }
+        correctMsg: "✅ 'I live IN Pennsauken' — use 'in' for cities & areas!",
+        wrongMsg: "❌ Tell her: 'I live in Pennsauken!' — share that you're close by.",
+        grammarTip: "💡 <strong>'I live in [place]'</strong> — Use <strong>'in'</strong> for cities, towns, neighborhoods. NOT 'at' or 'on'.",
+        techChat: { text: "Oh, I live in Pennsauken! That's really close to you!", vi: "Ồ, tôi sống ở Pennsauken! Gần bạn lắm!" },
+        clientReply: { text: "Oh wow, we're practically neighbors! That's so cool!", vi: "Ồ, chúng ta gần như là hàng xóm! Tuyệt quá!" }
     },
     {
-        teacher: "You're neighbors! Say something friendly about living close by.",
-        teacherVi: "Các bạn là hàng xóm! Nói điều gì đó thân thiện.",
-        instruction: "TYPE A FRIENDLY RESPONSE",
-        prompt: "Respond happily that you are neighbors!",
-        promptVi: "Trả lời vui vẻ rằng các bạn là hàng xóm!",
-        placeholder: "That's great! We are...",
-        acceptedAnswers: [
-            "thats great we are neighbors",
-            "thats great were neighbors",
-            "yes we are neighbors",
-            "wow we are neighbors",
-            "yes were neighbors thats great",
-            "thats so nice we are neighbors",
-            "we are neighbors thats great",
-            "nice we are neighbors",
-            "cool we are neighbors"
+        teacher: "You're neighbors! Now offer to help with her nails to start the service.",
+        teacherVi: "Các bạn là hàng xóm! Đề nghị giúp cô ấy làm móng nhé.",
+        badge: "respond",
+        instruction: "WRAP UP & START SERVICE",
+        prompt: "Sarah asks what you recommend for her nails. What do you say?",
+        promptVi: "Sarah hỏi bạn gợi ý gì cho móng tay. Bạn nói gì?",
+        preChat: { speaker: "client", text: "So, what do you recommend for my nails today?", vi: "Vậy hôm nay bạn gợi ý gì cho móng tay tôi?" },
+        options: [
+            { en: "Sure! I'd be happy to help you today! Let me take a look.", vi: "Chắc chắn! Tôi rất vui được giúp bạn! Để tôi xem nhé.", correct: true },
+            { en: "I don't know.", vi: "Tôi không biết.", correct: false },
+            { en: "Where are you from again?", vi: "Bạn đến từ đâu nhỉ?", correct: false },
+            { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false }
         ],
-        keywords: ["neighbors"],
-        keywordHint: "Include: 'neighbors' — say something friendly!",
-        sentenceHint: "That's great! We are neighbors!",
-        fullAnswer: "That's great! We are neighbors!",
-        correctMsg: "✅ Wonderful! Great friendly conversation!",
-        closeMsg: "👍 Good energy! Try: 'That's great! We are neighbors!'",
-        wrongMsg: "❌ Say something like: 'That's great! We are neighbors!'",
-        onComplete: function() {
-            addChat("tech", "That's great! We are neighbors! Maybe I'll see you around!", "Tuyệt vời! Chúng ta là hàng xóm!");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "Definitely! So what do you recommend for my nails today?", "Chắc chắn rồi! Hôm nay bạn gợi ý gì cho móng tay tôi?");
-                    resolve();
-                }, 1000);
-            });
-        }
-    },
-    {
-        teacher: "Wonderful conversation! Last step — offer to help with her nails!",
-        teacherVi: "Cuộc trò chuyện tuyệt vời! Bước cuối — đề nghị giúp cô ấy làm móng!",
-        instruction: "WRAP UP THE CONVERSATION",
-        prompt: "Tell her you'd be happy to help with her nails today!",
-        promptVi: "Nói rằng bạn rất vui được giúp cô ấy với móng tay hôm nay!",
-        placeholder: "Sure! I would be happy to...",
-        acceptedAnswers: [
-            "sure i would be happy to help",
-            "sure id be happy to help",
-            "id be happy to help you",
-            "i would be happy to help you today",
-            "sure let me help you",
-            "of course i can help you",
-            "sure what would you like",
-            "of course id be happy to help",
-            "sure lets get started",
-            "yes of course lets get started"
-        ],
-        keywords: ["happy", "help"],
-        keywordHint: "Include: 'happy' + 'help' or a positive response",
-        sentenceHint: "Sure! I'd be happy to help you today!",
-        fullAnswer: "Sure! I'd be happy to help you today!",
-        correctMsg: "✅ Perfect ending! You're a conversation pro!",
-        closeMsg: "👍 Nice! Great way to transition to the nail service.",
-        wrongMsg: "❌ Try: 'Sure! I'd be happy to help you today!'",
-        onComplete: function() {
-            addChat("tech", "Sure! I'd be happy to help you today, Sarah! Let me take a look at your nails.", "Chắc chắn! Tôi rất vui được giúp bạn hôm nay, Sarah!");
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    addChat("client", "Thank you, Minh! You're so nice! 😊", "Cảm ơn Minh! Bạn rất dễ thương! 😊");
-                    resolve();
-                }, 1000);
-            });
-        }
+        correctMsg: "✅ Perfect ending! Professional and friendly!",
+        wrongMsg: "❌ Offer to help! Say: 'I'd be happy to help you today!'",
+        grammarTip: "💡 <strong>'I'd be happy to...'</strong> = polite way to offer help. Great for customer service!",
+        techChat: { text: "Sure! I'd be happy to help you today, Sarah! Let me take a look at your nails.", vi: "Chắc chắn! Tôi rất vui được giúp bạn, Sarah! Để tôi xem móng tay bạn." },
+        clientReply: { text: "Thank you, Minh! You're so nice! 😊", vi: "Cảm ơn Minh! Bạn rất dễ thương! 😊" }
     }
 ];
 
-// ============================================
-// GAME STATE
-// ============================================
+// STATE
 var currentStep = 0;
 var score = 0;
 var streak = 0;
 var bestStreak = 0;
-var firstTryCorrect = 0;
-var attempts = 0;
-var maxAttempts = 3;
-var hintLevel = 0;
+var correctCount = 0;
 var answered = false;
 var discovered = {};
 var chatLog = [];
 
-// ============================================
-// CORE FUNCTIONS
-// ============================================
+// CORE
 function startGame() {
     switchScreen("gameScreen");
     loadStep();
 }
 
 function restart() {
-    currentStep = 0;
-    score = 0;
-    streak = 0;
-    bestStreak = 0;
-    firstTryCorrect = 0;
-    attempts = 0;
-    hintLevel = 0;
-    answered = false;
-    discovered = {};
-    chatLog = [];
+    currentStep = 0; score = 0; streak = 0; bestStreak = 0; correctCount = 0;
+    answered = false; discovered = {}; chatLog = [];
     document.getElementById("chatBody").innerHTML = "";
     document.getElementById("miniClientName").textContent = "Client";
     document.getElementById("miniClientSub").textContent = "New customer";
-    document.querySelectorAll(".disc-tag").forEach(function(t) { t.classList.remove("found"); });
     document.getElementById("dName").textContent = "📛 Name";
+    document.getElementById("dName").classList.remove("found");
     document.getElementById("dFrom").textContent = "🌍 From";
+    document.getElementById("dFrom").classList.remove("found");
     document.getElementById("dLives").textContent = "📍 Lives in";
+    document.getElementById("dLives").classList.remove("found");
     document.getElementById("dYears").textContent = "📅 Years";
+    document.getElementById("dYears").classList.remove("found");
     switchScreen("startScreen");
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function switchScreen(id) {
-    document.querySelectorAll(".screen").forEach(function(s) { s.classList.remove("active"); });
+    var screens = document.querySelectorAll(".screen");
+    for (var i = 0; i < screens.length; i++) screens[i].classList.remove("active");
     document.getElementById(id).classList.add("active");
 }
 
 function loadStep() {
     if (currentStep >= STEPS.length) { showResults(); return; }
     var s = STEPS[currentStep];
-    attempts = 0;
-    hintLevel = 0;
     answered = false;
     updateTopBar();
     updateTeacher(s.teacher, s.teacherVi);
@@ -748,233 +577,141 @@ function loadStep() {
     if (s.preChat) {
         setTimeout(function() {
             addChat(s.preChat.speaker, s.preChat.text, s.preChat.vi);
-            setTimeout(function() { setupInput(s); }, 500);
+            setTimeout(function() { renderQuestion(s); }, 500);
         }, 400);
     } else {
-        setTimeout(function() { setupInput(s); }, 300);
+        setTimeout(function() { renderQuestion(s); }, 300);
     }
 }
 
-function setupInput(s) {
-    document.getElementById("inputInstruction").textContent = s.instruction;
-    document.getElementById("inputPrompt").textContent = s.prompt;
-    document.getElementById("inputPromptVi").textContent = s.promptVi;
+function renderQuestion(s) {
+    var panel = document.getElementById("qPanel");
+    var letters = ["A", "B", "C", "D"];
 
-    var input = document.getElementById("textInput");
-    input.value = "";
-    input.placeholder = s.placeholder || "Type your response here...";
-    input.className = "text-input";
-    input.disabled = false;
-    input.focus();
+    // Shuffle options but remember correct
+    var opts = [];
+    for (var i = 0; i < s.options.length; i++) {
+        opts.push({ en: s.options[i].en, vi: s.options[i].vi, correct: s.options[i].correct, origIdx: i });
+    }
+    // Fisher-Yates shuffle
+    for (var j = opts.length - 1; j > 0; j--) {
+        var k = Math.floor(Math.random() * (j + 1));
+        var temp = opts[j]; opts[j] = opts[k]; opts[k] = temp;
+    }
 
-    document.getElementById("sendBtn").disabled = false;
-    document.getElementById("hintBtn1").disabled = false;
-    document.getElementById("hintBtn2").disabled = false;
-    document.getElementById("hintBtn3").disabled = false;
-    document.getElementById("hintDisplay").className = "hint-display";
-    document.getElementById("hintDisplay").innerHTML = "";
-    document.getElementById("fbBox").className = "fb-box";
-    document.getElementById("fbBox").innerHTML = "";
-    document.getElementById("contBtn").classList.remove("show");
-    document.getElementById("attemptInfo").textContent = "";
+    var badgeClass = s.badge || "ask";
+    var badgeLabel = { ask: "🗣 Ask", respond: "💬 Respond", understand: "👂 Understand", grammar: "📝 Grammar" };
+
+    var html = '<span class="q-badge ' + badgeClass + '">' + (badgeLabel[badgeClass] || badgeClass) + '</span>';
+    html += '<div class="q-instruction">' + s.instruction + '</div>';
+    html += '<div class="q-prompt">' + s.prompt + '</div>';
+    html += '<div class="q-prompt-vi">' + s.promptVi + '</div>';
+    html += '<div class="options-list" id="optionsList">';
+
+    for (var m = 0; m < opts.length; m++) {
+        html += '<button class="opt-btn" data-correct="' + opts[m].correct + '" onclick="pickAnswer(this,' + currentStep + ')">';
+        html += '<span class="opt-letter">' + letters[m] + '</span>';
+        html += '<span class="opt-text"><span class="opt-en">' + opts[m].en + '</span><span class="opt-vi">' + opts[m].vi + '</span></span>';
+        html += '</button>';
+    }
+
+    html += '</div>';
+    html += '<div class="fb-box" id="fbBox"></div>';
+    html += '<div class="grammar-tip" id="grammarTip">' + (s.grammarTip || '') + '</div>';
+    html += '<button class="cont-btn" id="contBtn" onclick="goNext()">Continue ➜</button>';
+
+    panel.innerHTML = html;
 
     setTimeout(function() {
-        document.getElementById("inputPanel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+        panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }, 200);
 }
 
-function submitAnswer() {
+function pickAnswer(btn, stepIdx) {
     if (answered) return;
-    var input = document.getElementById("textInput");
-    var raw = input.value.trim();
-    if (!raw) {
-        input.style.animation = "none";
-        input.offsetHeight;
-        input.style.animation = "shake 0.4s ease";
-        return;
-    }
-
-    var s = STEPS[currentStep];
-    attempts++;
-    var normalized = normalizeText(raw);
-    var matchType = checkAnswer(normalized, s);
-
-    if (
-matchType === "exact" || matchType === "close-enough") {
-        handleCorrect(s, raw);
-    } else if (matchType === "has-keywords") {
-        handleCloseAnswer(s, raw);
-    } else {
-        handleWrong(s, raw);
-    }
-}
-
-function normalizeText(text) {
-    return text.toLowerCase().replace(/['']/g, "'").replace(/[.,!?;:"""]/g, "").replace(/\s+/g, " ").trim();
-}
-
-function checkAnswer(normalized, s) {
-    var i, normAns, ansWords, userWords, matchCount, matchRatio, keyMatch;
-
-    for (i = 0; i < s.acceptedAnswers.length; i++) {
-        normAns = normalizeText(s.acceptedAnswers[i]);
-        if (normalized === normAns) return "exact";
-    }
-
-    for (i = 0; i < s.acceptedAnswers.length; i++) {
-        normAns = normalizeText(s.acceptedAnswers[i]);
-        ansWords = normAns.split(" ");
-        userWords = normalized.split(" ");
-        matchCount = 0;
-        for (var j = 0; j < ansWords.length; j++) {
-            if (userWords.indexOf(ansWords[j]) !== -1) matchCount++;
-        }
-        matchRatio = matchCount / ansWords.length;
-        if (matchRatio >= 0.75) return "close-enough";
-    }
-
-    if (s.keywords) {
-        keyMatch = 0;
-        for (i = 0; i < s.keywords.length; i++) {
-            if (normalized.indexOf(s.keywords[i].toLowerCase()) !== -1) keyMatch++;
-        }
-        if (keyMatch >= s.keywords.length) return "has-keywords";
-        if (keyMatch >= 1 && normalized.split(" ").length >= 3) return "has-keywords";
-    }
-
-    return "wrong";
-}
-
-function handleCorrect(s, raw) {
     answered = true;
-    var input = document.getElementById("textInput");
-    input.classList.add("input-correct");
-    input.disabled = true;
-    document.getElementById("sendBtn").disabled = true;
 
-    var points = 10;
-    if (attempts === 1 && hintLevel === 0) {
-        points = 15;
-        firstTryCorrect++;
-    } else if (attempts === 1) {
-        points = 10;
-    } else {
-        points = Math.max(3, 10 - (attempts - 1) * 2 - hintLevel * 2);
+    var s = STEPS[stepIdx];
+    var isCorrect = btn.getAttribute("data-correct") === "true";
+
+    // Lock all buttons
+    var allBtns = document.querySelectorAll(".opt-btn");
+    for (var i = 0; i < allBtns.length; i++) {
+        allBtns[i].classList.add("locked");
     }
-
-    streak++;
-    if (streak > bestStreak) bestStreak = streak;
-    score += points;
 
     var fbBox = document.getElementById("fbBox");
-    fbBox.className = "fb-box fb-ok";
-    var bonusText = "";
-    if (attempts === 1 && hintLevel === 0) bonusText = " 🌟 Perfect!";
-    if (streak > 1) bonusText += " 🔥 Streak: " + streak;
-    fbBox.innerHTML = s.correctMsg + '<div class="fb-correct-answer">+' + points + ' points' + bonusText + '</div>';
 
-    updateTopBar();
-    burstConfetti();
+    if (isCorrect) {
+        btn.classList.add("correct-opt");
+        correctCount++;
+        streak++;
+        if (streak > bestStreak) bestStreak = streak;
+        var points = 10 + (streak > 1 ? streak * 2 : 0);
+        score += points;
 
-    if (s.onComplete) {
-        s.onComplete().then(function() {
-            document.getElementById("contBtn").classList.add("show");
-        });
+        fbBox.className = "fb-box fb-ok";
+        var bonusText = "";
+        if (streak > 1) bonusText = " 🔥 Streak: " + streak;
+        fbBox.innerHTML = s.correctMsg + '<div class="fb-extra">+' + points + ' points' + bonusText + '</div>';
+
+        burstConfetti();
+
+        // Add chat messages
+        if (s.techChat) {
+            setTimeout(function() {
+                addChat("tech", s.techChat.text, s.techChat.vi);
+                if (s.clientReply) {
+                    setTimeout(function() {
+                        addChat("client", s.clientReply.text, s.clientReply.vi);
+                        if (s.discovers) {
+                            for (var d = 0; d < s.discovers.length; d++) {
+                                discover(s.discovers[d].key, s.discovers[d].val);
+                            }
+                        }
+                    }, 800);
+                }
+            }, 500);
+        }
     } else {
-        document.getElementById("contBtn").classList.add("show");
-    }
-
-    document.getElementById("attemptInfo").textContent = "Answered in " + attempts + " attempt" + (attempts > 1 ? "s" : "");
-}
-
-function handleCloseAnswer(s, raw) {
-    if (attempts >= maxAttempts) {
-        handleCorrect(s, raw);
-        return;
-    }
-
-    var input = document.getElementById("textInput");
-    input.classList.add("input-wrong");
-    setTimeout(function() { input.classList.remove("input-wrong"); }, 800);
-
-    var fbBox = document.getElementById("fbBox");
-    fbBox.className = "fb-box fb-close";
-    fbBox.innerHTML = s.closeMsg + '<div class="fb-correct-answer">Try again! Attempt ' + attempts + '/' + maxAttempts + '. Use a hint if you need help!</div>';
-
-    document.getElementById("attemptInfo").textContent = "Attempt " + attempts + "/" + maxAttempts + " — Keep trying!";
-    input.focus();
-    input.select();
-}
-
-function handleWrong(s, raw) {
-    if (attempts >= maxAttempts) {
-        answered = true;
+        btn.classList.add("wrong-opt");
         streak = 0;
 
-        var input = document.getElementById("textInput");
-        input.classList.add("input-wrong");
-        input.disabled = true;
-        document.getElementById("sendBtn").disabled = true;
-
-        var fbBox = document.getElementById("fbBox");
-        fbBox.className = "fb-box fb-wrong";
-        fbBox.innerHTML = s.wrongMsg + '<div class="fb-correct-answer">✏️ Correct answer: "' + s.fullAnswer + '"</div>';
-
-        updateTopBar();
-
-        if (s.onComplete) {
-            s.onComplete().then(function() {
-                document.getElementById("contBtn").classList.add("show");
-            });
-        } else {
-            document.getElementById("contBtn").classList.add("show");
+        // Highlight correct answer
+        for (var j = 0; j < allBtns.length; j++) {
+            if (allBtns[j].getAttribute("data-correct") === "true") {
+                allBtns[j].classList.add("correct-opt");
+            }
         }
 
-        document.getElementById("attemptInfo").textContent = "Used all " + maxAttempts + " attempts";
-        return;
+        fbBox.className = "fb-box fb-wrong";
+        fbBox.innerHTML = s.wrongMsg;
+
+        // Still add chat messages so conversation continues
+        if (s.techChat) {
+            setTimeout(function() {
+                addChat("tech", s.techChat.text, s.techChat.vi);
+                if (s.clientReply) {
+                    setTimeout(function() {
+                        addChat("client", s.clientReply.text, s.clientReply.vi);
+                        if (s.discovers) {
+                            for (var d = 0; d < s.discovers.length; d++) {
+                                discover(s.discovers[d].key, s.discovers[d].val);
+                            }
+                        }
+                    }, 800);
+                }
+            }, 500);
+        }
     }
 
-    var input = document.getElementById("textInput");
-    input.classList.add("input-wrong");
-    setTimeout(function() { input.classList.remove("input-wrong"); }, 800);
-
-    var fbBox = document.getElementById("fbBox");
-    fbBox.className = "fb-box fb-wrong";
-    fbBox.innerHTML = s.wrongMsg + '<div class="fb-correct-answer">Try again! Attempt ' + attempts + '/' + maxAttempts + '. Use hints if needed!</div>';
-
-    document.getElementById("attemptInfo").textContent = "Attempt " + attempts + "/" + maxAttempts;
-    input.focus();
-    input.select();
-}
-
-function showHint(level) {
-    if (answered) return;
-    var s = STEPS[currentStep];
-    var display = document.getElementById("hintDisplay");
-
-    if (level === 1 && hintLevel < 1) {
-        hintLevel = 1;
-        score = Math.max(0, score - 2);
-        display.className = "hint-display hint-keyword";
-        display.innerHTML = '<div class="hint-label">💡 Keyword Hint (-2pts)</div>' + s.keywordHint;
-        document.getElementById("hintBtn1").disabled = true;
-    } else if (level === 2 && hintLevel < 2) {
-        hintLevel = 2;
-        score = Math.max(0, score - 3);
-        display.className = "hint-display hint-keyword";
-        display.innerHTML = '<div class="hint-label">📝 Sentence Hint (-3pts)</div>' + s.sentenceHint;
-        document.getElementById("hintBtn1").disabled = true;
-        document.getElementById("hintBtn2").disabled = true;
-    } else if (level === 3) {
-        hintLevel = 3;
-        score = Math.max(0, score - 5);
-        display.className = "hint-display hint-answer";
-        display.innerHTML = '<div class="hint-label">🔑 Full Answer (-5pts)</div><strong>' + s.fullAnswer + '</strong><br><small>Type this answer above!</small>';
-        document.getElementById("hintBtn1").disabled = true;
-        document.getElementById("hintBtn2").disabled = true;
-        document.getElementById("hintBtn3").disabled = true;
+    // Show grammar tip
+    if (s.grammarTip) {
+        document.getElementById("grammarTip").classList.add("show");
     }
+
     updateTopBar();
+    document.getElementById("contBtn").classList.add("show");
 }
 
 function goNext() {
@@ -1004,23 +741,19 @@ function addChat(speaker, text, vi) {
         '</div>';
     body.appendChild(msg);
     body.scrollTop = body.scrollHeight;
-
     chatLog.push({ speaker: speaker, text: text, vi: vi, label: label });
 }
 
 function discover(key, value) {
     discovered[key] = value;
-
     var tagMap = { name: "dName", from: "dFrom", livesIn: "dLives", years: "dYears" };
     var iconMap = { name: "📛", from: "🌍", livesIn: "📍", years: "📅" };
-
     var tagId = tagMap[key];
     if (tagId) {
         var tag = document.getElementById(tagId);
         tag.classList.add("found");
         tag.textContent = iconMap[key] + " " + value;
     }
-
     if (key === "name") {
         document.getElementById("miniClientName").textContent = value;
         document.getElementById("miniClientSub").textContent = "Customer";
@@ -1046,18 +779,18 @@ function updateTeacher(msg, vi) {
 
 function burstConfetti() {
     var container = document.getElementById("confettiLayer");
-    var colors = ["#ff6b6b", "#feca57", "#48dbfb", "#ff9ff3", "#54a0ff", "#5f27cd", "#00d2d3", "#1dd1a1", "#fdcb6e", "#e17055"];
-
+    var colors = ["#ff6b6b","#feca57","#48dbfb","#ff9ff3","#54a0ff","#5f27cd","#00d2d3","#1dd1a1","#fdcb6e","#e17055"];
     for (var i = 0; i < 25; i++) {
         var piece = document.createElement("div");
         piece.className = "conf-piece";
         piece.style.left = (Math.random() * 100) + "%";
         piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = (2 + Math.random() * 2) + "s";
-        piece.style.animationDelay = (Math.random() * 0.5) + "s";
         piece.style.width = (6 + Math.random() * 8) + "px";
         piece.style.height = (6 + Math.random() * 8) + "px";
-        piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+        piece.style.borderRadius = Math.random() > 0.
+        5 ? "50%" : "2px";
+        piece.style.animationDuration = (2 + Math.random() * 2) + "s";
+        piece.style.animationDelay = (Math.random() * 0.5) + "s";
         container.appendChild(piece);
         (function(p) {
             setTimeout(function() { if (p.parentNode) p.parentNode.removeChild(p); }, 4500);
@@ -1069,18 +802,18 @@ function showResults() {
     switchScreen("resultsScreen");
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    var maxScore = STEPS.length * 15;
+    var maxScore = STEPS.length * 10 + 50;
     var pct = maxScore > 0 ? (score / maxScore) * 100 : 0;
 
     var icon, title, sub, stars;
     if (pct >= 85) {
         icon = "🏆"; title = "Outstanding!"; sub = "You're a small talk master!"; stars = "⭐⭐⭐";
-    } else if (pct >= 65) {
+    } else if (pct >= 60) {
         icon = "🎉"; title = "Great Job!"; sub = "You had a wonderful conversation!"; stars = "⭐⭐";
-    } else if (pct >= 40) {
+    } else if (pct >= 35) {
         icon = "👍"; title = "Good Try!"; sub = "Keep practicing your English!"; stars = "⭐";
     } else {
-        icon = "📚"; title = "Keep Learning!"; sub = "Use hints and practice more!"; stars = "💪";
+        icon = "📚"; title = "Keep Learning!"; sub = "Practice makes perfect!"; stars = "💪";
     }
 
     document.getElementById("rIcon").textContent = icon;
@@ -1088,7 +821,7 @@ function showResults() {
     document.getElementById("rSub").textContent = sub;
     document.getElementById("rStars").textContent = stars;
     document.getElementById("rScore").textContent = score;
-    document.getElementById("rCorrect").textContent = firstTryCorrect + "/" + STEPS.length;
+    document.getElementById("rCorrect").textContent = correctCount + "/" + STEPS.length;
     document.getElementById("rStreak").textContent = bestStreak;
 
     // Discovered info
@@ -1134,7 +867,7 @@ function showResults() {
     }
 
     // Confetti for good results
-    if (pct >= 65) {
+    if (pct >= 60) {
         for (var c = 0; c < 4; c++) {
             (function(delay) {
                 setTimeout(function() { burstConfetti(); }, delay);
@@ -1142,17 +875,6 @@ function showResults() {
         }
     }
 }
-
-// ENTER KEY
-document.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-        var input = document.getElementById("textInput");
-        if (document.activeElement === input && !answered) {
-            e.preventDefault();
-            submitAnswer();
-        }
-    }
-});
 
 </script>
 </body>
