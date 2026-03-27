@@ -262,3 +262,453 @@ function buildSteps() {
                 { en: "Hi! Welcome in. My name is Minh. What's your name?", vi: "Xin chào! Mời vào. Tên tôi là Minh. Tên bạn là gì?", correct: true },
                 { en: "What do you want today?", vi: "Hôm nay bạn muốn gì?", correct: false },
                 { en: "Where are you from?", vi: "Bạn đến từ đâ
+u?", correct: false },
+                { en: "Sit down please.", vi: "Mời ngồi.", correct: false }
+            ],
+            correctMsg: "✅ Great greeting! Friendly and professional!",
+            wrongMsg: "❌ Start with a warm greeting and introduce your name first!",
+            grammarTip: "💡 <strong>Greeting pattern:</strong> Hi/Hello + Welcome + My name is [name] + What's your name?",
+            discovers: [{ key: "name", val: C.name }]
+        },
+        {
+            teacher: "Her name is " + C.name + ". Now ask her where she is from.",
+            teacherVi: "Tên cô ấy là " + C.name + ". Hãy hỏi cô ấy đến từ đâu.",
+            badge: "ask", instruction: "ASK THE RIGHT QUESTION",
+            prompt: "You want to know where " + C.name + " is from. What do you ask?",
+            promptVi: "Bạn muốn biết " + C.name + " đến từ đâu. Bạn hỏi gì?",
+            options: [
+                { en: "Where are you from?", vi: "Bạn đến từ đâu?", correct: true },
+                { en: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?", correct: false },
+                { en: "Do you live near here?", vi: "Bạn có sống gần đây không?", correct: false },
+                { en: "What do you do for work?", vi: "Bạn làm nghề gì?", correct: false }
+            ],
+            correctMsg: "✅ Perfect question! 'Where are you from?' asks about origin!",
+            wrongMsg: "❌ To find out someone's origin, ask: 'Where are you from?'",
+            grammarTip: "💡 <strong>'Where are you from?'</strong> = Bạn đến từ đâu? Asks about hometown or country.",
+            discovers: [{ key: "from", val: C.from }]
+        },
+        {
+            teacher: C.name + " is from " + C.from + "! She asks YOU the same question. Tell her where you're from.",
+            teacherVi: C.name + " đến từ " + C.from + "! Cô ấy hỏi lại BẠN. Hãy trả lời!",
+            badge: "respond", instruction: "RESPOND TO " + C.name.toUpperCase(),
+            prompt: C.name + " asks: 'How about you, Minh? Where are you from?'",
+            promptVi: C.name + " hỏi: 'Còn bạn thì sao, Minh? Bạn đến từ đâu?'",
+            options: [
+                { en: "I am from Vietnam. I'm originally from Ho Chi Minh City.", vi: "Tôi đến từ Việt Nam. Tôi quê ở TP Hồ Chí Minh.", correct: true },
+                { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false },
+                { en: "I have been here for 5 years.", vi: "Tôi ở đây được 5 năm.", correct: false },
+                { en: "I like it here very much.", vi: "Tôi rất thích ở đây.", correct: false }
+            ],
+            correctMsg: "✅ Excellent! You told her about Vietnam and Ho Chi Minh City!",
+            wrongMsg: "❌ She asked where you're FROM — tell her your country and city.",
+            grammarTip: "💡 <strong>'I am from [country]'</strong> — Use <strong>'from'</strong> for origin. <strong>'originally from [city]'</strong> adds detail."
+        },
+        {
+            teacher: "Grammar check! Which word do we use to talk about our origin?",
+            teacherVi: "Kiểm tra ngữ pháp! Từ nào dùng để nói về quê quán?",
+            badge: "grammar", instruction: "FILL IN THE BLANK",
+            prompt: "Complete: 'I am _____ Vietnam.'",
+            promptVi: "Hoàn thành: 'Tôi _____ Việt Nam.'",
+            options: [
+                { en: "from", vi: "từ (quê quán)", correct: true },
+                { en: "in", vi: "ở trong", correct: false },
+                { en: "at", vi: "ở tại", correct: false },
+                { en: "to", vi: "đến", correct: false }
+            ],
+            correctMsg: "✅ 'I am FROM Vietnam' — 'from' tells your origin!",
+            wrongMsg: "❌ We say 'I am FROM Vietnam.' Use 'from' for where you come from.",
+            grammarTip: "💡 <strong>'from'</strong> = origin (I am FROM Vietnam) | <strong>'in'</strong> = current location (I live IN Pennsauken)"
+        },
+        {
+            teacher: "Now ask " + C.name + " how long she has lived in this area.",
+            teacherVi: "Bây giờ hãy hỏi " + C.name + " đã sống ở đây bao lâu.",
+            badge: "ask", instruction: "ASK THE RIGHT QUESTION",
+            prompt: "You want to know how long " + C.name + " has lived here. What do you ask?",
+            promptVi: "Bạn muốn biết " + C.name + " sống ở đây bao lâu. Hỏi gì?",
+            options: [
+                { en: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?", correct: true },
+                { en: "Where do you live?", vi: "Bạn sống ở đâu?", correct: false },
+                { en: "Do you like it here?", vi: "Bạn có thích ở đây không?", correct: false },
+                { en: "When did you move here?", vi: "Bạn chuyển đến đây khi nào?", correct: false }
+            ],
+            correctMsg: "✅ Great question! 'How long' asks about duration of time.",
+            wrongMsg: "❌ 'How long have you lived here?' is the correct way to ask about duration.",
+            grammarTip: "💡 <strong>'How long have you...?'</strong> asks about a <strong>duration</strong> (bao lâu). Uses present perfect tense.",
+            discovers: [{ key: "years", val: C.yearsHere }]
+        },
+        {
+            teacher: C.name + " has lived here " + C.yearsHere + ". She asks you the same. Tell her you've been here 5 years!",
+            teacherVi: C.name + " sống ở đây " + C.yearsHere + ". Cô ấy hỏi lại bạn. Nói 5 năm!",
+            badge: "respond", instruction: "RESPOND TO " + C.name.toUpperCase(),
+            prompt: C.name + " asks: 'How about you? How long have you been in the US?'",
+            promptVi: C.name + " hỏi: 'Còn bạn? Bạn ở Mỹ bao lâu rồi?'",
+            options: [
+                { en: "I have lived here for 5 years. I'm getting my citizenship soon!", vi: "Tôi đã sống ở đây 5 năm. Tôi sắp nhập quốc tịch!", correct: true },
+                { en: "I am from Vietnam.", vi: "Tôi đến từ Việt Nam.", correct: false },
+                { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false },
+                { en: "Yes, I like it here.", vi: "Vâng, tôi thích ở đây.", correct: false }
+            ],
+            correctMsg: "✅ Perfect! 'For 5 years' — and exciting news about citizenship!",
+            wrongMsg: "❌ She asked HOW LONG — say: 'I have lived here for 5 years.'",
+            grammarTip: "💡 <strong>'for' + time period</strong>: for 5 years, for 3 months. | <strong>'since' + specific time</strong>: since 2019."
+        },
+        {
+            teacher: "Grammar check! Which word fills the blank?",
+            teacherVi: "Kiểm tra ngữ pháp! Từ nào điền vào chỗ trống?",
+            badge: "grammar", instruction: "FILL IN THE BLANK",
+            prompt: "Complete: 'I have lived here _____ 5 years.'",
+            promptVi: "Hoàn thành: 'Tôi đã sống ở đây _____ 5 năm.'",
+            options: [
+                { en: "for", vi: "trong (khoảng thời gian)", correct: true },
+                { en: "since", vi: "kể từ (mốc thời gian)", correct: false },
+                { en: "in", vi: "trong", correct: false },
+                { en: "during", vi: "trong suốt", correct: false }
+            ],
+            correctMsg: "✅ 'For 5 years' — use 'for' with a period of time!",
+            wrongMsg: "❌ 'FOR' goes with a period: for 5 years. 'SINCE' goes with a date: since 2019.",
+            grammarTip: "💡 <strong>'for'</strong> + period (5 years, 2 months) | <strong>'since'</strong> + point in time (2019, last March)"
+        },
+        {
+            teacher: "Now ask " + C.name + " what specific area or neighborhood she lives in.",
+            teacherVi: "Hãy hỏi " + C.name + " sống ở khu vực cụ thể nào.",
+            badge: "ask", instruction: "ASK THE RIGHT QUESTION",
+            prompt: "You want to know " + C.name + "'s neighborhood. What do you ask?",
+            promptVi: "Bạn muốn biết khu vực " + C.name + " sống. Hỏi gì?",
+            options: [
+                { en: "What area do you live in?", vi: "Bạn sống ở khu vực nào?", correct: true },
+                { en: "Where are you from?", vi: "Bạn đến từ đâu?", correct: false },
+                { en: "Do you like your house?", vi: "Bạn có thích nhà mình không?", correct: false },
+                { en: "How far is your home?", vi: "Nhà bạn cách đây bao xa?", correct: false }
+            ],
+            correctMsg: "✅ Perfect! 'What area do you live in?' asks about the neighborhood.",
+            wrongMsg: "❌ 'What area do you live in?' is the right question for neighborhood/area.",
+            grammarTip: "💡 <strong>'What area do you live in?'</strong> = Bạn sống ở khu vực nào? Asks about specific neighborhood or town.",
+            discovers: [{ key: "livesIn", val: C.livesIn }]
+        },
+        {
+            teacher: C.name + " lives in " + C.livesIn + " — that's near Pennsauken! Tell her where you live.",
+            teacherVi: C.name + " sống ở " + C.livesIn + " — gần Pennsauken! Nói cho cô ấy biết.",
+            badge: "respond", instruction: "RESPOND TO " + C.name.toUpperCase(),
+            prompt: "Tell " + C.name + " where you live — it's close to " + C.livesIn + "!",
+            promptVi: "Nói cho " + C.name + " biết bạn sống ở đâu — gần " + C.livesIn + " lắm!",
+            options: [
+                { en: "Oh, I live in Pennsauken! That's really close to you!", vi: "Ồ, tôi sống ở Pennsauken! Gần bạn lắm!", correct: true },
+                { en: "I am from Vietnam.", vi: "Tôi đến từ Việt Nam.", correct: false },
+                { en: "I don't know that area.", vi: "Tôi không biết khu vực đó.", correct: false },
+                { en: "That's nice.", vi: "Hay đấy.", correct: false }
+            ],
+            correctMsg: "✅ 'I live IN Pennsauken' — use 'in' for cities and areas!",
+            wrongMsg: "❌ Tell her: 'I live in Pennsauken!' Share that you're close by!",
+            grammarTip: "💡 <strong>'I live in [place]'</strong> — Use <strong>'in'</strong> for cities, towns, neighborhoods. Not 'at' or 'on'."
+        },
+        {
+            teacher: "You're neighbors! Wrap up by offering to help with her nails.",
+            teacherVi: "Các bạn là hàng xóm! Kết thúc bằng cách đề nghị giúp làm móng.",
+            badge: "respond", instruction: "WRAP UP THE CONVERSATION",
+            prompt: C.name + " asks: 'So what do you recommend for my nails today?' What do you say?",
+            promptVi: C.name + " hỏi: 'Hôm nay bạn gợi ý gì cho móng tay tôi?'",
+            options: [
+                { en: "Sure! I'd be happy to help you today! Let me take a look.", vi: "Chắc chắn! Tôi rất vui được giúp bạn! Để tôi xem nhé.", correct: true },
+                { en: "I don't know.", vi: "Tôi không biết.", correct: false },
+                { en: "Where are you from again?", vi: "Bạn đến từ đâu nhỉ?", correct: false },
+                { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false }
+            ],
+            correctMsg: "✅ Perfect ending! Professional and friendly!",
+            wrongMsg: "❌ Offer to help! 'I'd be happy to help you today!'",
+            grammarTip: "💡 <strong>'I'd be happy to...'</strong> = polite way to offer help. Great for customer service!"
+        }
+    ];
+}
+
+// STATE
+var STEPS = buildSteps();
+var currentStep = 0;
+var score = 0;
+var streak = 0;
+var bestStreak = 0;
+var correctCount = 0;
+var answered = false;
+var discovered = {};
+var results = [];
+
+// SAVE PROGRESS FOR TEACHER
+function saveProgress() {
+    var data = {
+        currentStep: currentStep,
+        score: score,
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+        results: results,
+        finished: currentStep >= STEPS.length
+    };
+    localStorage.setItem("nailGameProgress", JSON.stringify(data));
+}
+
+// SCREEN
+function switchScreen(id) {
+    var screens = document.querySelectorAll(".screen");
+    for (var i = 0; i < screens.length; i++) screens[i].classList.remove("active");
+    document.getElementById(id).classList.add("active");
+}
+
+function startGame() {
+    switchScreen("gameScreen");
+    loadStep();
+}
+
+function restart() {
+    currentStep = 0; score = 0; streak = 0; bestStreak = 0;
+    correctCount = 0; answered = false; discovered = {}; results = [];
+    document.getElementById("dName").textContent = "📛 Name"; document.getElementById("dName").classList.remove("found");
+    document.getElementById("dFrom").textContent = "🌍 From"; document.getElementById("dFrom").classList.remove("found");
+    document.getElementById("dLives").textContent = "📍 Lives in"; document.getElementById("dLives").classList.remove("found");
+    document.getElementById("dYears").textContent = "📅 Years"; document.getElementById("dYears").classList.remove("found");
+    localStorage.removeItem("nailGameProgress");
+    STEPS = buildSteps();
+    switchScreen("startScreen");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function loadStep() {
+    if (currentStep >= STEPS.length) { showResults(); return; }
+    var s = STEPS[currentStep];
+    answered = false;
+    updateTopBar();
+    updateTeacher(s.teacher, s.teacherVi);
+    renderQuestion(s);
+    saveProgress();
+}
+
+function updateTopBar() {
+    var pct = (currentStep / STEPS.length) * 100;
+    document.getElementById("topFill").style.width = pct + "%";
+    document.getElementById("topStep").textContent = (currentStep + 1) + "/" + STEPS.length;
+    document.getElementById("topScore").textContent = "⭐ " + score;
+    document.getElementById("topStreak").textContent = "🔥" + streak;
+}
+
+function updateTeacher(msg, vi) {
+    var box = document.getElementById("teacherBox");
+    document.getElementById("teacherMsg").textContent = msg;
+    document.getElementById("teacherVi").textContent = vi || "";
+    box.style.animation = "none";
+    box.offsetHeight;
+    box.style.animation = "slideIn 0.4s ease";
+}
+
+function renderQuestion(s) {
+    var card = document.getElementById("qCard");
+    var letters = ["A", "B", "C", "D"];
+
+    // Shuffle options
+    var opts = [];
+    for (var i = 0; i < s.options.length; i++) {
+        opts.push({ en: s.options[i].en, vi: s.options[i].vi, correct: s.options[i].correct });
+    }
+    for (var j = opts.length - 1; j > 0; j--) {
+        var k = Math.floor(Math.random() * (j + 1));
+        var tmp = opts[j]; opts[j] = opts[k]; opts[k] = tmp;
+    }
+
+    var badgeLabels = { ask: "🗣 Ask", respond: "💬 Respond", grammar: "📝 Grammar" };
+    var html = '<span class="q-badge ' + s.badge + '">' + (badgeLabels[s.badge] || s.badge) + '</span>';
+    html += '<div class="q-instruction">' + s.instruction + '</div>';
+    html += '<div class="q-prompt">' + s.prompt + '</div>';
+    html += '<div class="q-prompt-vi">' + s.promptVi + '</div>';
+    html += '<div class="opts" id="optsList">';
+
+    for (var m = 0; m < opts.length; m++) {
+        html += '<button class="opt" data-correct="' + opts[m].correct + '" onclick="pickAnswer(this)">';
+        html += '<span class="opt-letter">' + letters[m] + '</span>';
+        html += '<span class="opt-text"><span class="opt-en">' + opts[m].en + '</span><span class="opt-vi">' + opts[m].vi + '</span></span>';
+        html += '</button>';
+    }
+
+    html += '</div>';
+    html += '<div class="fb" id="fb"></div>';
+    html += '<div class="grammar-box" id="grammarBox">' + (s.grammarTip || '') + '</div>';
+    html += '<button class="cont-btn" id="contBtn" onclick="goNext()">Continue ➜</button>';
+
+    card.innerHTML = html;
+
+    setTimeout(function() {
+        card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 200);
+}
+
+function pickAnswer(btn) {
+    if (answered) return;
+    answered = true;
+
+    var s = STEPS[currentStep];
+    var isCorrect = btn.getAttribute("data-correct") === "true";
+
+    // Lock all buttons
+    var allBtns = document.querySelectorAll(".opt");
+    for (var i = 0; i < allBtns.length; i++) {
+        allBtns[i].classList.add("locked");
+    }
+
+    var fb = document.getElementById("fb");
+
+    if (isCorrect) {
+        btn.classList.add("correct-opt");
+        correctCount++;
+        streak++;
+        if (streak > bestStreak) bestStreak = streak;
+        var points = 10 + (streak > 1 ? streak * 2 : 0);
+        score += points;
+
+        fb.className = "fb fb-ok";
+        var bonus = "";
+        if (streak > 1) bonus = " 🔥 Streak: " + streak + "!";
+        fb.innerHTML = s.correctMsg + '<div class="fb-extra">+' + points + ' points' + bonus + '</div>';
+
+        burstConfetti();
+
+        // Discover info
+        if (s.discovers) {
+            for (var d = 0; d < s.discovers.length; d++) {
+                discover(s.discovers[d].key, s.discovers[d].val);
+            }
+        }
+
+        results.push({ step: currentStep, correct: true });
+    } else {
+        btn.classList.add("wrong-opt");
+        streak = 0;
+
+        // Show correct
+        for (var j = 0; j < allBtns.length; j++) {
+            if (allBtns[j].getAttribute("data-correct") === "true") {
+                allBtns[j].classList.add("correct-opt");
+            }
+        }
+
+        fb.className = "fb fb-bad";
+        fb.innerHTML = s.wrongMsg;
+
+        // Still discover info so game continues properly
+        if (s.discovers) {
+            for (var d2 = 0; d2 < s.discovers.length; d2++) {
+                discover(s.discovers[d2].key, s.discovers[d2].val);
+            }
+        }
+
+        results.push({ step: currentStep, correct: false });
+    }
+
+    // Show grammar tip
+    if (s.grammarTip) {
+        document.getElementById("grammarBox").classList.add("show");
+    }
+
+    updateTopBar();
+    saveProgress();
+    document.getElementById("contBtn").classList.add("show");
+}
+
+function goNext() {
+    currentStep++;
+    if (currentStep >= STEPS.length) {
+        showResults();
+    } else {
+        loadStep();
+    }
+    document.getElementById("gameScreen").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function discover(key, value) {
+    discovered[key] = value;
+    var tagMap = { name: "dName", from: "dFrom", livesIn: "dLives", years: "dYears" };
+    var iconMap = { name: "📛", from: "🌍", livesIn: "📍", years: "📅" };
+    var tagId = tagMap[key];
+    if (tagId) {
+        var tag = document.getElementById(tagId);
+        tag.classList.add("found");
+        tag.textContent = iconMap[key] + " " + value;
+    }
+}
+
+function burstConfetti() {
+    var container = document.getElementById("confettiLayer");
+    var colors = ["#ff6b6b","#feca57","#48dbfb","#ff9ff3","#54a0ff","#5f27cd","#00d2d3","#1dd1a1","#fdcb6e","#e17055"];
+    for (var i = 0; i < 25; i++) {
+        var piece = document.createElement("div");
+        piece.className = "conf-piece";
+        piece.style.left = (Math.random() * 100) + "%";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.width = (6 + Math.random() * 8) + "px";
+        piece.style.height = (6 + Math.random() * 8) + "px";
+        piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+        piece.style.animationDuration = (2 + Math.random() * 2) + "s";
+        piece.style.animationDelay = (Math.random() * 0.5) + "s";
+        container.appendChild(piece);
+        (function(p) {
+            setTimeout(function() { if (p.parentNode) p.parentNode.removeChild(p); }, 4500);
+        })(piece);
+    }
+}
+
+function showResults() {
+    saveProgress();
+    switchScreen("resultsScreen");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    var maxScore = STEPS.length * 10 + 50;
+    var pct = maxScore > 0 ? (score / maxScore) * 100 : 0;
+
+    var icon, title, sub, stars;
+    if (pct >= 85) {
+        icon = "🏆"; title = "Outstanding!"; sub = "You're a small talk master!"; stars = "⭐⭐⭐";
+    } else if (pct >= 60) {
+        icon = "🎉"; title = "Great Job!"; sub = "You had a wonderful conversation!"; stars = "⭐⭐";
+    } else if (pct >= 35) {
+        icon = "👍"; title = "Good Try!"; sub = "Keep practicing your English!"; stars = "⭐";
+    } else {
+        icon = "📚"; title = "Keep Learning!"; sub = "Practice makes perfect!"; stars = "💪";
+    }
+
+    document.getElementById("rIcon").textContent = icon;
+    document.getElementById("rTitle").textContent = title;
+    document.getElementById("rSub").textContent = sub;
+    document.getElementById("rStars").textContent = stars;
+    document.getElementById("rScore").textContent = score;
+    document.getElementById("rCorrect").textContent = correctCount + "/" + STEPS.length;
+    document.getElementById("rStreak").textContent = bestStreak;
+
+    // Discovered info
+    var discResults = document.getElementById("discResults");
+    var items = [
+        { label: "👤 Name", key: "name" },
+        { label: "🌍 From", key: "from" },
+        { label: "📍 Lives in", key: "livesIn" },
+        { label: "📅 Years here", key: "years" }
+    ];
+
+    var dHTML = "";
+    for (var i = 0; i < items.length; i++) {
+        var val = discovered[items[i].key];
+        dHTML += '<div class="disc-r-row">' +
+            '<span class="disc-r-label">' + items[i].label + '</span>' +
+            '<span class="disc-r-val ' + (val ? '' : 'missed') + '">' + (val || 'Not discovered') + '</span>' +
+            '</div>';
+    }
+    dHTML += '<div class="disc-r-row" style="margin-top:8px;border-top:2px solid rgba(0,0,0,0.1);padding-top:8px;">' +
+        '<span class="disc-r-label">🔍 Total</span>' +
+        '<span class="disc-r-val">' + Object.keys(discovered).length + '/4 discovered</span></div>';
+    discResults.innerHTML = dHTML;
+
+    // Confetti
+    if (pct >= 60) {
+        for (var c = 0; c < 4; c++) {
+            (function(delay) {
+                setTimeout(function() { burstConfetti(); }, delay);
+            })(c * 400);
+        }
+    }
+}
+
+</script>
+</body>
+</html>
