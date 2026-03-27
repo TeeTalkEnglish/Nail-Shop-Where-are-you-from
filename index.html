@@ -800,3 +800,360 @@ function submitAnswer() {
     var matchType = checkAnswer(normalized, s);
 
     if (
+matchType === "exact" || matchType === "close-enough") {
+        handleCorrect(s, raw);
+    } else if (matchType === "has-keywords") {
+        handleCloseAnswer(s, raw);
+    } else {
+        handleWrong(s, raw);
+    }
+}
+
+function normalizeText(text) {
+    return text.toLowerCase().replace(/['']/g, "'").replace(/[.,!?;:"""]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function checkAnswer(normalized, s) {
+    var i, normAns, ansWords, userWords, matchCount, matchRatio, keyMatch;
+
+    for (i = 0; i < s.acceptedAnswers.length; i++) {
+        normAns = normalizeText(s.acceptedAnswers[i]);
+        if (normalized === normAns) return "exact";
+    }
+
+    for (i = 0; i < s.acceptedAnswers.length; i++) {
+        normAns = normalizeText(s.acceptedAnswers[i]);
+        ansWords = normAns.split(" ");
+        userWords = normalized.split(" ");
+        matchCount = 0;
+        for (var j = 0; j < ansWords.length; j++) {
+            if (userWords.indexOf(ansWords[j]) !== -1) matchCount++;
+        }
+        matchRatio = matchCount / ansWords.length;
+        if (matchRatio >= 0.75) return "close-enough";
+    }
+
+    if (s.keywords) {
+        keyMatch = 0;
+        for (i = 0; i < s.keywords.length; i++) {
+            if (normalized.indexOf(s.keywords[i].toLowerCase()) !== -1) keyMatch++;
+        }
+        if (keyMatch >= s.keywords.length) return "has-keywords";
+        if (keyMatch >= 1 && normalized.split(" ").length >= 3) return "has-keywords";
+    }
+
+    return "wrong";
+}
+
+function handleCorrect(s, raw) {
+    answered = true;
+    var input = document.getElementById("textInput");
+    input.classList.add("input-correct");
+    input.disabled = true;
+    document.getElementById("sendBtn").disabled = true;
+
+    var points = 10;
+    if (attempts === 1 && hintLevel === 0) {
+        points = 15;
+        firstTryCorrect++;
+    } else if (attempts === 1) {
+        points = 10;
+    } else {
+        points = Math.max(3, 10 - (attempts - 1) * 2 - hintLevel * 2);
+    }
+
+    streak++;
+    if (streak > bestStreak) bestStreak = streak;
+    score += points;
+
+    var fbBox = document.getElementById("fbBox");
+    fbBox.className = "fb-box fb-ok";
+    var bonusText = "";
+    if (attempts === 1 && hintLevel === 0) bonusText = " 🌟 Perfect!";
+    if (streak > 1) bonusText += " 🔥 Streak: " + streak;
+    fbBox.innerHTML = s.correctMsg + '<div class="fb-correct-answer">+' + points + ' points' + bonusText + '</div>';
+
+    updateTopBar();
+    burstConfetti();
+
+    if (s.onComplete) {
+        s.onComplete().then(function() {
+            document.getElementById("contBtn").classList.add("show");
+        });
+    } else {
+        document.getElementById("contBtn").classList.add("show");
+    }
+
+    document.getElementById("attemptInfo").textContent = "Answered in " + attempts + " attempt" + (attempts > 1 ? "s" : "");
+}
+
+function handleCloseAnswer(s, raw) {
+    if (attempts >= maxAttempts) {
+        handleCorrect(s, raw);
+        return;
+    }
+
+    var input = document.getElementById("textInput");
+    input.classList.add("input-wrong");
+    setTimeout(function() { input.classList.remove("input-wrong"); }, 800);
+
+    var fbBox = document.getElementById("fbBox");
+    fbBox.className = "fb-box fb-close";
+    fbBox.innerHTML = s.closeMsg + '<div class="fb-correct-answer">Try again! Attempt ' + attempts + '/' + maxAttempts + '. Use a hint if you need help!</div>';
+
+    document.getElementById("attemptInfo").textContent = "Attempt " + attempts + "/" + maxAttempts + " — Keep trying!";
+    input.focus();
+    input.select();
+}
+
+function handleWrong(s, raw) {
+    if (attempts >= maxAttempts) {
+        answered = true;
+        streak = 0;
+
+        var input = document.getElementById("textInput");
+        input.classList.add("input-wrong");
+        input.disabled = true;
+        document.getElementById("sendBtn").disabled = true;
+
+        var fbBox = document.getElementById("fbBox");
+        fbBox.className = "fb-box fb-wrong";
+        fbBox.innerHTML = s.wrongMsg + '<div class="fb-correct-answer">✏️ Correct answer: "' + s.fullAnswer + '"</div>';
+
+        updateTopBar();
+
+        if (s.onComplete) {
+            s.onComplete().then(function() {
+                document.getElementById("contBtn").classList.add("show");
+            });
+        } else {
+            document.getElementById("contBtn").classList.add("show");
+        }
+
+        document.getElementById("attemptInfo").textContent = "Used all " + maxAttempts + " attempts";
+        return;
+    }
+
+    var input = document.getElementById("textInput");
+    input.classList.add("input-wrong");
+    setTimeout(function() { input.classList.remove("input-wrong"); }, 800);
+
+    var fbBox = document.getElementById("fbBox");
+    fbBox.className = "fb-box fb-wrong";
+    fbBox.innerHTML = s.wrongMsg + '<div class="fb-correct-answer">Try again! Attempt ' + attempts + '/' + maxAttempts + '. Use hints if needed!</div>';
+
+    document.getElementById("attemptInfo").textContent = "Attempt " + attempts + "/" + maxAttempts;
+    input.focus();
+    input.select();
+}
+
+function showHint(level) {
+    if (answered) return;
+    var s = STEPS[currentStep];
+    var display = document.getElementById("hintDisplay");
+
+    if (level === 1 && hintLevel < 1) {
+        hintLevel = 1;
+        score = Math.max(0, score - 2);
+        display.className = "hint-display hint-keyword";
+        display.innerHTML = '<div class="hint-label">💡 Keyword Hint (-2pts)</div>' + s.keywordHint;
+        document.getElementById("hintBtn1").disabled = true;
+    } else if (level === 2 && hintLevel < 2) {
+        hintLevel = 2;
+        score = Math.max(0, score - 3);
+        display.className = "hint-display hint-keyword";
+        display.innerHTML = '<div class="hint-label">📝 Sentence Hint (-3pts)</div>' + s.sentenceHint;
+        document.getElementById("hintBtn1").disabled = true;
+        document.getElementById("hintBtn2").disabled = true;
+    } else if (level === 3) {
+        hintLevel = 3;
+        score = Math.max(0, score - 5);
+        display.className = "hint-display hint-answer";
+        display.innerHTML = '<div class="hint-label">🔑 Full Answer (-5pts)</div><strong>' + s.fullAnswer + '</strong><br><small>Type this answer above!</small>';
+        document.getElementById("hintBtn1").disabled = true;
+        document.getElementById("hintBtn2").disabled = true;
+        document.getElementById("hintBtn3").disabled = true;
+    }
+    updateTopBar();
+}
+
+function goNext() {
+    currentStep++;
+    if (currentStep >= STEPS.length) {
+        showResults();
+    } else {
+        loadStep();
+    }
+    document.getElementById("gameScreen").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function addChat(speaker, text, vi) {
+    var body = document.getElementById("chatBody");
+    var isClient = (speaker === "client");
+    var cls = isClient ? "c-client" : "c-tech";
+    var avatar = isClient ? "👩" : "💅";
+    var label = isClient ? (discovered.name ? CLIENT.name : "Client") : "You (Minh)";
+
+    var msg = document.createElement("div");
+    msg.className = "c-msg " + cls;
+    msg.innerHTML = '<div class="c-ava">' + avatar + '</div>' +
+        '<div class="c-content">' +
+        '<div class="c-label">' + label + '</div>' +
+        '<div class="c-bubble">' + text + '</div>' +
+        (vi ? '<div class="c-vi">' + vi + '</div>' : '') +
+        '</div>';
+    body.appendChild(msg);
+    body.scrollTop = body.scrollHeight;
+
+    chatLog.push({ speaker: speaker, text: text, vi: vi, label: label });
+}
+
+function discover(key, value) {
+    discovered[key] = value;
+
+    var tagMap = { name: "dName", from: "dFrom", livesIn: "dLives", years: "dYears" };
+    var iconMap = { name: "📛", from: "🌍", livesIn: "📍", years: "📅" };
+
+    var tagId = tagMap[key];
+    if (tagId) {
+        var tag = document.getElementById(tagId);
+        tag.classList.add("found");
+        tag.textContent = iconMap[key] + " " + value;
+    }
+
+    if (key === "name") {
+        document.getElementById("miniClientName").textContent = value;
+        document.getElementById("miniClientSub").textContent = "Customer";
+    }
+}
+
+function updateTopBar() {
+    var pct = (currentStep / STEPS.length) * 100;
+    document.getElementById("topFill").style.width = pct + "%";
+    document.getElementById("topStep").textContent = (currentStep + 1) + "/" + STEPS.length;
+    document.getElementById("topScore").textContent = "⭐ " + score;
+    document.getElementById("topStreak").textContent = "🔥" + streak;
+}
+
+function updateTeacher(msg, vi) {
+    var panel = document.getElementById("teacherPanel");
+    document.getElementById("teacherTxt").textContent = msg;
+    document.getElementById("teacherVi").textContent = vi || "";
+    panel.style.animation = "none";
+    panel.offsetHeight;
+    panel.style.animation = "panelIn 0.4s ease";
+}
+
+function burstConfetti() {
+    var container = document.getElementById("confettiLayer");
+    var colors = ["#ff6b6b", "#feca57", "#48dbfb", "#ff9ff3", "#54a0ff", "#5f27cd", "#00d2d3", "#1dd1a1", "#fdcb6e", "#e17055"];
+
+    for (var i = 0; i < 25; i++) {
+        var piece = document.createElement("div");
+        piece.className = "conf-piece";
+        piece.style.left = (Math.random() * 100) + "%";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (2 + Math.random() * 2) + "s";
+        piece.style.animationDelay = (Math.random() * 0.5) + "s";
+        piece.style.width = (6 + Math.random() * 8) + "px";
+        piece.style.height = (6 + Math.random() * 8) + "px";
+        piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+        container.appendChild(piece);
+        (function(p) {
+            setTimeout(function() { if (p.parentNode) p.parentNode.removeChild(p); }, 4500);
+        })(piece);
+    }
+}
+
+function showResults() {
+    switchScreen("resultsScreen");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    var maxScore = STEPS.length * 15;
+    var pct = maxScore > 0 ? (score / maxScore) * 100 : 0;
+
+    var icon, title, sub, stars;
+    if (pct >= 85) {
+        icon = "🏆"; title = "Outstanding!"; sub = "You're a small talk master!"; stars = "⭐⭐⭐";
+    } else if (pct >= 65) {
+        icon = "🎉"; title = "Great Job!"; sub = "You had a wonderful conversation!"; stars = "⭐⭐";
+    } else if (pct >= 40) {
+        icon = "👍"; title = "Good Try!"; sub = "Keep practicing your English!"; stars = "⭐";
+    } else {
+        icon = "📚"; title = "Keep Learning!"; sub = "Use hints and practice more!"; stars = "💪";
+    }
+
+    document.getElementById("rIcon").textContent = icon;
+    document.getElementById("rTitle").textContent = title;
+    document.getElementById("rSub").textContent = sub;
+    document.getElementById("rStars").textContent = stars;
+    document.getElementById("rScore").textContent = score;
+    document.getElementById("rCorrect").textContent = firstTryCorrect + "/" + STEPS.length;
+    document.getElementById("rStreak").textContent = bestStreak;
+
+    // Discovered info
+    var discResults = document.getElementById("discResults");
+    var infoItems = [
+        { label: "👤 Name", key: "name" },
+        { label: "🌍 From", key: "from" },
+        { label: "📍 Lives in", key: "livesIn" },
+        { label: "📅 Years here", key: "years" }
+    ];
+
+    var discHTML = "";
+    for (var i = 0; i < infoItems.length; i++) {
+        var val = discovered[infoItems[i].key];
+        discHTML += '<div class="disc-row">' +
+            '<span class="disc-r-label">' + infoItems[i].label + '</span>' +
+            '<span class="disc-r-val ' + (val ? '' : 'missed') + '">' + (val || 'Not discovered') + '</span>' +
+            '</div>';
+    }
+    discHTML += '<div class="disc-row" style="margin-top:6px;border-top:2px solid rgba(0,0,0,0.1);padding-top:8px;">' +
+        '<span class="disc-r-label">🔍 Discovered</span>' +
+        '<span class="disc-r-val">' + Object.keys(discovered).length + '/4 items</span></div>';
+    discResults.innerHTML = discHTML;
+
+    // Review conversation
+    var reviewWrap = document.getElementById("reviewWrap");
+    if (chatLog.length > 0) {
+        var reviewHTML = "";
+        for (var r = 0; r < chatLog.length; r++) {
+            var msg = chatLog[r];
+            var isClient = (msg.speaker === "client");
+            var rlabel = isClient ? "👩 " + msg.label : "💅 " + msg.label;
+            var rcls = isClient ? "rev-c" : "rev-t";
+            reviewHTML += '<div class="rev-line">' +
+                '<span class="rev-speaker ' + rcls + '">' + rlabel + ':</span> ' +
+                msg.text +
+                (msg.vi ? '<span class="rev-vi">' + msg.vi + '</span>' : '') +
+                '</div>';
+        }
+        reviewWrap.innerHTML = reviewHTML;
+    } else {
+        reviewWrap.innerHTML = '<div class="rev-line" style="text-align:center;color:#999;">No conversation recorded.</div>';
+    }
+
+    // Confetti for good results
+    if (pct >= 65) {
+        for (var c = 0; c < 4; c++) {
+            (function(delay) {
+                setTimeout(function() { burstConfetti(); }, delay);
+            })(c * 400);
+        }
+    }
+}
+
+// ENTER KEY
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        var input = document.getElementById("textInput");
+        if (document.activeElement === input && !answered) {
+            e.preventDefault();
+            submitAnswer();
+        }
+    }
+});
+
+</script>
+</body>
+</html>
