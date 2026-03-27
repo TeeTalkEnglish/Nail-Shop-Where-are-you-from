@@ -319,3 +319,1701 @@
         .mini-mission-dot .dot-tooltip {
             display: none;
             position: absolute;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d3436;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .mini-mission-dot:hover .dot-tooltip { display: block; }
+
+        /* Chat Window */
+        .chat-window {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+            margin-bottom: 10px;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            padding: 12px 18px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header-icon { font-size: 20px; }
+        .chat-header-title { font-weight: 800; font-size: 14px; }
+        .chat-header-sub { font-size: 11px; opacity: 0.8; }
+
+        .chat-body {
+            padding: 16px;
+            max-height: 350px;
+            overflow-y: auto;
+            min-height: 80px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-msg {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            animation: msgIn 0.4s ease;
+        }
+
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-msg.from-client { flex-direction: row; }
+        .chat-msg.from-tech { flex-direction: row-reverse; }
+
+        .chat-msg-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .from-client .chat-msg-avatar { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .from-tech .chat-msg-avatar { background: linear-gradient(135deg, #ffeaa7, #fdcb6e); }
+
+        .chat-msg-content { max-width: 72%; }
+
+        .chat-msg-bubble {
+            padding: 10px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .from-client .chat-msg-bubble {
+            background: #f0f4ff;
+            color: #2d3436;
+            border-bottom-left-radius: 4px;
+        }
+
+        .from-tech .chat-msg-bubble {
+            background: linear-gradient(135deg, #fdcb6e, #f9ca24);
+            color: #2d3436;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-msg-vi {
+            font-size: 11px;
+            color: #b2bec3;
+            font-style: italic;
+            margin-top: 3px;
+            padding: 0 6px;
+        }
+
+        .from-tech .chat-msg-vi { text-align: right; }
+
+        .chat-msg-label {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+            padding: 0 6px;
+        }
+
+        .from-client .chat-msg-label { color: #0984e3; }
+        .from-tech .chat-msg-label { color: #e17055; text-align: right; }
+
+        /* Typing Indicator */
+        .typing-dots {
+            display: inline-flex;
+            gap: 4px;
+            padding: 10px 16px;
+            background: #f0f4ff;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing-dots span {
+            width: 7px; height: 7px;
+            background: #b2bec3;
+            border-radius: 50%;
+            animation: dotBounce 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+
+        /* ===== QUESTION PANEL ===== */
+        .question-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+        }
+
+        .q-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .q-type-badge.ask { background: #dfe6e9; color: #636e72; }
+        .q-type-badge.listen { background: #ffeaa7; color: #d35400; }
+        .q-type-badge.respond { background: #d5f5e3; color: #1e8449; }
+        .q-type-badge.build { background: #e8daef; color: #6c3483; }
+
+        .q-instruction {
+            font-size: 13px;
+            color: #e8594f;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .q-main {
+            font-size: 17px;
+            font-weight: 800;
+            color: #2d3436;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .q-vi {
+            font-size: 13px;
+            color: #b2bec3;
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
+        .q-hint {
+            font-size: 12px;
+            color: #a29bfe;
+            background: #f8f7ff;
+            padding: 8px 14px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #a29bfe;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .opt-btn {
+            width: 100%;
+            padding: 13px 18px;
+            border: 3px solid #eee;
+            border-radius: 14px;
+            background: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #2d3436;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .opt-btn:hover:not(.locked) {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-1px);
+        }
+
+        .opt-letter {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 900; color: #999;
+            flex-shrink: 0;
+        }
+
+        .opt-btn .opt-vi {
+            font-size: 11px;
+            color: #b2bec3;
+            font-style: italic;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .opt-btn.correct-opt {
+            border-color: #00b894;
+            background: #f0fff4;
+            animation: popCorrect 0.5s ease;
+        }
+        .opt-btn.correct-opt .opt-letter { background: #00b894; color: white; }
+
+        .opt-btn.wrong-opt {
+            border-color: #ff6b6b;
+            background: #fff5f5;
+            animation: shake 0.5s ease;
+        }
+        .opt-btn.wrong-opt .opt-letter { background: #ff6b6b; color: white; }
+
+        .opt-btn.locked {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        @keyframes popCorrect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        /* Fill blank area */
+        .fill-sentence {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #2d3436;
+            margin: 16px 0;
+            line-height: 2.4;
+        }
+
+        .blank-box {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+            height: 38px;
+            border-bottom: 3px dashed #a29bfe;
+            color: #667eea;
+            font-weight: 900;
+            padding: 0 8px;
+            transition: all 0.3s ease;
+        }
+
+        .blank-box.filled-in {
+            border-bottom-style: solid;
+            background: #f8f7ff;
+            border-radius: 8px;
+        }
+
+        .blank-box.blank-correct {
+            border-color: #00b894;
+            color: #00b894;
+            background: #f0fff4;
+        }
+
+        .blank-box.blank-wrong {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+            background: #fff5f5;
+        }
+
+        /* Word chips */
+        .chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 14px;
+        }
+
+        .chip {
+            padding: 9px 18px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            background: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #2d3436;
+        }
+
+        .chip:hover:not(.chip-used) {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-1px);
+        }
+
+        .chip.chip-used { opacity: 0.25; cursor: default; }
+        .chip.chip-correct { border-color: #00b894; background: #f0fff4; color: #00b894; }
+        .chip.chip-wrong { border-color: #ff6b6b; background: #fff5f5; color: #ff6b6b; }
+
+        /* Word order builder */
+        .word-builder {
+            min-height: 50px;
+            border: 2px dashed #ddd;
+            border-radius: 14px;
+            padding: 10px;
+            margin: 14px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .word-builder.builder-correct { border-color: #00b894; background: #f0fff4; }
+        .word-builder.builder-wrong { border-color: #ff6b6b; background: #fff5f5; }
+
+        .builder-placeholder { color: #ccc; font-size: 13px; font-weight: 600; }
+
+        .builder-word {
+            padding: 6px 14px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            animation: msgIn 0.2s ease;
+        }
+
+        .builder-word:hover { background: #5568d4; }
+
+        .check-order-btn {
+            display: block;
+            margin: 10px auto 0;
+            padding: 10px 30px;
+            border: 3px solid #667eea;
+            border-radius: 14px;
+            background: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .check-order-btn:hover { background: #667eea; color: white; }
+        .check-order-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* Feedback */
+        .feedback-box {
+            margin-top: 14px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 1.5;
+            display: none;
+            animation: msgIn 0.3s ease;
+        }
+
+        .feedback-box.fb-correct {
+            display: block;
+            background: linear-gradient(135deg, #d5f5e3, #a9dfbf);
+            color: #1e8449;
+        }
+
+        .feedback-box.fb-wrong {
+            display: block;
+            background: linear-gradient(135deg, #fadbd8, #f5b7b1);
+            color: #c0392b;
+        }
+
+        .feedback-box .fb-explain {
+            font-size: 12px; font-weight: 600; margin-top: 4px; opacity: 0.75;
+        }
+
+        /* Continue button */
+        .continue-btn {
+            display: none;
+            width: 100%;
+            margin-top: 12px;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .continue-btn.show { display: block; }
+        .continue-btn:hover { transform: translateY(-2px); }
+
+        /* ===== RESULTS SCREEN ===== */
+        .results-screen { display: none; }
+
+        .results-card {
+            background: white;
+            border-radius: 24px;
+            padding: 36px 24px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .res-icon { font-size: 56px; margin-bottom: 6px; }
+        .res-title { font-size: 26px; font-weight: 900; color: #2d3436; }
+        .res-sub { font-size: 14px; color: #999; margin: 4px 0 16px; }
+        .res-stars { font-size: 36px; letter-spacing: 4px; margin-bottom: 16px; }
+
+        .res-stats {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .res-stat {
+            background: #f8f9ff;
+            border-radius: 14px;
+            padding: 14px 20px;
+            min-width: 90px;
+        }
+
+        .res-stat-val { font-size: 28px; font-weight: 900; color: #667eea; }
+        .res-stat-label { font-size: 11px; color: #999; font-weight: 700; text-transform: uppercase; }
+
+        /* Discovered Info Card */
+        .discovered-card {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .discovered-title {
+            font-size: 16px;
+            font-weight: 900;
+            color: #d35400;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .discovered-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            font-size: 14px;
+        }
+
+        .discovered-row:last-child { border-bottom: none; }
+        .discovered-label { font-weight: 700; color: #636e72; }
+        .discovered-val { font-weight: 900; color: #2d3436; }
+        .discovered-val.not-found { color: #e17055; font-style: italic; }
+
+        /* Review Conversation */
+        .review-section {
+            text-align: left;
+            margin-top: 24px;
+            border-top: 2px solid #f0f0f0;
+            padding-top: 20px;
+        }
+
+        .review-title {
+            font-size: 16px; font-weight: 900; color: #2d3436;
+            text-align: center; margin-bottom: 14px;
+        }
+
+        .review-box {
+            background: #f8f9ff;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .review-line {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .review-line .r-speaker { font-weight: 900; margin-right: 6px; }
+        .review-line .r-speaker.r-client { color: #0984e3; }
+        .review-line .r-speaker.r-tech { color: #e84393; }
+        .review-line .r-vi { display: block; font-size: 11px; color: #b2bec3; font-style: italic; margin-top: 2px; }
+
+        .restart-btn {
+            margin-top: 20px;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #e8594f, #d94440);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 17px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(232,89,79,0.4);
+            transition: all 0.2s ease;
+        }
+
+        .restart-btn:hover { transform: translateY(-2px); }
+
+        /* Confetti */
+        .confetti-box {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+            overflow: hidden;
+        }
+
+        .confetti-bit {
+            position: absolute;
+            top: -20px;
+            width: 10px; height: 10px;
+            border-radius: 2px;
+            animation: confFall 3s ease-in forwards;
+        }
+
+        @keyframes confFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Client info reveal animation */
+        .info-reveal {
+            animation: revealPop 0.5s ease;
+        }
+
+        @keyframes revealPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 480px) {
+            .profile-cards { grid-template-columns: 1fr; }
+            .header h1 { font-size: 18px; }
+            .q-main { font-size: 15px; }
+            .res-stats { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>💅 Nail Salon English Game</h1>
+        <p>Role-Play: Ask the Right Questions!</p>
+    </div>
+
+    <div class="main-container">
+
+        <!-- ============================== -->
+        <!-- START SCREEN -->
+        <!-- ============================== -->
+        <div class="start-screen" id="startScreen">
+            <div class="scenario-card">
+                <div class="scenario-icon">💬</div>
+                <div class="scenario-title">Where Are You From?</div>
+                <div class="scenario-title-vi">Bạn đến từ đâu?</div>
+
+                <div class="scenario-desc">
+                    🎯 <strong>Your Mission:</strong> You are a <strong>Nail Technician</strong> from Vietnam 🇻🇳. A new client just sat down. Make small talk and ask the right questions to learn about your client!
+                    <br><br>
+                    👨‍🏫 Your <strong>Teacher</strong> will guide you on what to ask. Choose the correct questions and responses to complete the conversation!
+                </div>
+
+                <!-- Profile Cards -->
+                <div class="profile-cards">
+                    <div class="profile-card tech-card">
+                        <div class="card-emoji">💅</div>
+                        <div class="card-role">You — Nail Tech</div>
+                        <div class="card-name">Minh</div>
+                        <div class="card-info">
+                            <div class="card-info-row">
+                                <span class="card-info-label">From</span>
+                                <span class="card-info-value">🇻🇳 Ho Chi Minh City</span>
+                            </div>
+                            <div class="card-info-row">
+                                <span class="card-info-label">Lives in</span>
+                                <span class="card-info-value">Pennsauken, NJ</span>
+                            </div>
+                            <div class="card-info-row">
+                                <span class="card-info-label">Years in US</span>
+                                <span class="card-info-value">5 years</span>
+                            </div>
+                            <div class="card-info-row">
+                                <span class="card-info-label">Status</span>
+                                <span class="card-info-value">Soon citizen! 🇺🇸</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-card client-card">
+                        <div class="card-emoji">👩</div>
+                        <div class="card-role">Client</div>
+                        <div class="card-name">???</div>
+                        <div class="card-info">
+                            <div class="card-info-row">
+                                <span class="card-info-label">Name</span>
+                                <span class="card-info-value hidden-val">Find out!</span>
+                            </div>
+                            <div class="card-info-row">
+                                <span class="card-info-label">From</span>
+                                <span class="card-info-value hidden-val">Find out!</span>
+                            </div>
+                            <div class="card-info-row">
+                                <span class="card-info-label">Lives in</span>
+                                <span class="card-info-value hidden-val">Find out!</span>
+                            </div>
+                            <div class="card-info-row">
+                                <span class="card-info-label">Years here</span>
+                                <span class="card-info-value hidden-val">Find out!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission Box -->
+                <div class="mission-box">
+                    <h3>🎯 Mission Checklist</h3>
+                    <div class="mission-item" id="startMission0">
+                        <div class="mission-check"></div>
+                        <span>Greet the client & introduce yourself</span>
+                    </div>
+                    <div class="mission-item" id="startMission1">
+                        <div class="mission-check"></div>
+                        <span>Find out the client's name</span>
+                    </div>
+                    <div class="mission-item" id="startMission2">
+                        <div class="mission-check"></div>
+                        <span>Find out where the client is from</span>
+                    </div>
+                    <div class="mission-item" id="startMission3">
+                        <div class="mission-check"></div>
+                        <span>Tell the client where you're from</span>
+                    </div>
+                    <div class="mission-item" id="startMission4">
+                        <div class="mission-check"></div>
+                        <span>Find out how long client has lived here</span>
+                    </div>
+                    <div class="mission-item" id="startMission5">
+                        <div class="mission-check"></div>
+                        <span>Share how long you've lived here</span>
+                    </div>
+                    <div class="mission-item" id="startMission6">
+                        <div class="mission-check"></div>
+                        <span>Find out what area the client lives in</span>
+                    </div>
+                    <div class="mission-item" id="startMission7">
+                        <div class="mission-check"></div>
+                        <span>Share that you live nearby too</span>
+                    </div>
+                </div>
+
+                <button class="start-btn" onclick="startGame()">▶ Start Conversation</button>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- GAME SCREEN -->
+        <!-- ============================== -->
+        <div class="game-screen" id="gameScreen">
+
+            <!-- Progress -->
+            <div class="progress-bar-container">
+                <span class="progress-text" id="progText">Step 1/10</span>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progFill"></div>
+                </div>
+                <span class="progress-score" id="progScore">⭐ 0</span>
+            </div>
+
+            <!-- Mini cards -->
+            <div class="mini-cards">
+                <div class="mini-card">
+                    <div class="mini-card-emoji">💅</div>
+                    <div class="mini-card-info">
+                        <div class="mini-card-name">Minh (You)</div>
+                        <div class="mini-card-detail">Nail Tech</div>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-emoji">👩</div>
+                    <div class="mini-card-info">
+                        <div class="mini-card-name" id="clientMiniName">Client</div>
+                        <div class="mini-card-detail" id="clientMiniDetail">New customer</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini mission dots -->
+            <div class="mini-mission" id="miniMission">
+                <span class="mini-mission-label">🎯 MISSIONS:</span>
+            </div>
+
+            <!-- Teacher Banner -->
+            <div class="teacher-banner" id="teacherBanner">
+                <div class="teacher-avatar">👨‍🏫</div>
+                <div class="teacher-text">
+                    <div class="teacher-label">Teacher says</div>
+                    <div class="teacher-msg" id="teacherMsg">Let's start the conversation!</div>
+                    <div class="teacher-msg-vi" id="teacherMsgVi"></div>
+                </div>
+            </div>
+
+            <!-- Chat Window -->
+            <div class="chat-window">
+                <div class="chat-header">
+                    <span class="chat-header-icon">💬</span>
+                    <div>
+                        <div class="chat-header-title">Nail Salon Conversation</div>
+                        <div class="chat-header-sub">Small Talk — Where Are You From?</div>
+                    </div>
+                </div>
+                <div class="chat-body" id="chatBody"></div>
+            </div>
+
+            <!-- Question Panel -->
+            <div class="question-panel" id="questionPanel"></div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- RESULTS SCREEN -->
+        <!-- ============================== -->
+        <div class="results-screen" id="resultsScreen">
+            <div class="results-card">
+                <div class="res-icon" id="resIcon">🎉</div>
+                <div class="res-title" id="resTitle">Conversation Complete!</div>
+                <div class="res-sub" id="resSub">You learned about your client!</div>
+                <div class="res-stars" id="resStars">⭐⭐⭐</div>
+
+                <div class="res-stats">
+                    <div class="res-stat">
+                        <div class="res-stat-val" id="resFinalScore">0</div>
+                        <div class="res-stat-label">Score</div>
+                    </div>
+                    <div class="res-stat">
+                        <div class="res-stat-val" id="resFinalCorrect">0/0</div>
+                        <div class="res-stat-label">Correct</div>
+                    </div>
+                    <div class="res-stat">
+                        <div class="res-stat-val" id="resFinalStreak">0</div>
+                        <div class="res-stat-label">Best Streak</div>
+                    </div>
+                </div>
+
+                <!-- Discovered Client Info -->
+                <div class="discovered-card">
+                    <div class="discovered-title">🔍 Client Information Discovered</div>
+                    <div id="discoveredInfo"></div>
+                </div>
+
+                <!-- Review -->
+                <div class="review-section">
+                    <div class="review-title">📝 Full Conversation</div>
+                    <div class="review-box" id="reviewBox"></div>
+                </div>
+
+                <button class="restart-btn" onclick="restartGame()">🔄 Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti -->
+    <div class="confetti-box" id="confettiBox"></div>
+
+    <!-- ============================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================== -->
+    <script>
+    // ============================================================
+    // CLIENT SECRET INFO (Teacher knows this, student must discover)
+    // ============================================================
+    const CLIENT_INFO = {
+        name: "Sarah",
+        from: "Philadelphia",
+        livesIn: "Cherry Hill, NJ",
+        yearsHere: "her whole life",
+        likesArea: true
+    };
+
+    // ============================================================
+    // NAIL TECH INFO (Student's character)
+    // ============================================================
+    const TECH_INFO = {
+        name: "Minh",
+        from: "Ho Chi Minh City, Vietnam",
+        livesIn: "Pennsauken, NJ",
+        yearsHere: "5 years",
+        gettingCitizenship: true
+    };
+
+    // ============================================================
+    // MISSION LIST
+    // ============================================================
+    const MISSIONS = [
+        { id: 0, label: "Greet & introduce", icon: "👋" },
+        { id: 1, label: "Client's name", icon: "📛" },
+        { id: 2, label: "Where client is from", icon: "🌍" },
+        { id: 3, label: "Tell where you're from", icon: "🇻🇳" },
+        { id: 4, label: "How long client lived here", icon: "📅" },
+        { id: 5, label: "Share your years here", icon: "🏠" },
+        { id: 6, label: "What area client lives in", icon: "📍" },
+        { id: 7, label: "Share you live nearby", icon: "🤝" },
+    ];
+
+    // ============================================================
+    // GAME STEPS (10 steps)
+    // ============================================================
+    const STEPS = [
+        // STEP 0: Greeting — the client walks in
+        {
+            teacherMsg: "A new client just sat down! Greet her and introduce yourself.",
+            teacherMsgVi: "Một khách hàng mới vừa ngồi xuống! Chào cô ấy và giới thiệu bản thân.",
+            type: "multiple-choice",
+            badge: "ask",
+            instruction: "CHOOSE YOUR GREETING",
+            question: "How should you greet the new client?",
+            questionVi: "Bạn nên chào khách hàng mới như thế nào?",
+            hint: "💡 Be friendly! Say hi and tell your name.",
+            options: [
+                { text: "Hi! Welcome in. My name is Minh. What's your name?", vi: "Xin chào! Mời vào. Tên tôi là Minh. Tên bạn là gì?", correct: true },
+                { text: "Where are you from?", vi: "Bạn đến từ đâu?", correct: false },
+                { text: "What do you want?", vi: "Bạn muốn gì?", correct: false },
+                { text: "Sit down please.", vi: "Mời ngồi.", correct: false },
+            ],
+            correctFeedback: "✅ Great greeting! Friendly and professional!",
+            wrongFeedback: "❌ Start with a warm greeting and introduce your name first!",
+            onCorrect: function() {
+                addChat("tech", "Hi! Welcome in. My name is Minh. What's your name?", "Xin chào! Mời vào. Tên tôi là Minh. Tên bạn là gì?");
+                setTimeout(() => {
+                    addChat("client", `Hi Minh! I'm ${CLIENT_INFO.name}. Nice to meet you!`, `Chào Minh! Tôi là ${CLIENT_INFO.name}. Rất vui được gặp bạn!`);
+                    revealClientInfo("name", CLIENT_INFO.name);
+                }, 800);
+                completeMission(0);
+                completeMission(1);
+            },
+            missions: [0, 1]
+        },
+
+        // STEP 1: Ask where the client is from
+        {
+            teacherMsg: `Good! The client's name is ${CLIENT_INFO.name}. Now ask her where she is from.`,
+            teacherMsgVi: `Tốt! Tên khách hàng là ${CLIENT_INFO.name}. Bây giờ hãy hỏi cô ấy đến từ đâu.`,
+            type: "multiple-choice",
+            badge: "ask",
+            instruction: "ASK THE RIGHT QUESTION",
+            question: `You want to know where ${CLIENT_INFO.name} is from. What do you ask?`,
+            questionVi: `Bạn muốn biết ${CLIENT_INFO.name} đến từ đâu. Bạn hỏi gì?`,
+            hint: "💡 Use 'Where are you from?' to ask about someone's origin.",
+            options: [
+                { text: "Where are you from?", vi: "Bạn đến từ đâu?", correct: true },
+                { text: "Do you live near here?", vi: "Bạn có sống gần đây không?", correct: false },
+                { text: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?", correct: false },
+                { text: "What is your name?", vi: "Tên bạn là gì?", correct: false },
+            ],
+            correctFeedback: `✅ Perfect question! Let's hear where ${CLIENT_INFO.name} is from!`,
+            wrongFeedback: "❌ To find out where someone is from, ask 'Where are you from?'",
+            onCorrect: function() {
+                addChat("tech", "So where are you from, Sarah?", "Vậy bạn đến từ đâu, Sarah?");
+                setTimeout(() => {
+                    addChat("client", `I'm from ${CLIENT_INFO.from}! Born and raised.`, `Tôi đến từ ${CLIENT_INFO.from}! Sinh ra và lớn lên ở đó.`);
+                    revealClientInfo("from", CLIENT_INFO.from);
+                }, 800);
+                completeMission(2);
+            },
+            missions: [2]
+        },
+
+        // STEP 2: Client asks you back — respond about where you're from
+        {
+            teacherMsg: `${CLIENT_INFO.name} says she's from ${CLIENT_INFO.from}. Now she asks YOU "Where are you from?" Tell her!`,
+            teacherMsgVi: `${CLIENT_INFO.name} nói cô ấy đến từ ${CLIENT_INFO.from}. Bây giờ cô ấy hỏi lại BẠN. Hãy trả lời!`,
+            type: "multiple-choice",
+            badge: "respond",
+            instruction: "RESPOND TO THE CLIENT",
+            question: `${CLIENT_INFO.name} asks: "How about you, Minh? Where are you from?"`,
+            questionVi: `${CLIENT_INFO.name} hỏi: "Còn bạn thì sao, Minh? Bạn đến từ đâu?"`,
+            preChat: { speaker: "client", text: "How about you, Minh? Where are you from?", vi: "Còn bạn thì sao, Minh? Bạn đến từ đâu?" },
+            options: [
+                { text: "I am from Vietnam. I'm originally from Ho Chi Minh City.", vi: "Tôi đến từ Việt Nam. Tôi quê ở Thành phố Hồ Chí Minh.", correct: true },
+                { text: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false },
+                { text: "I have been here for 5 years.", vi: "Tôi ở đây được 5 năm.", correct: false },
+                { text: "I like it here very much.", vi: "Tôi rất thích ở đây.", correct: false },
+            ],
+            correctFeedback: '✅ Excellent! You told her about Vietnam and Ho Chi Minh City!',
+            wrongFeedback: '❌ She asked where you\'re FROM — tell her your country and city.',
+            onCorrect: function() {
+                addChat("tech", "I am from Vietnam. I'm originally from Ho Chi Minh City.", "Tôi đến từ Việt Nam. Tôi quê ở Thành phố Hồ Chí Minh.");
+                setTimeout(() => {
+                    addChat("client", "Oh, that's so cool! I've always wanted to visit Vietnam!", "Ồ, tuyệt thật! Tôi luôn muốn đến thăm Việt Nam!");
+                }, 800);
+                completeMission(3);
+            },
+            missions: [3]
+        },
+
+        // STEP 3: Fill blank — "I am ___ Vietnam"
+        {
+            teacherMsg: "Great job sharing about Vietnam! Let's practice the grammar. Fill in the blank.",
+            teacherMsgVi: "Giỏi lắm khi chia sẻ về Việt Nam! Hãy luyện ngữ pháp nào.",
+            type: "fill-blank",
+            badge: "build",
+            instruction: "FILL IN THE BLANK",
+            question: 'Complete: "I am _____ Vietnam."',
+            questionVi: 'Hoàn thành: "Tôi _____ Việt Nam."',
+            hint: "💡 We use this word to talk about our origin country.",
+            sentence: ["I am ", "_BLANK_", " Vietnam."],
+            choices: ["from", "in", "at", "to"],
+            answer: "from",
+            correctFeedback: '✅ "I am FROM Vietnam" — Use "from" for your origin!',
+            wrongFeedback: '❌ We say "I am FROM Vietnam." "From" tells your origin.',
+        },
+
+        // STEP 4: Ask how long client has lived here
+        {
+            teacherMsg: `Now find out how long ${CLIENT_INFO.name} has lived in this area. Ask her!`,
+            teacherMsgVi: `Bây giờ hãy hỏi ${CLIENT_INFO.name} đã sống ở đây bao lâu.`,
+            type: "multiple-choice",
+            badge: "ask",
+            instruction: "ASK THE RIGHT QUESTION",
+            question: `You want to know how long ${CLIENT_INFO.name} has lived here. What do you ask?`,
+            questionVi: `Bạn muốn biết ${CLIENT_INFO.name} đã sống ở đây bao lâu. Bạn hỏi gì?`,
+            hint: "💡 'How long have you...?' asks about duration of time.",
+            options: [
+                { text: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?", correct: true },
+                { text: "Where do you live?", vi: "Bạn sống ở đâu?", correct: false },
+                { text: "Do you like it here?", vi: "Bạn có thích ở đây không?", correct: false },
+                { text: "When did you come here?", vi: "Khi nào bạn đến đây?", correct: false },
+            ],
+            correctFeedback: `✅ Great question! Let's hear ${CLIENT_INFO.name}'s answer.`,
+            wrongFeedback: "❌ 'How long have you lived here?' is the correct way to ask about duration.",
+            onCorrect: function() {
+                addChat("tech", "How long have you lived here?", "Bạn đã sống ở đây bao lâu?");
+                setTimeout(() => {
+                    addChat("client", `Oh, I've lived here ${CLIENT_INFO.yearsHere}! I grew up around here.`, `Ồ, tôi đã sống ở đây ${CLIENT_INFO.yearsHere}! Tôi lớn lên ở quanh đây.`);
+                    revealClientInfo("yearsHere", CLIENT_INFO.yearsHere);
+                }, 800);
+                completeMission(4);
+            },
+            missions: [4]
+        },
+
+        // STEP 5: Client asks how long YOU lived here — respond
+        {
+            teacherMsg: `${CLIENT_INFO.name} has lived here ${CLIENT_INFO.yearsHere}. Now she asks you the same question. Tell her you've been here 5 years!`,
+            teacherMsgVi: `${CLIENT_INFO.name} đã sống ở đây ${CLIENT_INFO.yearsHere}. Bây giờ cô ấy hỏi lại bạn. Nói rằng bạn ở đây 5 năm!`,
+            type: "fill-blank",
+            badge: "respond",
+            instruction: "COMPLETE YOUR RESPONSE",
+            question: `${CLIENT_INFO.name} asks: "How about you? How long have you been in the US?"`,
+            questionVi: `${CLIENT_INFO.name} hỏi: "Còn bạn? Bạn ở Mỹ bao lâu rồi?"`,
+            preChat: { speaker: "client", text: "How about you, Minh? How long have you been in the US?", vi: "Còn bạn, Minh? Bạn ở Mỹ bao lâu rồi?" },
+            hint: "💡 Use 'for' + number of years.",
+            sentence: ["I have lived here ", "_BLANK_", " 5 years. I'm actually getting my citizenship soon!"],
+            choices: ["for", "since", "in", "during"],
+            answer: "for",
+            correctFeedback: '✅ "I have lived here FOR 5 years" — Use "for" + period of time!',
+            wrongFeedback: '❌ Use "FOR" with a period of time (5 years). "Since" is for a specific date.',
+            onCorrectChat: function() {
+                addChat("tech", "I have lived here for 5 years. I'm actually getting my citizenship soon!", "Tôi đã sống ở đây 5 năm. Thực ra tôi sắp được nhập quốc tịch rồi!");
+                setTimeout(() => {
+                    addChat("client", "Oh, congratulations! That's wonderful!", "Ồ, chúc mừng bạn! Tuyệt vời quá!");
+                }, 800);
+                completeMission(5);
+            },
+            missions: [5]
+        },
+
+        // STEP 6: Ask what area client lives in
+        {
+            teacherMsg: `Find out which specific area or neighborhood ${CLIENT_INFO.name} lives in.`,
+            teacherMsgVi: `Hãy hỏi xem ${CLIENT_INFO.name} sống ở khu vực cụ thể nào.`,
+            type: "multiple-choice",
+            badge: "ask",
+            instruction: "ASK THE RIGHT QUESTION",
+            question: `You want to know the specific area ${CLIENT_INFO.name} lives in. What do you ask?`,
+            questionVi: `Bạn muốn biết ${CLIENT_INFO.name} sống ở khu vực cụ thể nào.`,
+            hint: "💡 'What area do you live in?' asks about their neighborhood.",
+            options: [
+                { text: "What area do you live in?", vi: "Bạn sống ở khu vực nào?", correct: true },
+                { text: "Where are you from?", vi: "Bạn đến từ đâu?", correct: false },
+                { text: "Do you like your house?", vi: "Bạn có thích nhà mình không?", correct: false },
+                { text: "How far do you live?", vi: "Bạn sống xa không?", correct: false },
+            ],
+            correctFeedback: "✅ Perfect! Let's hear where she lives.",
+            wrongFeedback: "❌ 'What area do you live in?' asks about the neighborhood/area.",
+            onCorrect: function() {
+                addChat("tech", "What area do you live in?", "Bạn sống ở khu vực nào?");
+                setTimeout(() => {
+                    addChat("client", `I live in ${CLIENT_INFO.livesIn}. It's really nice there.`, `Tôi sống ở ${CLIENT_INFO.livesIn}. Ở đó rất đẹp.`);
+                    revealClientInfo("livesIn", CLIENT_INFO.livesIn);
+                }, 800);
+                completeMission(6);
+            },
+            missions: [6]
+        },
+
+        // STEP 7: Fill blank — "I live ___ Pennsauken"
+        {
+            teacherMsg: `${CLIENT_INFO.name} lives in ${CLIENT_INFO.livesIn} — that's near you! Tell her you live in Pennsauken. It's close by!`,
+            teacherMsgVi: `${CLIENT_INFO.name} sống ở ${CLIENT_INFO.livesIn} — gần bạn đó! Nói cho cô ấy biết bạn sống ở Pennsauken.`,
+            type: "fill-blank",
+            badge: "respond",
+            instruction: "COMPLETE YOUR RESPONSE",
+            question: 'Tell the client where you live:',
+            questionVi: 'Cho khách biết bạn sống ở đâu:',
+            hint: "💡 We use 'in' with cities and neighborhoods.",
+            sentence: ["Oh, I live ", "_BLANK_", " Pennsauken! That's really close to you!"],
+            choices: ["in", "at", "on", "from"],
+            answer: "in",
+            correctFeedback: '✅ "I live IN Pennsauken" — Use "in" for cities & areas!',
+            wrongFeedback: '❌ We say "I live IN [city/area]" — Use "in" for places.',
+            onCorrectChat: function() {
+                addChat("tech", "Oh, I live in Pennsauken! That's really close to you!", "Ồ, tôi sống ở Pennsauken! Gần bạn lắm đó!");
+                setTimeout(() => {
+                    addChat("client", "Oh wow, we're neighbors! That's so funny!", "Ồ, chúng ta là hàng xóm! Vui ghê!");
+                }, 800);
+                completeMission(7);
+            },
+            missions: [7]
+        },
+
+        // STEP 8: Word order — arrange a friendly closing
+        {
+            teacherMsg: "Almost done! Build a nice sentence to keep the conversation going. You're practically neighbors!",
+            teacherMsgVi: "Sắp xong rồi! Hãy xây dựng một câu hay để tiếp tục cuộc trò chuyện.",
+            type: "word-order",
+            badge: "build",
+            instruction: "PUT THE WORDS IN ORDER",
+            question: "Build a friendly response about being neighbors:",
+            questionVi: "Sắp xếp câu thân thiện về việc là hàng xóm:",
+            words: ["That's", "great!", "We", "are", "neighbors!"],
+            answer: "That's great! We are neighbors!",
+            correctFeedback: "✅ 'That's great! We are neighbors!' — Perfect friendly response!",
+            wrongFeedback: "❌ The correct sentence is: 'That's great! We are neighbors!'",
+            onCorrectChat: function() {
+                addChat("tech", "That's great! We are neighbors!", "Tuyệt vời! Chúng ta là hàng xóm!");
+                setTimeout(() => {
+                    addChat("client", "Haha, yes! So, what service would you recommend for me today?", "Haha, đúng vậy! Vậy hôm nay bạn gợi ý dịch vụ gì cho tôi?");
+                }, 800);
+            }
+        },
+
+        // STEP 9: Final — understanding check
+        {
+            teacherMsg: "Last question! Let's check you understood everything about your client.",
+            teacherMsgVi: "Câu hỏi cuối! Kiểm tra xem bạn đã hiểu hết về khách hàng chưa.",
+            type: "multiple-choice",
+            badge: "listen",
+            instruction: "COMPREHENSION CHECK",
+            question: `Based on the conversation, which is TRUE about ${CLIENT_INFO.name}?`,
+            questionVi: `Dựa trên cuộc trò chuyện, điều nào ĐÚNG về ${CLIENT_INFO.name}?`,
+            options: [
+                { text: `She is from ${CLIENT_INFO.from} and lives in ${CLIENT_INFO.livesIn}.`, vi: `Cô ấy đến từ ${CLIENT_INFO.from} và sống ở ${CLIENT_INFO.livesIn}.`, correct: true },
+                { text: "She is from Vietnam and lives in Pennsauken.", vi: "Cô ấy đến từ Việt Nam và sống ở Pennsauken.", correct: false },
+                { text: "She has lived here for 5 years.", vi: "Cô ấy đã sống ở đây 5 năm.", correct: false },
+                { text: `She is from ${CLIENT_INFO.livesIn} and lives in ${CLIENT_INFO.from}.`, vi: `Cô ấy đến từ ${CLIENT_INFO.livesIn} và sống ở ${CLIENT_INFO.from}.`, correct: false },
+            ],
+            correctFeedback: `✅ You got it! ${CLIENT_INFO.name} is from ${CLIENT_INFO.from} and lives in ${CLIENT_INFO.livesIn}. Great listening!`,
+            wrongFeedback: `❌ Remember: ${CLIENT_INFO.name} is FROM ${CLIENT_INFO.from} and LIVES IN ${CLIENT_INFO.livesIn}.`,
+        },
+    ];
+
+    // ============================================================
+    // GAME STATE
+    // ============================================================
+    let currentStep = 0;
+    let score = 0;
+    let streak = 0;
+    let bestStreak = 0;
+    let correctCount = 0;
+    let totalAnswered = 0;
+    let missionsCompleted = new Set();
+    let chatHistory = [];
+    let discoveredInfo = {};
+    let selectedBuilderWords = [];
+
+    // ============================================================
+    // INIT / START
+    // ============================================================
+    function startGame() {
+        document.getElementById("startScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "block";
+        renderMiniMission();
+        loadStep();
+    }
+
+    function restartGame() {
+        currentStep = 0;
+        score = 0;
+        streak = 0;
+        bestStreak = 0;
+        correctCount = 0;
+        totalAnswered = 0;
+        missionsCompleted = new Set();
+        chatHistory = [];
+        discoveredInfo = {};
+        selectedBuilderWords = [];
+
+        document.getElementById("resultsScreen").style.display = "none";
+        document.getElementById("startScreen").style.display = "block";
+        document.getElementById("gameScreen").style.display = "none";
+        document.getElementById("chatBody").innerHTML = "";
+
+        // Reset start mission checks
+        MISSIONS.forEach((m, i) => {
+            const el = document.getElementById(`startMission${i}`);
+            if (el) { el.classList.remove("completed"); el.querySelector(".mission-check").textContent = ""; }
+        });
+
+        document.getElementById("clientMiniName").textContent = "Client";
+        document.getElementById("clientMiniDetail").textContent = "New customer";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ============================================================
+    // LOAD STEP
+    // ============================================================
+    function loadStep() {
+        if (currentStep >= STEPS.length) {
+            showResults();
+            return;
+        }
+
+        const step = STEPS[currentStep];
+        updateProgress();
+        updateTeacher(step.teacherMsg, step.teacherMsgVi);
+
+        // Pre-chat from client
+        if (step.preChat) {
+            setTimeout(() => {
+                addChat(step.preChat.speaker === "client" ? "client" : "tech", step.preChat.text, step.preChat.vi);
+                setTimeout(() => renderQuestion(step), 500);
+            }, 400);
+        } else {
+            setTimeout(() => renderQuestion(step), 300);
+        }
+    }
+
+    // ============================================================
+    // UPDATE UI
+    // ============================================================
+    function updateProgress() {
+        const pct = (currentStep / STEPS.length) * 100;
+        document.getElementById("progFill").style.width = pct + "%";
+        document.getElementById("progText").textContent = `Step ${currentStep + 1}/${STEPS.length}`;
+        document.getElementById("progScore").textContent = `⭐ ${score}`;
+    }
+
+    function updateTeacher(msg, vi) {
+        const banner = document.getElementById("teacherBanner");
+        document.getElementById("teacherMsg").textContent = msg;
+        document.getElementById("teacherMsgVi").textContent = vi || "";
+        banner.style.animation = "none";
+        banner.offsetHeight;
+        banner.style.animation = "slideDown 0.4s ease";
+    }
+
+    function renderMiniMission() {
+        const container = document.getElementById("miniMission");
+        container.innerHTML = '<span class="mini-mission-label">🎯 MISSIONS:</span>';
+        MISSIONS.forEach(m => {
+            const dot = document.createElement("div");
+            dot.className = "mini-mission-dot" + (missionsCompleted.has(m.id) ? " done" : "");
+            dot.id = `miniDot${m.id}`;
+            dot.innerHTML = `${missionsCompleted.has(m.id) ? "✓" : ""}<div class="dot-tooltip">${m.icon} ${m.label}</div>`;
+            container.appendChild(dot);
+        });
+    }
+
+    function completeMission(id) {
+        missionsCompleted.add(id);
+        const dot = document.getElementById(`miniDot${id}`);
+        if (dot) {
+            dot.classList.add("done");
+            dot.innerHTML = `✓<div class="dot-tooltip">${MISSIONS[id].icon} ${MISSIONS[id].label}</div>`;
+        }
+        const startEl = document.getElementById(`startMission${id}`);
+        if (startEl) {
+            startEl.classList.add("completed");
+            startEl.querySelector(".mission-check").textContent = "✓";
+        }
+    }
+
+    function revealClientInfo(key, value) {
+        discoveredInfo[key] = value;
+        if (key === "name") {
+            document.getElementById("clientMiniName").textContent = value;
+            document.getElementById("clientMiniDetail").textContent = "Customer";
+        }
+    }
+
+    // ============================================================
+    // ADD CHAT MESSAGE
+    // ============================================================
+    function addChat(speaker, text, vi) {
+        const chatBody = document.getElementById("chatBody");
+        const isClient = speaker === "client";
+        const cls = isClient ? "from-client" : "from-tech";
+        const avatar = isClient ? "👩" : "💅";
+        const label = isClient ? "Client" : "You (Minh)";
+
+        const msg = document.createElement("div");
+        msg.className = `chat-msg ${cls}`;
+        msg.innerHTML = `
+            <div class="chat-msg-avatar">${avatar}</div>
+            <div class="chat-msg-content">
+                <div class="chat-msg-label">${label}</div>
+                <div class="chat-msg-bubble">${text}</div>
+                ${vi ? `<div class="chat-msg-vi">${vi}</div>` : ""}
+            </div>
+        `;
+        chatBody.appendChild(msg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        chatHistory.push({ speaker, text, vi });
+    }
+
+    // ============================================================
+    // RENDER QUESTIONS
+    // ============================================================
+    function renderQuestion(step) {
+        switch (step.type) {
+            case "multiple-choice": renderMC(step); break;
+            case "fill-blank": renderFB(step); break;
+            case "word-order": renderWO(step); break;
+        }
+    }
+
+    // --- MULTIPLE CHOICE ---
+    function renderMC(step) {
+        const panel = document.getElementById("questionPanel");
+        const letters = ["A", "B", "C", "D"];
+        const shuffled = [...step.options].sort(() => Math.random() - 0.5);
+
+        let optsHTML = shuffled.map((o, i) => `
+            <button class="opt-btn" data-correct="${o.correct}" onclick="handleMC(this, ${currentStep})">
+                <span class="opt-letter">${letters[i]}</span>
+                <span>
+                    ${o.text}
+                    ${o.vi ? `<span class="opt-vi">${o.vi}</span>` : ""}
+                </span>
+            </button>
+        `).join("");
+
+        panel.innerHTML = `
+            <span class="q-type-badge ${step.badge}">${step.badge === 'ask' ? '🗣 Ask' : step.badge === 'respond' ? '💬 Respond' : step.badge === 'listen' ? '👂 Listen' : '🔨 Build'}</span>
+            <div class="q-instruction">${step.instruction}</div>
+            <div class="q-main">${step.question}</div>
+            <div class="q-vi">${step.questionVi || ""}</div>
+            ${step.hint ? `<div class="q-hint">${step.hint}</div>` : ""}
+            <div class="options-list">${optsHTML}</div>
+            <div class="feedback-box" id="fb"></div>
+            <button class="continue-btn" id="contBtn" onclick="goNext()">Continue ➜</button>
+        `;
+        }
+
+    function handleMC(btn, stepIdx) {
+        const step = STEPS[stepIdx];
+        const allBtns = document.querySelectorAll(".opt-btn");
+        allBtns.forEach(b => b.classList.add("locked"));
+
+        totalAnswered++;
+        const isCorrect = btn.dataset.correct === "true";
+
+        if (isCorrect) {
+            btn.classList.add("correct-opt");
+            streak++;
+            if (streak > bestStreak) bestStreak = streak;
+            correctCount++;
+            score += 10 + (streak > 1 ? streak * 2 : 0);
+            showFeedback(step.correctFeedback, true);
+            burstConfetti();
+
+            // Show correct answer in chat
+            if (step.onCorrect) {
+                setTimeout(() => step.onCorrect(), 600);
+            }
+        } else {
+            btn.classList.add("wrong-opt");
+            streak = 0;
+            // Highlight correct
+            allBtns.forEach(b => {
+                if (b.dataset.correct === "true") b.classList.add("correct-opt");
+            });
+            showFeedback(step.wrongFeedback, false);
+
+            // Still show the correct chat after wrong answer
+            if (step.onCorrect) {
+                setTimeout(() => step.onCorrect(), 1000);
+            }
+        }
+
+        updateProgress();
+        document.getElementById("contBtn").classList.add("show");
+    }
+
+    // --- FILL IN THE BLANK ---
+    function renderFB(step) {
+        const panel = document.getElementById("questionPanel");
+
+        let sentenceHTML = step.sentence.map(part => {
+            if (part === "_BLANK_") {
+                return `<span class="blank-box" id="blankBox">___</span>`;
+            }
+            return `<span>${part}</span>`;
+        }).join("");
+
+        const shuffled = [...step.choices].sort(() => Math.random() - 0.5);
+        let chipsHTML = shuffled.map(word => `
+            <button class="chip" onclick="handleFB(this, '${word}', ${currentStep})">${word}</button>
+        `).join("");
+
+        panel.innerHTML = `
+            <span class="q-type-badge ${step.badge}">${step.badge === 'respond' ? '💬 Respond' : '🔨 Build'}</span>
+            <div class="q-instruction">${step.instruction}</div>
+            <div class="q-main">${step.question}</div>
+            <div class="q-vi">${step.questionVi || ""}</div>
+            ${step.hint ? `<div class="q-hint">${step.hint}</div>` : ""}
+            <div class="fill-sentence">${sentenceHTML}</div>
+            <div class="chips-row">${chipsHTML}</div>
+            <div class="feedback-box" id="fb"></div>
+            <button class="continue-btn" id="contBtn" onclick="goNext()">Continue ➜</button>
+        `;
+    }
+
+    function handleFB(chip, word, stepIdx) {
+        const step = STEPS[stepIdx];
+        const allChips = document.querySelectorAll(".chip");
+        allChips.forEach(c => c.classList.add("chip-used"));
+
+        const blankBox = document.getElementById("blankBox");
+        blankBox.textContent = word;
+        blankBox.classList.add("filled-in");
+
+        totalAnswered++;
+        const isCorrect = word === step.answer;
+
+        if (isCorrect) {
+            chip.classList.remove("chip-used");
+            chip.classList.add("chip-correct");
+            blankBox.classList.add("blank-correct");
+            streak++;
+            if (streak > bestStreak) bestStreak = streak;
+            correctCount++;
+            score += 10 + (streak > 1 ? streak * 2 : 0);
+            showFeedback(step.correctFeedback, true);
+            burstConfetti();
+
+            // Add chat and complete missions
+            if (step.onCorrectChat) {
+                setTimeout(() => step.onCorrectChat(), 600);
+            }
+            if (step.missions) {
+                step.missions.forEach(m => completeMission(m));
+            }
+        } else {
+            chip.classList.remove("chip-used");
+            chip.classList.add("chip-wrong");
+            blankBox.classList.add("blank-wrong");
+            streak = 0;
+            // Highlight correct chip
+            allChips.forEach(c => {
+                if (c.textContent === step.answer) {
+                    c.classList.remove("chip-used");
+                    c.classList.add("chip-correct");
+                }
+            });
+            showFeedback(step.wrongFeedback, false);
+
+            // Still add correct chat after wrong
+            if (step.onCorrectChat) {
+                setTimeout(() => step.onCorrectChat(), 1000);
+            }
+            if (step.missions) {
+                step.missions.forEach(m => completeMission(m));
+            }
+        }
+
+        updateProgress();
+        document.getElementById("contBtn").classList.add("show");
+    }
+
+    // --- WORD ORDER ---
+    function renderWO(step) {
+        const panel = document.getElementById("questionPanel");
+        selectedBuilderWords = [];
+
+        const shuffled = [...step.words].sort(() => Math.random() - 0.5);
+
+        let chipsHTML = shuffled.map((word, i) => `
+            <button class="chip" id="woChip${i}" data-word="${word}" data-idx="${i}" onclick="toggleWOWord(this)">${word}</button>
+        `).join("");
+
+        panel.innerHTML = `
+            <span class="q-type-badge ${step.badge}">${step.badge === 'build' ? '🔨 Build' : '💬 Respond'}</span>
+            <div class="q-instruction">${step.instruction}</div>
+            <div class="q-main">${step.question}</div>
+            <div class="q-vi">${step.questionVi || ""}</div>
+            <div class="word-builder" id="wordBuilder">
+                <span class="builder-placeholder">Tap words in the correct order...</span>
+            </div>
+            <div class="chips-row" id="woChips">${chipsHTML}</div>
+            <button class="check-order-btn" id="checkOrderBtn" onclick="checkWO(${currentStep})" disabled>✓ Check Answer</button>
+            <div class="feedback-box" id="fb"></div>
+            <button class="continue-btn" id="contBtn" onclick="goNext()">Continue ➜</button>
+        `;
+    }
+
+    function toggleWOWord(chip) {
+        const word = chip.dataset.word;
+        const idx = chip.dataset.idx;
+
+        if (chip.classList.contains("chip-used")) {
+            // Remove from builder
+            chip.classList.remove("chip-used");
+            selectedBuilderWords = selectedBuilderWords.filter(w => w.idx !== idx);
+        } else {
+            chip.classList.add("chip-used");
+            selectedBuilderWords.push({ word: word, idx: idx, element: chip });
+        }
+        updateBuilder();
+    }
+
+    function updateBuilder() {
+        const builder = document.getElementById("wordBuilder");
+        const checkBtn = document.getElementById("checkOrderBtn");
+
+        if (selectedBuilderWords.length === 0) {
+            builder.innerHTML = '<span class="builder-placeholder">Tap words in the correct order...</span>';
+            checkBtn.disabled = true;
+        } else {
+            builder.innerHTML = selectedBuilderWords.map((w, i) => `
+                <span class="builder-word" onclick="removeBuilderWord(${i})">${w.word}</span>
+            `).join("");
+            checkBtn.disabled = false;
+        }
+    }
+
+    function removeBuilderWord(index) {
+        const removed = selectedBuilderWords.splice(index, 1)[0];
+        if (removed && removed.element) {
+            removed.element.classList.remove("chip-used");
+        }
+        updateBuilder();
+    }
+
+    function checkWO(stepIdx) {
+        const step = STEPS[stepIdx];
+        const userAnswer = selectedBuilderWords.map(w => w.word).join(" ");
+        const builder = document.getElementById("wordBuilder");
+        const checkBtn = document.getElementById("checkOrderBtn");
+
+        // Disable everything
+        checkBtn.disabled = true;
+        checkBtn.style.pointerEvents = "none";
+        document.querySelectorAll(".chip").forEach(c => c.style.pointerEvents = "none");
+        document.querySelectorAll(".builder-word").forEach(w => w.style.cursor = "default");
+
+        totalAnswered++;
+        const isCorrect = userAnswer === step.answer;
+
+        if (isCorrect) {
+            builder.classList.add("builder-correct");
+            streak++;
+            if (streak > bestStreak) bestStreak = streak;
+            correctCount++;
+            score += 15 + (streak > 1 ? streak * 2 : 0);
+            showFeedback(step.correctFeedback, true);
+            burstConfetti();
+
+            if (step.onCorrectChat) {
+                setTimeout(() => step.onCorrectChat(), 600);
+            }
+            if (step.missions) {
+                step.missions.forEach(m => completeMission(m));
+            }
+        } else {
+            builder.classList.add("builder-wrong");
+            streak = 0;
+            showFeedback(step.wrongFeedback + `<div class="fb-explain">Correct: "${step.answer}"</div>`, false);
+
+            if (step.onCorrectChat) {
+                setTimeout(() => step.onCorrectChat(), 1000);
+            }
+            if (step.missions) {
+                step.missions.forEach(m => completeMission(m));
+            }
+        }
+
+        updateProgress();
+        document.getElementById("contBtn").classList.add("show");
+    }
+
+    // ============================================================
+    // GO NEXT
+    // ============================================================
+    function goNext() {
+        currentStep++;
+        if (currentStep >= STEPS.length) {
+            showResults();
+        } else {
+            loadStep();
+        }
+        // Scroll to top of game
+        document.getElementById("gameScreen").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    // ============================================================
+    // FEEDBACK
+    // ============================================================
+    function showFeedback(message, isCorrect) {
+        const fb = document.getElementById("fb");
+        fb.className = `feedback-box ${isCorrect ? "fb-correct" : "fb-wrong"}`;
+        fb.innerHTML = message;
+    }
+
+    // ============================================================
+    // CONFETTI
+    // ============================================================
+    function burstConfetti() {
+        const container = document.getElementById("confettiBox");
+        const colors = ["#ff6b6b", "#feca57", "#48dbfb", "#ff9ff3", "#54a0ff", "#5f27cd", "#00d2d3", "#1dd1a1", "#fdcb6e", "#e17055"];
+
+        for (let i = 0; i < 25; i++) {
+            const bit = document.createElement("div");
+            bit.className = "confetti-bit";
+            bit.style.left = (Math.random() * 100) + "%";
+            bit.style.background = colors[Math.floor(Math.random() * colors.length)];
+            bit.style.animationDuration = (2 + Math.random() * 2) + "s";
+            bit.style.animationDelay = (Math.random() * 0.5) + "s";
+            bit.style.width = (6 + Math.random() * 8) + "px";
+            bit.style.height = (6 + Math.random() * 8) + "px";
+            bit.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+            container.appendChild(bit);
+            setTimeout(() => bit.remove(), 4500);
+        }
+    }
+
+    // ============================================================
+    // RESULTS SCREEN
+    // ============================================================
+    function showResults() {
+        document.getElementById("gameScreen").style.display = "none";
+        document.getElementById("resultsScreen").style.display = "block";
+        document.getElementById("resultsScreen").scrollIntoView({ behavior: "smooth" });
+
+        const pct = totalAnswered > 0 ? (correctCount / totalAnswered) * 100 : 0;
+        const missionPct = (missionsCompleted.size / MISSIONS.length) * 100;
+
+        let icon, title, sub, stars;
+        if (pct >= 90 && missionPct >= 90) {
+            icon = "🏆"; title = "Perfect Conversation!"; sub = "You're a small talk master!"; stars = "⭐⭐⭐";
+        } else if (pct >= 70) {
+            icon = "🎉"; title = "Great Job!"; sub = "You learned a lot about your client!"; stars = "⭐⭐";
+        } else if (pct >= 50) {
+            icon = "👍"; title = "Good Try!"; sub = "Keep practicing your small talk!"; stars = "⭐";
+        } else {
+            icon = "📚"; title = "Keep Learning!"; sub = "Practice makes perfect!"; stars = "💪";
+        }
+
+        document.getElementById("resIcon").textContent = icon;
+        document.getElementById("resTitle").textContent = title;
+        document.getElementById("resSub").textContent = sub;
+        document.getElementById("resStars").textContent = stars;
+        document.getElementById("resFinalScore").textContent = score;
+        document.getElementById("resFinalCorrect").textContent = `${correctCount}/${totalAnswered}`;
+        document.getElementById("resFinalStreak").textContent = bestStreak;
+
+        // Discovered info card
+        const infoBox = document.getElementById("discoveredInfo");
+        const infoRows = [
+            { label: "👤 Name", key: "name" },
+            { label: "🌍 From", key: "from" },
+            { label: "📍 Lives in", key: "livesIn" },
+            { label: "📅 Years here", key: "yearsHere" },
+        ];
+
+        infoBox.innerHTML = infoRows.map(r => {
+            const found = discoveredInfo[r.key];
+            return `
+                <div class="discovered-row">
+                    <span class="discovered-label">${r.label}</span>
+                    <span class="discovered-val ${found ? '' : 'not-found'}">${found || "Not discovered"}</span>
+                </div>
+            `;
+        }).join("");
+
+        // Mission summary
+        infoBox.innerHTML += `
+            <div class="discovered-row" style="margin-top: 8px; border-top: 2px solid rgba(0,0,0,0.1); padding-top: 10px;">
+                <span class="discovered-label">🎯 Missions</span>
+                <span class="discovered-val">${missionsCompleted.size}/${MISSIONS.length} completed</span>
+            </div>
+        `;
+
+        // Review conversation
+        const reviewBox = document.getElementById("reviewBox");
+        reviewBox.innerHTML = chatHistory.map(msg => {
+            const isClient = msg.speaker === "client";
+            const speakerLabel = isClient ? "👩 Client" : "💅 You (Minh)";
+            const speakerClass = isClient ? "r-client" : "r-tech";
+            return `
+                <div class="review-line">
+                    <span class="r-speaker ${speakerClass}">${speakerLabel}:</span>
+                    ${msg.text}
+                    ${msg.vi ? `<span class="r-vi">${msg.vi}</span>` : ""}
+                </div>
+            `;
+        }).join("");
+
+        // If no chat history, show a default
+        if (chatHistory.length === 0) {
+            reviewBox.innerHTML = '<div class="review-line" style="text-align:center;color:#999;">No conversation recorded. Try again!</div>';
+        }
+
+        // Big confetti for good results
+        if (pct >= 70) {
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => burstConfetti(), i * 400);
+            }
+        }
+    }
+
+    </script>
+</body>
+</html>
