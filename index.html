@@ -3,879 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💅 Nail Salon - Where Are You From?</title>
+    <title>💅 Nail Salon English Game</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(180deg, #ffecd2 0%, #fcb69f 100%); min-height: 100vh; }
 
-        .header { background: linear-gradient(135deg, #e8594f, #d94440); padding: 14px 20px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100; }
-        .header h1 { font-size: 20px; font-weight: 900; }
-        .header p { font-size: 11px; opacity: 0.85; margin-top: 2px; }
-        .main { max-width: 680px; margin: 0 auto; padding: 12px; }
+        .header { background: linear-gradient(135deg, #e8594f, #d94440); padding: 20px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .header h1 { font-size: 24px; font-weight: 900; }
+        .header p { font-size: 13px; opacity: 0.85; margin-top: 2px; }
 
-        .screen { display: none; }
-        .screen.active { display: block; }
+        .main { max-width: 700px; margin: 0 auto; padding: 20px 14px; }
 
-        /* START SCREEN */
-        .start-card { background: white; border-radius: 24px; padding: 28px 22px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); text-align: center; }
-        .start-icon { font-size: 48px; margin-bottom: 8px; }
-        .start-title { font-size: 24px; font-weight: 900; color: #2d3436; }
-        .start-title-vi { font-size: 14px; color: #b2bec3; font-style: italic; margin: 4px 0 14px; }
-        .start-desc { font-size: 13px; color: #636e72; line-height: 1.7; background: #f8f9ff; border-radius: 12px; padding: 14px 16px; text-align: left; margin-bottom: 16px; }
-        .start-desc strong { color: #2d3436; }
-
-        .profiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
-        .profile { border-radius: 16px; padding: 14px; text-align: center; }
-        .profile.you-profile { background: linear-gradient(135deg, #ffeaa7, #fdcb6e); border: 3px solid #f9ca24; }
-        .profile.client-profile { background: linear-gradient(135deg, #dfe6e9, #b2bec3); border: 3px solid #b2bec3; }
-        .profile-emoji { font-size: 32px; }
-        .profile-role { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin: 4px 0; }
-        .you-profile .profile-role { color: #d35400; }
-        .client-profile .profile-role { color: #636e72; }
-        .profile-name { font-size: 15px; font-weight: 900; color: #2d3436; }
-        .profile-details { text-align: left; margin-top: 8px; font-size: 11px; }
-        .p-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dashed rgba(0,0,0,0.08); }
-        .p-label { color: #636e72; font-weight: 700; }
-        .p-val { font-weight: 800; color: #2d3436; text-align: right; max-width: 55%; }
-        .p-val.unknown { color: #b2bec3; font-style: italic; font-weight: 600; }
-
-        .rules-box { background: linear-gradient(135deg, #6c5ce7, #a29bfe); border-radius: 14px; padding: 16px; color: white; text-align: left; margin: 16px 0; }
-        .rules-box h3 { font-size: 13px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-        .rule-item { font-size: 12px; font-weight: 600; padding: 3px 0; display: flex; align-items: center; gap: 8px; opacity: 0.9; }
-
-        .start-btn { padding: 16px 50px; border: none; border-radius: 16px; background: linear-gradient(135deg, #e8594f, #d94440); color: white; font-family: 'Nunito', sans-serif; font-size: 19px; font-weight: 900; cursor: pointer; box-shadow: 0 6px 20px rgba(232,89,79,0.4); transition: all 0.25s ease; margin-top: 8px; }
-        .start-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(232,89,79,0.5); }
-
-        /* GAME SCREEN */
-        .top-bar { display: flex; align-items: center; gap: 10px; background: white; border-radius: 14px; padding: 10px 14px; margin-bottom: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
-        .top-step { font-size: 12px; font-weight: 800; color: #636e72; white-space: nowrap; }
-        .top-track { flex: 1; height: 8px; background: #eee; border-radius: 8px; overflow: hidden; }
-        .top-fill { height: 100%; background: linear-gradient(90deg, #00b894, #55efc4); border-radius: 8px; transition: width 0.5s; width: 0%; }
-        .top-score { font-size: 13px; font-weight: 900; color: #f39c12; white-space: nowrap; }
-        .top-streak { font-size: 12px; font-weight: 800; color: #e17055; white-space: nowrap; }
-
-        .mini-profiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-        .mini-p { background: white; border-radius: 10px; padding: 8px 10px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
-        .mini-p-emoji { font-size: 20px; }
-        .mini-p-name { font-size: 12px; font-weight: 900; color: #2d3436; }
-        .mini-p-sub { font-size: 10px; color: #b2bec3; font-weight: 600; }
-
-        .discovery-bar { background: linear-gradient(135deg, #2d3436, #636e72); border-radius: 10px; padding: 8px 12px; margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-        .disc-label { font-size: 10px; font-weight: 800; color: #ffeaa7; letter-spacing: 0.5px; margin-right: 2px; }
-        .disc-tag { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.4); transition: all 0.4s ease; }
-        .disc-tag.found { border-color: #00b894; color: #55efc4; background: rgba(0,184,148,0.15); animation: tagPop 0.4s ease; }
-        @keyframes tagPop { 0%{transform:scale(0.8)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
-
-        .teacher-panel { background: linear-gradient(135deg, #6c5ce7, #a29bfe); border-radius: 14px; padding: 14px 16px; color: white; display: flex; gap: 12px; margin-bottom: 8px; box-shadow: 0 4px 14px rgba(108,92,231,0.3); animation: panelIn 0.4s ease; }
-        @keyframes panelIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
-        .teacher-ava { width: 42px; height: 42px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-        .teacher-body { flex: 1; }
-        .teacher-tag { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.6; margin-bottom: 3px; }
-        .teacher-txt { font-size: 13px; font-weight: 700; line-height: 1.5; }
-        .teacher-vi { font-size: 11px; opacity: 0.7; font-style: italic; margin-top: 3px; }
-
-        .chat-win { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 6px 25px rgba(0,0,0,0.08); margin-bottom: 8px; }
-        .chat-top { background: linear-gradient(135deg, #fd79a8, #e84393); padding: 10px 16px; color: white; display: flex; align-items: center; gap: 8px; }
-        .chat-top-icon { font-size: 18px; }
-        .chat-top-title { font-weight: 800; font-size: 13px; }
-        .chat-body { padding: 14px; max-height: 320px; overflow-y: auto; min-height: 60px; scroll-behavior: smooth; }
-
-        .c-msg { display: flex; gap: 8px; margin-bottom: 10px; animation: msgSlide 0.35s ease; }
-        @keyframes msgSlide { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-        .c-msg.c-client { flex-direction: row; }
-        .c-msg.c-tech { flex-direction: row-reverse; }
-        .c-ava { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-        .c-client .c-ava { background: linear-gradient(135deg, #74b9ff, #0984e3); }
-        .c-tech .c-ava { background: linear-gradient(135deg, #ffeaa7, #fdcb6e); }
-        .c-content { max-width: 75%; }
-        .c-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; padding: 0 4px; }
-        .c-client .c-label { color: #0984e3; }
-        .c-tech .c-label { color: #e17055; text-align: right; }
-        .c-bubble { padding: 9px 14px; border-radius: 14px; font-size: 13px; font-weight: 600; line-height: 1.5; }
-        .c-client .c-bubble { background: #f0f4ff; color: #2d3436; border-bottom-left-radius: 4px; }
-        .c-tech .c-bubble { background: linear-gradient(135deg, #fdcb6e, #f9ca24); color: #2d3436; border-bottom-right-radius: 4px; }
-        .c-vi { font-size: 10px; color: #b2bec3; font-style: italic; margin-top: 2px; padding: 0 4px; }
-        .c-tech .c-vi { text-align: right; }
-
-        /* QUESTION PANEL */
-        .q-panel { background: white; border-radius: 18px; padding: 20px; box-shadow: 0 6px 25px rgba(0,0,0,0.08); }
-
-        .q-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-        .q-badge.ask { background: #e8f4fd; color: #0984e3; }
-        .q-badge.respond { background: #fef9e7; color: #d35400; }
-        .q-badge.understand { background: #eafaf1; color: #1e8449; }
-        .q-badge.grammar { background: #f4ecf7; color: #7d3c98; }
-
-        .q-instruction { font-size: 11px; font-weight: 800; color: #e8594f; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .q-prompt { font-size: 15px; font-weight: 800; color: #2d3436; margin-bottom: 2px; line-height: 1.4; }
-        .q-prompt-vi { font-size: 12px; color: #b2bec3; font-style: italic; margin-bottom: 12px; }
-
-        /* OPTIONS */
-        .options-list { display: flex; flex-direction: column; gap: 8px; }
-
-        .opt-btn {
-            width: 100%; padding: 12px 16px; border: 3px solid #eee; border-radius: 14px;
-            background: white; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
-            color: #2d3436; cursor: pointer; transition: all 0.2s ease; text-align: left;
-            display: flex; align-items: flex-start; gap: 10px;
+        /* TOPIC CARD */
+        .topic-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px; padding: 24px; text-align: center;
+            color: white; margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
         }
-        .opt-btn:hover:not(.locked) { border-color: #667eea; background: #f8f9ff; transform: translateY(-1px); }
+        .topic-icon { font-size: 44px; margin-bottom: 6px; }
+        .topic-title { font-size: 22px; font-weight: 900; }
+        .topic-title-vi { font-size: 14px; opacity: 0.8; font-style: italic; margin-top: 2px; }
+        .topic-desc { font-size: 13px; opacity: 0.75; margin-top: 10px; line-height: 1.6; }
 
-        .opt-letter {
-            width: 28px; height: 28px; border-radius: 50%; background: #f0f0f0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: 900; color: #999; flex-shrink: 0; margin-top: 1px;
+        /* SECTION TITLE */
+        .section-title { font-size: 16px; font-weight: 900; color: #2d3436; margin-bottom: 14px; text-align: center; }
+
+        /* ROLE CARDS */
+        .role-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+
+        .role-card {
+            background: white; border-radius: 20px; padding: 24px 18px;
+            text-align: center; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border: 4px solid transparent;
+            position: relative; overflow: hidden;
         }
+        .role-card:hover { transform: translateY(-6px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
 
-        .opt-text { flex: 1; }
-        .opt-en { display: block; }
-        .opt-vi { display: block; font-size: 11px; color: #b2bec3; font-style: italic; margin-top: 2px; }
+        .role-card.tech-role { border-color: #fdcb6e; }
+        .role-card.tech-role:hover { border-color: #f9ca24; background: #fffdf5; }
 
-        .opt-btn.correct-opt { border-color: #00b894; background: #f0fff4; animation: popCorrect 0.5s ease; }
-        .opt-btn.correct-opt .opt-letter { background: #00b894; color: white; }
-        @keyframes popCorrect { 0%{transform:scale(1)} 50%{transform:scale(1.02)} 100%{transform:scale(1)} }
+        .role-card.client-role { border-color: #74b9ff; }
+        .role-card.client-role:hover { border-color: #0984e3; background: #f5faff; }
 
-        .opt-btn.wrong-opt { border-color: #ff6b6b; background: #fff5f5; animation: shake 0.5s ease; }
-        .opt-btn.wrong-opt .opt-letter { background: #ff6b6b; color: white; }
-        @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+        .role-emoji { font-size: 50px; margin-bottom: 8px; }
+        .role-badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .tech-role .role-badge { background: #fef9e7; color: #d35400; }
+        .client-role .role-badge { background: #e8f4fd; color: #0984e3; }
 
-        .opt-btn.locked { cursor: not-allowed; opacity: 0.5; }
+        .role-name { font-size: 18px; font-weight: 900; color: #2d3436; }
+        .role-char { font-size: 13px; color: #636e72; font-weight: 700; margin: 2px 0 10px; }
 
-        /* FEEDBACK */
-        .fb-box { margin-top: 12px; padding: 12px 16px; border-radius: 12px; font-weight: 700; font-size: 13px; line-height: 1.5; display: none; animation: msgSlide 0.3s ease; }
-        .fb-box.fb-ok { display: block; background: linear-gradient(135deg, #d5f5e3, #a9dfbf); color: #1e8449; }
-        .fb-box.fb-wrong { display: block; background: linear-gradient(135deg, #fadbd8, #f5b7b1); color: #c0392b; }
-        .fb-extra { font-size: 12px; margin-top: 4px; opacity: 0.8; }
+        .role-desc { font-size: 12px; color: #999; line-height: 1.6; margin-bottom: 12px; text-align: left; background: #f8f9ff; padding: 10px 12px; border-radius: 10px; }
+        .role-desc strong { color: #2d3436; }
 
-        .cont-btn { display: none; width: 100%; margin-top: 10px; padding: 13px; border: none; border-radius: 14px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 900; cursor: pointer; box-shadow: 0 4px 14px rgba(102,126,234,0.3); transition: all 0.2s; }
-        .cont-btn.show { display: block; }
-        .cont-btn:hover { transform: translateY(-1px); }
+        .role-info { text-align: left; font-size: 11px; }
+        .role-info-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dashed rgba(0,0,0,0.06); }
+        .role-info-label { color: #999; font-weight: 700; }
+        .role-info-val { font-weight: 800; color: #2d3436; }
 
-        /* GRAMMAR TIP */
-        .grammar-tip { background: #f4ecf7; border-left: 4px solid #a29bfe; border-radius: 10px; padding: 10px 14px; margin-top: 10px; font-size: 12px; color: #6c3483; line-height: 1.5; display: none; animation: msgSlide 0.3s ease; }
-        .grammar-tip.show { display: block; }
-        .grammar-tip strong { color: #5b2c6f; }
+        .play-btn {
+            display: inline-block; margin-top: 14px; padding: 10px 24px;
+            border: none; border-radius: 12px; font-family: 'Nunito', sans-serif;
+            font-size: 14px; font-weight: 900; color: white; cursor: pointer;
+            transition: all 0.2s; text-decoration: none;
+        }
+        .tech-role .play-btn { background: linear-gradient(135deg, #f9ca24, #f0932b); box-shadow: 0 4px 12px rgba(249,202,36,0.4); }
+        .client-role .play-btn { background: linear-gradient(135deg, #74b9ff, #0984e3); box-shadow: 0 4px 12px rgba(9,132,227,0.4); }
+        .play-btn:hover { transform: translateY(-2px); }
 
-        /* RESULTS */
-        .result-card { background: white; border-radius: 24px; padding: 32px 22px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-        .r-icon { font-size: 52px; margin-bottom: 6px; }
-        .r-title { font-size: 24px; font-weight: 900; color: #2d3436; }
-        .r-sub { font-size: 13px; color: #999; margin: 4px 0 14px; }
-        .r-stars { font-size: 34px; letter-spacing: 4px; margin-bottom: 14px; }
-        .r-stats { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-        .r-stat { background: #f8f9ff; border-radius: 14px; padding: 12px 18px; min-width: 80px; }
-        .r-stat-v { font-size: 26px; font-weight: 900; color: #667eea; }
-        .r-stat-l { font-size: 10px; color: #999; font-weight: 700; text-transform: uppercase; }
+        /* HOW IT WORKS */
+        .how-card { background: white; border-radius: 20px; padding: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); margin-bottom: 20px; }
+        .how-steps { display: flex; flex-direction: column; gap: 10px; }
+        .how-step { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+        .how-num { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; flex-shrink: 0; }
+        .how-text { font-size: 13px; font-weight: 700; color: #2d3436; }
+        .how-text-vi { font-size: 11px; color: #b2bec3; font-style: italic; }
 
-        .disc-card { background: linear-gradient(135deg, #ffeaa7, #fdcb6e); border-radius: 16px; padding: 18px; margin: 18px 0; text-align: left; }
-        .disc-title { font-size: 15px; font-weight: 900; color: #d35400; text-align: center; margin-bottom: 10px; }
-        .disc-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); font-size: 13px; }
-        .disc-row:last-child { border-bottom: none; }
-        .disc-r-label { font-weight: 700; color: #636e72; }
-        .disc-r-val { font-weight: 900; color: #2d3436; }
-        .disc-r-val.missed { color: #e17055; font-style: italic; }
+        /* KEY PHRASES */
+        .phrases-card { background: white; border-radius: 20px; padding: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        .phrase-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        .phrase-row:last-child { border-bottom: none; }
+        .phrase-en { font-size: 13px; font-weight: 800; color: #2d3436; }
+        .phrase-vi { font-size: 12px; color: #b2bec3; font-style: italic; text-align: right; }
 
-        .review-sec { text-align: left; margin-top: 20px; border-top: 2px solid #f0f0f0; padding-top: 18px; }
-        .review-h { font-size: 15px; font-weight: 900; color: #2d3436; text-align: center; margin-bottom: 12px; }
-        .review-wrap { background: #f8f9ff; border-radius: 14px; padding: 14px; max-height: 400px; overflow-y: auto; }
-        .rev-line { margin-bottom: 8px; padding: 7px 10px; border-radius: 8px; font-size: 12px; line-height: 1.6; }
-        .rev-speaker { font-weight: 900; margin-right: 4px; }
-        .rev-speaker.rev-c { color: #0984e3; }
-        .rev-speaker.rev-t { color: #e84393; }
-        .rev-vi { display: block; font-size: 10px; color: #b2bec3; font-style: italic; margin-top: 1px; }
+        .footer { text-align: center; padding: 20px; font-size: 11px; color: #999; }
+        .footer a { color: #667eea; text-decoration: none; font-weight: 700; }
 
-        .restart-btn { margin-top: 18px; padding: 14px 40px; border: none; border-radius: 14px; background: linear-gradient(135deg, #e8594f, #d94440); color: white; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; box-shadow: 0 4px 15px rgba(232,89,79,0.4); transition: all 0.2s; }
-        .restart-btn:hover { transform: translateY(-2px); }
-
-        .confetti-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; overflow: hidden; }
-        .conf-piece { position: absolute; top: -20px; animation: confDrop 3s ease-in forwards; }
-        @keyframes confDrop { 0%{transform:translateY(0) rotate(0deg);opacity:1} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
-
-        @media (max-width: 480px) {
-            .profiles { grid-template-columns: 1fr; }
-            .header h1 { font-size: 17px; }
-            .q-prompt { font-size: 14px; }
-            .opt-btn { font-size: 13px; padding: 10px 14px; }
-            .r-stats { flex-direction: column; align-items: center; }
+        @media (max-width: 520px) {
+            .role-cards { grid-template-columns: 1fr; }
+            .header h1 { font-size: 20px; }
         }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>💅 Nail Salon — Choose & Chat</h1>
-    <p>Practice Nail Salon Conversations!</p>
+    <h1>💅 Nail Salon English Game</h1>
+    <p>Interactive Conversation Practice</p>
 </div>
 
 <div class="main">
 
-    <!-- ===== START SCREEN ===== -->
-    <div class="screen active" id="startScreen">
-        <div class="start-card">
-            <div class="start-icon">💬💅</div>
-            <div class="start-title">Where Are You From?</div>
-            <div class="start-title-vi">Bạn đến từ đâu?</div>
+    <!-- TOPIC -->
+    <div class="topic-card">
+        <div class="topic-icon">🌍</div>
+        <div class="topic-title">Where Are You From?</div>
+        <div class="topic-title-vi">Bạn đến từ đâu?</div>
+        <div class="topic-desc">Practice asking and answering questions about where you're from, how long you've lived somewhere, and what area you live in.</div>
+    </div>
 
-            <div class="start-desc">
-                🎯 <strong>Your Mission:</strong> You are <strong>Minh</strong>, a Nail Technician from Vietnam 🇻🇳 living in <strong>Pennsauken, NJ</strong>. A new client just sat down!
-                <br><br>
-                👨‍🏫 Your <strong>Teacher</strong> will guide you. <strong>Choose the best response</strong> to keep the conversation going and discover information about your client!
+    <!-- ROLE SELECTION -->
+    <div class="section-title">🎭 Choose Your Role</div>
+
+    <div class="role-cards">
+
+        <!-- NAIL TECH ROLE -->
+        <div class="role-card tech-role" onclick="window.location.href='nail-tech.html'">
+            <div class="role-emoji">💅</div>
+            <div class="role-badge">Role 1</div>
+            <div class="role-name">Nail Technician</div>
+            <div class="role-char">Play as Minh</div>
+            <div class="role-desc">
+                You are <strong>Minh</strong>, a nail tech from Vietnam 🇻🇳. A new client sits down — make small talk and <strong>discover info about your client</strong>!
             </div>
-
-            <div class="profiles">
-                <div class="profile you-profile">
-                    <div class="profile-emoji">💅</div>
-                    <div class="profile-role">You — Nail Tech</div>
-                    <div class="profile-name">Minh</div>
-                    <div class="profile-details">
-                        <div class="p-row"><span class="p-label">From</span><span class="p-val">🇻🇳 Ho Chi Minh City</span></div>
-                        <div class="p-row"><span class="p-label">Lives in</span><span class="p-val">Pennsauken, NJ</span></div>
-                        <div class="p-row"><span class="p-label">Years in US</span><span class="p-val">5 years</span></div>
-                        <div class="p-row"><span class="p-label">Status</span><span class="p-val">Getting citizenship 🇺🇸</span></div>
-                    </div>
-                </div>
-                <div class="profile client-profile">
-                    <div class="profile-emoji">👩</div>
-                    <div class="profile-role">Client</div>
-                    <div class="profile-name">???</div>
-                    <div class="profile-details">
-                        <div class="p-row"><span class="p-label">Name</span><span class="p-val unknown">Discover!</span></div>
-                        <div class="p-row"><span class="p-label">From</span><span class="p-val unknown">Discover!</span></div>
-                        <div class="p-row"><span class="p-label">Lives in</span><span class="p-val unknown">Discover!</span></div>
-                        <div class="p-row"><span class="p-label">Years here</span><span class="p-val unknown">Discover!</span></div>
-                    </div>
-                </div>
+            <div class="role-info">
+                <div class="role-info-row"><span class="role-info-label">From</span><span class="role-info-val">🇻🇳 Ho Chi Minh City</span></div>
+                <div class="role-info-row"><span class="role-info-label">Lives in</span><span class="role-info-val">Pennsauken, NJ</span></div>
+                <div class="role-info-row"><span class="role-info-label">Years in US</span><span class="role-info-val">5 years</span></div>
             </div>
+            <a class="play-btn" href="nail-tech.html">▶ Play as Nail Tech</a>
+        </div>
 
-            <div class="rules-box">
-                <h3>📝 How to Play</h3>
-                <div class="rule-item"><span>👨‍🏫</span> Teacher tells you what to say or ask</div>
-                <div class="rule-item"><span>🔘</span> Pick the best answer from the choices</div>
-                <div class="rule-item"><span>💬</span> Watch the conversation build in real-time</div>
-                <div class="rule-item"><span>🔍</span> Discover client info through conversation</div>
-                <div class="rule-item"><span>📚</span> Learn grammar tips along the way</div>
-                <div class="rule-item"><span>🏆</span> Try to get 3 stars!</div>
+        <!-- CLIENT ROLE -->
+        <div class="role-card client-role" onclick="window.location.href='customer.html'">
+            <div class="role-emoji">👩</div>
+            <div class="role-badge">Role 2</div>
+            <div class="role-name">Customer</div>
+            <div class="role-char">Play as Sarah</div>
+            <div class="role-desc">
+                You are <strong>Sarah</strong>, a customer from Philadelphia. You sit down at the nail salon — chat with the nail tech and <strong>discover info about them</strong>!
             </div>
+            <div class="role-info">
+                <div class="role-info-row"><span class="role-info-label">From</span><span class="role-info-val">Philadelphia</span></div>
+                <div class="role-info-row"><span class="role-info-label">Lives in</span><span class="role-info-val">Cherry Hill, NJ</span></div>
+                <div class="role-info-row"><span class="role-info-label">Years here</span><span class="role-info-val">Whole life</span></div>
+            </div>
+            <a class="play-btn" href="customer.html">▶ Play as Customer</a>
+        </div>
 
-            <button class="start-btn" onclick="startGame()">▶ Start Conversation</button>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="how-card">
+        <div class="section-title" style="margin-bottom:12px;">📝 How To Play</div>
+        <div class="how-steps">
+            <div class="how-step">
+                <div class="how-num">1</div>
+                <div><div class="how-text">Choose your role above</div><div class="how-text-vi">Chọn vai trò của bạn ở trên</div></div>
+            </div>
+            <div class="how-step">
+                <div class="how-num">2</div>
+                <div><div class="how-text">Read the teacher's instruction</div><div class="how-text-vi">Đọc hướng dẫn của giáo viên</div></div>
+            </div>
+            <div class="how-step">
+                <div class="how-num">3</div>
+                <div><div class="how-text">Pick the best answer from 4 choices</div><div class="how-text-vi">Chọn câu trả lời tốt nhất từ 4 lựa chọn</div></div>
+            </div>
+            <div class="how-step">
+                <div class="how-num">4</div>
+                <div><div class="how-text">Learn grammar tips after each answer</div><div class="how-text-vi">Học mẹo ngữ pháp sau mỗi câu trả lời</div></div>
+            </div>
+            <div class="how-step">
+                <div class="how-num">5</div>
+                <div><div class="how-text">Discover info about the other person</div><div class="how-text-vi">Khám phá thông tin về người kia</div></div>
+            </div>
         </div>
     </div>
 
-    <!-- ===== GAME SCREEN ===== -->
-    <div class="screen" id="gameScreen">
-        <div class="top-bar">
-            <span class="top-step" id="topStep">1/10</span>
-            <div class="top-track"><div class="top-fill" id="topFill"></div></div>
-            <span class="top-score" id="topScore">⭐ 0</span>
-            <span class="top-streak" id="topStreak">🔥0</span>
-        </div>
-
-        <div class="mini-profiles">
-            <div class="mini-p"><span class="mini-p-emoji">💅</span><div><div class="mini-p-name">Minh (You)</div><div class="mini-p-sub">Nail Tech</div></div></div>
-            <div class="mini-p"><span class="mini-p-emoji">👩</span><div><div class="mini-p-name" id="miniClientName">Client</div><div class="mini-p-sub" id="miniClientSub">New customer</div></div></div>
-        </div>
-
-        <div class="discovery-bar">
-            <span class="disc-label">🔍 DISCOVERED:</span>
-            <span class="disc-tag" id="dName">📛 Name</span>
-            <span class="disc-tag" id="dFrom">🌍 From</span>
-            <span class="disc-tag" id="dLives">📍 Lives in</span>
-            <span class="disc-tag" id="dYears">📅 Years</span>
-        </div>
-
-        <div class="teacher-panel" id="teacherPanel">
-            <div class="teacher-ava">👨‍🏫</div>
-            <div class="teacher-body">
-                <div class="teacher-tag">Teacher says</div>
-                <div class="teacher-txt" id="teacherTxt"></div>
-                <div class="teacher-vi" id="teacherVi"></div>
-            </div>
-        </div>
-
-        <div class="chat-win">
-            <div class="chat-top"><span class="chat-top-icon">💬</span><span class="chat-top-title">Nail Salon Conversation</span></div>
-            <div class="chat-body" id="chatBody"></div>
-        </div>
-
-        <div class="q-panel" id="qPanel"></div>
+    <!-- KEY PHRASES -->
+    <div class="phrases-card">
+        <div class="section-title" style="margin-bottom:12px;">🗣 Key Phrases You'll Learn</div>
+        <div class="phrase-row"><span class="phrase-en">Where are you from?</span><span class="phrase-vi">Bạn đến từ đâu?</span></div>
+        <div class="phrase-row"><span class="phrase-en">I am from Vietnam.</span><span class="phrase-vi">Tôi đến từ Việt Nam.</span></div>
+        <div class="phrase-row"><span class="phrase-en">How long have you lived here?</span><span class="phrase-vi">Bạn sống ở đây bao lâu?</span></div>
+        <div class="phrase-row"><span class="phrase-en">I have lived here for 5 years.</span><span class="phrase-vi">Tôi sống ở đây 5 năm.</span></div>
+        <div class="phrase-row"><span class="phrase-en">What area do you live in?</span><span class="phrase-vi">Bạn sống ở khu vực nào?</span></div>
+        <div class="phrase-row"><span class="phrase-en">I live in Pennsauken.</span><span class="phrase-vi">Tôi sống ở Pennsauken.</span></div>
+        <div class="phrase-row"><span class="phrase-en">Do you like it here?</span><span class="phrase-vi">Bạn có thích ở đây không?</span></div>
     </div>
 
-    <!-- ===== RESULTS SCREEN ===== -->
-    <div class="screen" id="resultsScreen">
-        <div class="result-card">
-            <div class="r-icon" id="rIcon">🎉</div>
-            <div class="r-title" id="rTitle">Conversation Complete!</div>
-            <div class="r-sub" id="rSub">Great job!</div>
-            <div class="r-stars" id="rStars">⭐⭐⭐</div>
-            <div class="r-stats">
-                <div class="r-stat"><div class="r-stat-v" id="rScore">0</div><div class="r-stat-l">Score</div></div>
-                <div class="r-stat"><div class="r-stat-v" id="rCorrect">0/0</div><div class="r-stat-l">Correct</div></div>
-                <div class="r-stat"><div class="r-stat-v" id="rStreak">0</div><div class="r-stat-l">Best Streak</div></div>
-            </div>
-            <div class="disc-card">
-                <div class="disc-title">🔍 Client Information Discovered</div>
-                <div id="discResults"></div>
-            </div>
-            <div class="review-sec">
-                <div class="review-h">📝 Full Conversation</div>
-                <div class="review-wrap" id="reviewWrap"></div>
-            </div>
-            <button class="restart-btn" onclick="restart()">🔄 Play Again</button>
-        </div>
+    <div class="footer">
+        Made with ❤️ by <a href="https://teetalkenglish.github.io">TeeTalkEnglish</a>
     </div>
 </div>
 
-<div class="confetti-layer" id="confettiLayer"></div>
-
-<script>
-var CLIENT = { name: "Sarah", from: "Philadelphia", livesIn: "Cherry Hill, NJ", yearsHere: "her whole life" };
-
-var STEPS = [
-    {
-        teacher: "A new client just sat down! Greet her warmly and ask her name.",
-        teacherVi: "Khách hàng mới ngồi xuống! Chào cô ấy và hỏi tên.",
-        badge: "ask",
-        instruction: "CHOOSE YOUR GREETING",
-        prompt: "How should you greet the client?",
-        promptVi: "Bạn nên chào khách hàng như thế nào?",
-        options: [
-            { en: "Hi! Welcome in. My name is Minh. What's your name?", vi: "Xin chào! Mời vào. Tên tôi là Minh. Tên bạn là gì?", correct: true },
-            { en: "What do you want today?", vi: "Hôm nay bạn muốn gì?", correct: false },
-            { en: "Where are you from?", vi: "Bạn đến từ đâu?", correct: false },
-            { en: "Sit down please.", vi: "Mời ngồi.", correct: false }
-        ],
-        correctMsg: "✅ Great greeting! Friendly and professional!",
-        wrongMsg: "❌ Start with a warm greeting and introduce your name first!",
-        grammarTip: "💡 <strong>Greeting pattern:</strong> Hi/Hello + Welcome + My name is [name] + What's your name?",
-        techChat: { text: "Hi! Welcome in. My name is Minh. What's your name?", vi: "Xin chào! Mời vào. Tên tôi là Minh. Tên bạn là gì?" },
-        clientReply: { text: "Hi Minh! I'm Sarah. Nice to meet you!", vi: "Chào Minh! Tôi là Sarah. Rất vui được gặp bạn!" },
-        discovers: [{ key: "name", val: "Sarah" }]
-    },
-    {
-        teacher: "Great! Her name is Sarah. Now ask her where she is from.",
-        teacherVi: "Tốt! Tên cô ấy là Sarah. Hãy hỏi cô ấy đến từ đâu.",
-        badge: "ask",
-        instruction: "ASK THE RIGHT QUESTION",
-        prompt: "You want to know where Sarah is from. What do you ask?",
-        promptVi: "Bạn muốn biết Sarah đến từ đâu. Bạn hỏi gì?",
-        options: [
-            { en: "Where are you from?", vi: "Bạn đến từ đâu?", correct: true },
-            { en: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?", correct: false },
-            { en: "Do you live near here?", vi: "Bạn có sống gần đây không?", correct: false },
-            { en: "What do you do for work?", vi: "Bạn làm nghề gì?", correct: false }
-        ],
-        correctMsg: "✅ Perfect question! Let's hear where Sarah is from!",
-        wrongMsg: "❌ To find out someone's origin, ask: 'Where are you from?'",
-        grammarTip: "💡 <strong>'Where are you from?'</strong> asks about someone's hometown or country of origin.",
-        techChat: { text: "So where are you from, Sarah?", vi: "Vậy bạn đến từ đâu, Sarah?" },
-        clientReply: { text: "I'm from Philadelphia! Born and raised there.", vi: "Tôi đến từ Philadelphia! Sinh ra và lớn lên ở đó." },
-        discovers: [{ key: "from", val: "Philadelphia" }]
-    },
-    {
-        teacher: "Sarah is from Philadelphia! Now she asks YOU the same question. Tell her where you're from.",
-        teacherVi: "Sarah đến từ Philadelphia! Cô ấy hỏi lại BẠN. Hãy trả lời!",
-        badge: "respond",
-        instruction: "RESPOND TO SARAH",
-        prompt: "Sarah asks: 'How about you, Minh? Where are you from?'",
-        promptVi: "Sarah hỏi: 'Còn bạn thì sao, Minh? Bạn đến từ đâu?'",
-        preChat: { speaker: "client", text: "How about you, Minh? Where are you from?", vi: "Còn bạn thì sao, Minh? Bạn đến từ đâu?" },
-        options: [
-            { en: "I am from Vietnam. I'm originally from Ho Chi Minh City.", vi: "Tôi đến từ Việt Nam. Tôi quê ở TP Hồ Chí Minh.", correct: true },
-            { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false },
-            { en: "I have been here for 5 years.", vi: "Tôi ở đây được 5 năm.", correct: false },
-            { en: "I like it here very much.", vi: "Tôi rất thích ở đây.", correct: false }
-        ],
-        correctMsg: "✅ Excellent! You told her about Vietnam and Ho Chi Minh City!",
-        wrongMsg: "❌ She asked where you're FROM — tell her your country and city.",
-        grammarTip: "💡 <strong>'I am from [country]'</strong> — Use <strong>'from'</strong> to tell your origin. Add <strong>'originally from [city]'</strong> for more detail.",
-        techChat: { text: "I am from Vietnam. I'm originally from Ho Chi Minh City.", vi: "Tôi đến từ Việt Nam. Tôi quê ở TP Hồ Chí Minh." },
-        clientReply: { text: "Oh, that's so cool! I've always wanted to visit Vietnam!", vi: "Ồ, tuyệt thật! Tôi luôn muốn đến Việt Nam!" }
-    },
-    {
-        teacher: "Great job! Now let's check — which word do we use to talk about origin?",
-        teacherVi: "Giỏi lắm! Kiểm tra ngữ pháp — từ nào dùng để nói về quê quán?",
-        badge: "grammar",
-        instruction: "GRAMMAR CHECK",
-        prompt: "Complete: 'I am _____ Vietnam.'",
-        promptVi: "Hoàn thành: 'Tôi _____ Việt Nam.'",
-        options: [
-            { en: "from", vi: "từ (quê quán)", correct: true },
-            { en: "in", vi: "ở trong", correct: false },
-            { en: "at", vi: "ở tại", correct: false },
-            { en: "to", vi: "đến", correct: false }
-        ],
-        correctMsg: "✅ 'I am FROM Vietnam' — 'from' tells your origin!",
-        wrongMsg: "❌ We say 'I am FROM Vietnam.' 'From' is used for where you come from.",
-        grammarTip: "💡 <strong>'from'</strong> = origin (Where are you FROM?) | <strong>'in'</strong> = current location (I live IN Pennsauken)"
-    },
-    {
-        teacher: "Now ask Sarah how long she has lived in this area.",
-        teacherVi: "Hãy hỏi Sarah đã sống ở đây bao lâu.",
-        badge: "ask",
-        instruction: "ASK THE RIGHT QUESTION",
-        prompt: "You want to know how long Sarah has lived here. What do you ask?",
-        promptVi: "Bạn muốn biết Sarah sống ở đây bao lâu. Hỏi gì?",
-        options: [
-            { en: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?", correct: true },
-            { en: "Where do you live?", vi: "Bạn sống ở đâu?", correct: false },
-            { en: "Do you like it here?", vi: "Bạn có thích ở đây không?", correct: false },
-            { en: "When did you move here?", vi: "Bạn chuyển đến đây khi nào?", correct: false }
-        ],
-        correctMsg: "✅ Great question! Let's hear Sarah's answer.",
-        wrongMsg: "❌ 'How long have you lived here?' asks about duration of time.",
-        grammarTip: "💡 <strong>'How long have you...?'</strong> asks about a <strong>duration</strong> of time (bao lâu).",
-        techChat: { text: "How long have you lived here?", vi: "Bạn đã sống ở đây bao lâu?" },
-        clientReply: { text: "I've lived here my whole life! Born and raised in the area.", vi: "Tôi sống ở đây cả đời! Sinh ra và lớn lên ở vùng này." },
-        discovers: [{ key: "years", val: "her whole life" }]
-    },
-    {
-        teacher: "Sarah has lived here her whole life! She asks you the same. Tell her you've been here 5 years.",
-        teacherVi: "Sarah sống ở đây cả đời! Cô ấy hỏi lại bạn. Nói 5 năm.",
-        badge: "respond",
-        instruction: "RESPOND TO SARAH",
-        prompt: "Sarah asks: 'How about you? How long have you been in the US?'",
-        promptVi: "Sarah hỏi: 'Còn bạn? Bạn ở Mỹ bao lâu rồi?'",
-        preChat: { speaker: "client", text: "How about you, Minh? How long have you been in the US?", vi: "Còn bạn, Minh? Bạn ở Mỹ bao lâu rồi?" },
-        options: [
-            { en: "I have lived here for 5 years. I'm getting my citizenship soon!", vi: "Tôi đã sống ở đây 5 năm. Tôi sắp nhập quốc tịch!", correct: true },
-            { en: "I am from Vietnam.", vi: "Tôi đến từ Việt Nam.", correct: false },
-            { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false },
-            { en: "Yes, I like it here.", vi: "Vâng, tôi thích ở đây.", correct: false }
-        ],
-        correctMsg: "✅ Perfect! 'For 5 years' — and great news about citizenship!",
-        wrongMsg: "❌ She asked HOW LONG — tell her: 'I have lived here for 5 years.'",
-        grammarTip: "💡 <strong>'for' + time period</strong>: for 5 years, for 3 months. <strong>'since' + specific time</strong>: since 2019, since January.",
-        techChat: { text: "I have lived here for 5 years. I'm actually getting my citizenship soon!", vi: "Tôi đã sống ở đây 5 năm. Thực ra tôi sắp nhập quốc tịch!" },
-        clientReply: { text: "Oh, congratulations! That's wonderful news!", vi: "Ồ, chúc mừng bạn! Tin tuyệt vời!" }
-    },
-    {
-        teacher: "Grammar check! Which word fills the blank correctly?",
-        teacherVi: "Kiểm tra ngữ pháp! Từ nào điền vào chỗ trống?",
-        badge: "grammar",
-        instruction: "GRAMMAR CHECK",
-        prompt: "Complete: 'I have lived here _____ 5 years.'",
-        promptVi: "Hoàn thành: 'Tôi đã sống ở đây _____ 5 năm.'",
-        options: [
-            { en: "for", vi: "trong (khoảng thời gian)", correct: true },
-            { en: "since", vi: "kể từ (mốc thời gian)", correct: false },
-            { en: "in", vi: "trong", correct: false },
-            { en: "during", vi: "trong suốt", correct: false }
-        ],
-        correctMsg: "✅ 'For 5 years' — use 'for' with a period of time!",
-        wrongMsg: "❌ Use 'FOR' with a number/period: for 5 years, for 3 months.",
-        grammarTip: "💡 <strong>'for'</strong> + period (5 years, 2 months) | <strong>'since'</strong> + point in time (2019, last March)"
-    },
-    {
-        teacher: "Now ask Sarah what specific area she lives in.",
-        teacherVi: "Hãy hỏi Sarah sống ở khu vực nào.",
-        badge: "ask",
-        instruction: "ASK THE RIGHT QUESTION",
-        prompt: "You want to know Sarah's neighborhood. What do you ask?",
-        promptVi: "Bạn muốn biết khu vực Sarah sống. Hỏi gì?",
-        options: [
-            { en: "What area do you live in?", vi: "Bạn sống ở khu vực nào?", correct: true },
-            { en: "Where are you from?", vi: "Bạn đến từ đâu?", correct: false },
-            { en: "Do you like your house?", vi: "Bạn có thích nhà mình không?", correct: false },
-            { en: "How far is your home?", vi: "Nhà bạn cách đây bao xa?", correct: false }
-        ],
-        correctMsg: "✅ Perfect! Let's find out where she lives.",
-        wrongMsg: "❌ 'What area do you live in?' asks about the neighborhood.",
-        grammarTip: "💡 <strong>'What area do you live in?'</strong> = Khu vực nào? Asks about neighborhood/town.",
-        techChat: { text: "What area do you live in?", vi: "Bạn sống ở khu vực nào?" },
-        clientReply: { text: "I live in Cherry Hill, NJ. Do you know it?", vi: "Tôi sống ở Cherry Hill, NJ. Bạn biết chỗ đó không?" },
-        discovers: [{ key: "livesIn", val: "Cherry Hill, NJ" }]
-    },
-    {
-        teacher: "Sarah lives in Cherry Hill — that's near you! Tell her where you live.",
-        teacherVi: "Sarah sống ở Cherry Hill — gần bạn! Nói cho cô ấy biết bạn sống ở đâu.",
-        badge: "respond",
-        instruction: "RESPOND TO SARAH",
-        prompt: "Tell Sarah where you live. It's close to Cherry Hill!",
-        promptVi: "Nói cho Sarah biết bạn sống ở đâu. Gần Cherry Hill lắm!",
-        options: [
-            { en: "Oh, I live in Pennsauken! That's really close to you!", vi: "Ồ, tôi sống ở Pennsauken! Gần bạn lắm!", correct: true },
-            { en: "I am from Vietnam.", vi: "Tôi đến từ Việt Nam.", correct: false },
-            { en: "I don't know Cherry Hill.", vi: "Tôi không biết Cherry Hill.", correct: false },
-            { en: "That's nice.", vi: "Hay đấy.", correct: false }
-        ],
-        correctMsg: "✅ 'I live IN Pennsauken' — use 'in' for cities & areas!",
-        wrongMsg: "❌ Tell her: 'I live in Pennsauken!' — share that you're close by.",
-        grammarTip: "💡 <strong>'I live in [place]'</strong> — Use <strong>'in'</strong> for cities, towns, neighborhoods. NOT 'at' or 'on'.",
-        techChat: { text: "Oh, I live in Pennsauken! That's really close to you!", vi: "Ồ, tôi sống ở Pennsauken! Gần bạn lắm!" },
-        clientReply: { text: "Oh wow, we're practically neighbors! That's so cool!", vi: "Ồ, chúng ta gần như là hàng xóm! Tuyệt quá!" }
-    },
-    {
-        teacher: "You're neighbors! Now offer to help with her nails to start the service.",
-        teacherVi: "Các bạn là hàng xóm! Đề nghị giúp cô ấy làm móng nhé.",
-        badge: "respond",
-        instruction: "WRAP UP & START SERVICE",
-        prompt: "Sarah asks what you recommend for her nails. What do you say?",
-        promptVi: "Sarah hỏi bạn gợi ý gì cho móng tay. Bạn nói gì?",
-        preChat: { speaker: "client", text: "So, what do you recommend for my nails today?", vi: "Vậy hôm nay bạn gợi ý gì cho móng tay tôi?" },
-        options: [
-            { en: "Sure! I'd be happy to help you today! Let me take a look.", vi: "Chắc chắn! Tôi rất vui được giúp bạn! Để tôi xem nhé.", correct: true },
-            { en: "I don't know.", vi: "Tôi không biết.", correct: false },
-            { en: "Where are you from again?", vi: "Bạn đến từ đâu nhỉ?", correct: false },
-            { en: "I live in Pennsauken.", vi: "Tôi sống ở Pennsauken.", correct: false }
-        ],
-        correctMsg: "✅ Perfect ending! Professional and friendly!",
-        wrongMsg: "❌ Offer to help! Say: 'I'd be happy to help you today!'",
-        grammarTip: "💡 <strong>'I'd be happy to...'</strong> = polite way to offer help. Great for customer service!",
-        techChat: { text: "Sure! I'd be happy to help you today, Sarah! Let me take a look at your nails.", vi: "Chắc chắn! Tôi rất vui được giúp bạn, Sarah! Để tôi xem móng tay bạn." },
-        clientReply: { text: "Thank you, Minh! You're so nice! 😊", vi: "Cảm ơn Minh! Bạn rất dễ thương! 😊" }
-    }
-];
-
-// STATE
-var currentStep = 0;
-var score = 0;
-var streak = 0;
-var bestStreak = 0;
-var correctCount = 0;
-var answered = false;
-var discovered = {};
-var chatLog = [];
-
-// CORE
-function startGame() {
-    switchScreen("gameScreen");
-    loadStep();
-}
-
-function restart() {
-    currentStep = 0; score = 0; streak = 0; bestStreak = 0; correctCount = 0;
-    answered = false; discovered = {}; chatLog = [];
-    document.getElementById("chatBody").innerHTML = "";
-    document.getElementById("miniClientName").textContent = "Client";
-    document.getElementById("miniClientSub").textContent = "New customer";
-    document.getElementById("dName").textContent = "📛 Name";
-    document.getElementById("dName").classList.remove("found");
-    document.getElementById("dFrom").textContent = "🌍 From";
-    document.getElementById("dFrom").classList.remove("found");
-    document.getElementById("dLives").textContent = "📍 Lives in";
-    document.getElementById("dLives").classList.remove("found");
-    document.getElementById("dYears").textContent = "📅 Years";
-    document.getElementById("dYears").classList.remove("found");
-    switchScreen("startScreen");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function switchScreen(id) {
-    var screens = document.querySelectorAll(".screen");
-    for (var i = 0; i < screens.length; i++) screens[i].classList.remove("active");
-    document.getElementById(id).classList.add("active");
-}
-
-function loadStep() {
-    if (currentStep >= STEPS.length) { showResults(); return; }
-    var s = STEPS[currentStep];
-    answered = false;
-    updateTopBar();
-    updateTeacher(s.teacher, s.teacherVi);
-
-    if (s.preChat) {
-        setTimeout(function() {
-            addChat(s.preChat.speaker, s.preChat.text, s.preChat.vi);
-            setTimeout(function() { renderQuestion(s); }, 500);
-        }, 400);
-    } else {
-        setTimeout(function() { renderQuestion(s); }, 300);
-    }
-}
-
-function renderQuestion(s) {
-    var panel = document.getElementById("qPanel");
-    var letters = ["A", "B", "C", "D"];
-
-    // Shuffle options but remember correct
-    var opts = [];
-    for (var i = 0; i < s.options.length; i++) {
-        opts.push({ en: s.options[i].en, vi: s.options[i].vi, correct: s.options[i].correct, origIdx: i });
-    }
-    // Fisher-Yates shuffle
-    for (var j = opts.length - 1; j > 0; j--) {
-        var k = Math.floor(Math.random() * (j + 1));
-        var temp = opts[j]; opts[j] = opts[k]; opts[k] = temp;
-    }
-
-    var badgeClass = s.badge || "ask";
-    var badgeLabel = { ask: "🗣 Ask", respond: "💬 Respond", understand: "👂 Understand", grammar: "📝 Grammar" };
-
-    var html = '<span class="q-badge ' + badgeClass + '">' + (badgeLabel[badgeClass] || badgeClass) + '</span>';
-    html += '<div class="q-instruction">' + s.instruction + '</div>';
-    html += '<div class="q-prompt">' + s.prompt + '</div>';
-    html += '<div class="q-prompt-vi">' + s.promptVi + '</div>';
-    html += '<div class="options-list" id="optionsList">';
-
-    for (var m = 0; m < opts.length; m++) {
-        html += '<button class="opt-btn" data-correct="' + opts[m].correct + '" onclick="pickAnswer(this,' + currentStep + ')">';
-        html += '<span class="opt-letter">' + letters[m] + '</span>';
-        html += '<span class="opt-text"><span class="opt-en">' + opts[m].en + '</span><span class="opt-vi">' + opts[m].vi + '</span></span>';
-        html += '</button>';
-    }
-
-    html += '</div>';
-    html += '<div class="fb-box" id="fbBox"></div>';
-    html += '<div class="grammar-tip" id="grammarTip">' + (s.grammarTip || '') + '</div>';
-    html += '<button class="cont-btn" id="contBtn" onclick="goNext()">Continue ➜</button>';
-
-    panel.innerHTML = html;
-
-    setTimeout(function() {
-        panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 200);
-}
-
-function pickAnswer(btn, stepIdx) {
-    if (answered) return;
-    answered = true;
-
-    var s = STEPS[stepIdx];
-    var isCorrect = btn.getAttribute("data-correct") === "true";
-
-    // Lock all buttons
-    var allBtns = document.querySelectorAll(".opt-btn");
-    for (var i = 0; i < allBtns.length; i++) {
-        allBtns[i].classList.add("locked");
-    }
-
-    var fbBox = document.getElementById("fbBox");
-
-    if (isCorrect) {
-        btn.classList.add("correct-opt");
-        correctCount++;
-        streak++;
-        if (streak > bestStreak) bestStreak = streak;
-        var points = 10 + (streak > 1 ? streak * 2 : 0);
-        score += points;
-
-        fbBox.className = "fb-box fb-ok";
-        var bonusText = "";
-        if (streak > 1) bonusText = " 🔥 Streak: " + streak;
-        fbBox.innerHTML = s.correctMsg + '<div class="fb-extra">+' + points + ' points' + bonusText + '</div>';
-
-        burstConfetti();
-
-        // Add chat messages
-        if (s.techChat) {
-            setTimeout(function() {
-                addChat("tech", s.techChat.text, s.techChat.vi);
-                if (s.clientReply) {
-                    setTimeout(function() {
-                        addChat("client", s.clientReply.text, s.clientReply.vi);
-                        if (s.discovers) {
-                            for (var d = 0; d < s.discovers.length; d++) {
-                                discover(s.discovers[d].key, s.discovers[d].val);
-                            }
-                        }
-                    }, 800);
-                }
-            }, 500);
-        }
-    } else {
-        btn.classList.add("wrong-opt");
-        streak = 0;
-
-        // Highlight correct answer
-        for (var j = 0; j < allBtns.length; j++) {
-            if (allBtns[j].getAttribute("data-correct") === "true") {
-                allBtns[j].classList.add("correct-opt");
-            }
-        }
-
-        fbBox.className = "fb-box fb-wrong";
-        fbBox.innerHTML = s.wrongMsg;
-
-        // Still add chat messages so conversation continues
-        if (s.techChat) {
-            setTimeout(function() {
-                addChat("tech", s.techChat.text, s.techChat.vi);
-                if (s.clientReply) {
-                    setTimeout(function() {
-                        addChat("client", s.clientReply.text, s.clientReply.vi);
-                        if (s.discovers) {
-                            for (var d = 0; d < s.discovers.length; d++) {
-                                discover(s.discovers[d].key, s.discovers[d].val);
-                            }
-                        }
-                    }, 800);
-                }
-            }, 500);
-        }
-    }
-
-    // Show grammar tip
-    if (s.grammarTip) {
-        document.getElementById("grammarTip").classList.add("show");
-    }
-
-    updateTopBar();
-    document.getElementById("contBtn").classList.add("show");
-}
-
-function goNext() {
-    currentStep++;
-    if (currentStep >= STEPS.length) {
-        showResults();
-    } else {
-        loadStep();
-    }
-    document.getElementById("gameScreen").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function addChat(speaker, text, vi) {
-    var body = document.getElementById("chatBody");
-    var isClient = (speaker === "client");
-    var cls = isClient ? "c-client" : "c-tech";
-    var avatar = isClient ? "👩" : "💅";
-    var label = isClient ? (discovered.name ? CLIENT.name : "Client") : "You (Minh)";
-
-    var msg = document.createElement("div");
-    msg.className = "c-msg " + cls;
-    msg.innerHTML = '<div class="c-ava">' + avatar + '</div>' +
-        '<div class="c-content">' +
-        '<div class="c-label">' + label + '</div>' +
-        '<div class="c-bubble">' + text + '</div>' +
-        (vi ? '<div class="c-vi">' + vi + '</div>' : '') +
-        '</div>';
-    body.appendChild(msg);
-    body.scrollTop = body.scrollHeight;
-    chatLog.push({ speaker: speaker, text: text, vi: vi, label: label });
-}
-
-function discover(key, value) {
-    discovered[key] = value;
-    var tagMap = { name: "dName", from: "dFrom", livesIn: "dLives", years: "dYears" };
-    var iconMap = { name: "📛", from: "🌍", livesIn: "📍", years: "📅" };
-    var tagId = tagMap[key];
-    if (tagId) {
-        var tag = document.getElementById(tagId);
-        tag.classList.add("found");
-        tag.textContent = iconMap[key] + " " + value;
-    }
-    if (key === "name") {
-        document.getElementById("miniClientName").textContent = value;
-        document.getElementById("miniClientSub").textContent = "Customer";
-    }
-}
-
-function updateTopBar() {
-    var pct = (currentStep / STEPS.length) * 100;
-    document.getElementById("topFill").style.width = pct + "%";
-    document.getElementById("topStep").textContent = (currentStep + 1) + "/" + STEPS.length;
-    document.getElementById("topScore").textContent = "⭐ " + score;
-    document.getElementById("topStreak").textContent = "🔥" + streak;
-}
-
-function updateTeacher(msg, vi) {
-    var panel = document.getElementById("teacherPanel");
-    document.getElementById("teacherTxt").textContent = msg;
-    document.getElementById("teacherVi").textContent = vi || "";
-    panel.style.animation = "none";
-    panel.offsetHeight;
-    panel.style.animation = "panelIn 0.4s ease";
-}
-
-function burstConfetti() {
-    var container = document.getElementById("confettiLayer");
-    var colors = ["#ff6b6b","#feca57","#48dbfb","#ff9ff3","#54a0ff","#5f27cd","#00d2d3","#1dd1a1","#fdcb6e","#e17055"];
-    for (var i = 0; i < 25; i++) {
-        var piece = document.createElement("div");
-        piece.className = "conf-piece";
-        piece.style.left = (Math.random() * 100) + "%";
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.width = (6 + Math.random() * 8) + "px";
-        piece.style.height = (6 + Math.random() * 8) + "px";
-        piece.style.borderRadius = Math.random() > 0.
-        5 ? "50%" : "2px";
-        piece.style.animationDuration = (2 + Math.random() * 2) + "s";
-        piece.style.animationDelay = (Math.random() * 0.5) + "s";
-        container.appendChild(piece);
-        (function(p) {
-            setTimeout(function() { if (p.parentNode) p.parentNode.removeChild(p); }, 4500);
-        })(piece);
-    }
-}
-
-function showResults() {
-    switchScreen("resultsScreen");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    var maxScore = STEPS.length * 10 + 50;
-    var pct = maxScore > 0 ? (score / maxScore) * 100 : 0;
-
-    var icon, title, sub, stars;
-    if (pct >= 85) {
-        icon = "🏆"; title = "Outstanding!"; sub = "You're a small talk master!"; stars = "⭐⭐⭐";
-    } else if (pct >= 60) {
-        icon = "🎉"; title = "Great Job!"; sub = "You had a wonderful conversation!"; stars = "⭐⭐";
-    } else if (pct >= 35) {
-        icon = "👍"; title = "Good Try!"; sub = "Keep practicing your English!"; stars = "⭐";
-    } else {
-        icon = "📚"; title = "Keep Learning!"; sub = "Practice makes perfect!"; stars = "💪";
-    }
-
-    document.getElementById("rIcon").textContent = icon;
-    document.getElementById("rTitle").textContent = title;
-    document.getElementById("rSub").textContent = sub;
-    document.getElementById("rStars").textContent = stars;
-    document.getElementById("rScore").textContent = score;
-    document.getElementById("rCorrect").textContent = correctCount + "/" + STEPS.length;
-    document.getElementById("rStreak").textContent = bestStreak;
-
-    // Discovered info
-    var discResults = document.getElementById("discResults");
-    var infoItems = [
-        { label: "👤 Name", key: "name" },
-        { label: "🌍 From", key: "from" },
-        { label: "📍 Lives in", key: "livesIn" },
-        { label: "📅 Years here", key: "years" }
-    ];
-
-    var discHTML = "";
-    for (var i = 0; i < infoItems.length; i++) {
-        var val = discovered[infoItems[i].key];
-        discHTML += '<div class="disc-row">' +
-            '<span class="disc-r-label">' + infoItems[i].label + '</span>' +
-            '<span class="disc-r-val ' + (val ? '' : 'missed') + '">' + (val || 'Not discovered') + '</span>' +
-            '</div>';
-    }
-    discHTML += '<div class="disc-row" style="margin-top:6px;border-top:2px solid rgba(0,0,0,0.1);padding-top:8px;">' +
-        '<span class="disc-r-label">🔍 Discovered</span>' +
-        '<span class="disc-r-val">' + Object.keys(discovered).length + '/4 items</span></div>';
-    discResults.innerHTML = discHTML;
-
-    // Review conversation
-    var reviewWrap = document.getElementById("reviewWrap");
-    if (chatLog.length > 0) {
-        var reviewHTML = "";
-        for (var r = 0; r < chatLog.length; r++) {
-            var msg = chatLog[r];
-            var isClient = (msg.speaker === "client");
-            var rlabel = isClient ? "👩 " + msg.label : "💅 " + msg.label;
-            var rcls = isClient ? "rev-c" : "rev-t";
-            reviewHTML += '<div class="rev-line">' +
-                '<span class="rev-speaker ' + rcls + '">' + rlabel + ':</span> ' +
-                msg.text +
-                (msg.vi ? '<span class="rev-vi">' + msg.vi + '</span>' : '') +
-                '</div>';
-        }
-        reviewWrap.innerHTML = reviewHTML;
-    } else {
-        reviewWrap.innerHTML = '<div class="rev-line" style="text-align:center;color:#999;">No conversation recorded.</div>';
-    }
-
-    // Confetti for good results
-    if (pct >= 60) {
-        for (var c = 0; c < 4; c++) {
-            (function(delay) {
-                setTimeout(function() { burstConfetti(); }, delay);
-            })(c * 400);
-        }
-    }
-}
-
-</script>
 </body>
 </html>
